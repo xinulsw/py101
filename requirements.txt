@@ -1,0 +1,11 @@
+Sphinx==7.3.7
+sphinx-rtd-theme==2.0.0
+# pip install sphinx sphinx_rtd_theme
+pygame
+Flask
+Flask-wtf
+Flask-SQLAlchemy
+SQLAlchemy
+django
+matplotlib
+peewee
