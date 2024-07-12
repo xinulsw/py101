@@ -10,7 +10,7 @@ Interpreter Pythona
 
 .. note::
 
-  Przed rozpoczęciem instalacji Pythona zaktualizuj sytem.
+  Przed rozpoczęciem instalacji Pythona zaktualizuj system.
 
 Na stronie `Python Releases for Windows <https://www.python.org/downloads/windows/>`_
 klikamy link *Last Python 3 Release - ...* i pobieramy instalator

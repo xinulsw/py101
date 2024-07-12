@@ -12,13 +12,11 @@ na dysku, czytaj dalej.
 Dystrybucje
 ===========
 
-Najwygodniej pracować w systemie Linux zainstalowanym na dysku twardym,
-np. obok albo zamiast MS Windows. Polecamy dystrybucje oparte na Debianie,
-na których przetestowaliśmy scenariusze:
+Polecamy dysstrybucje oparte na Debianie:
 
-* `Linux Mint 20.04 <https://www.linuxmint.com>`_
-* `Ubuntu 20.04 LTS <https://www.ubuntu.com/>`__.
-* `MX Linux 21 <https://mxlinux.org/>`_
+* `Linux Mint <https://www.linuxmint.com>`_
+* `Ubuntu <https://www.ubuntu.com/>`__.
+* `MX Linux <https://mxlinux.org/>`_
 
 Środowisko graficzne (zob. :term:`środowisko graficzne`) dowolne.
 
@@ -35,15 +33,14 @@ Interpreter, narzędzia i pakiety
 ================================
 
 W Linuksach interpreter Pythona 3.x zainstalowany jest domyślnie.
-Wymagane pakiety Pythona i/lub wersję Pythona 2.x, a także narzędzia dodatkowe
-w razie potrzeby instalujemy za pomocą systemowego menedżera pakietów ``apt``.
-Pakiety można również instalować przy użyciu instalatora pakietów Pythona
-`pip <http://www.pip-installer.org/en/latest/>`_.
 
 .. note::
 
-   Polecenie ``sudo`` oznacza, że do instalacji potrzebne są uprawnienia administracyjne,
-   czyli w praktyce należy być zalogowanym na koncie użytkownika utworzonym podczas instalacji systemu.
+    * Polecenie ``sudo`` oznacza, że do instalacji potrzebne są uprawnienia administracyjne,
+      czyli w praktyce należy być zalogowanym na koncie użytkownika utworzonym podczas instalacji systemu.
+    * System *Debian* w domyślnej konfiguracji nie wykorzystuje
+      mechanizmu podnoszenia uprawnień ``sudo``, wtedy polecenia instalacji
+      należy wydawać z konta użytkownika *root*.    
 
 * Aktualizacja bazy oprogramowania i instalacja podstawowych narzędzi:
 
@@ -52,29 +49,5 @@ Pakiety można również instalować przy użyciu instalatora pakietów Pythona
        ~$ sudo apt update
        ~$ sudo apt install python3-pip python3-venv git sqlite3
 
-* Ogólnosystemowa instalacja rozszerzonych powłok:
+* Przygotowanie :ref:`środowiska wirtualnego <pve>` i instalacja wymaganych pakietów.
 
-   .. code-block:: bash
-
-       ~$ sudo apt install python3-qtconsole python3-tk python3-sip python3-pyqt5
-
-* Ogólnosystemowa instalacja dodatkowych pakietów:
-
-   .. code-block:: bash
-
-       ~$ sudo pip3 install matplotlib
-       ~$ sudo pip3 install pygame
-       ~$ sudo pip3 install flask flask-wtf peewee sqlalchemy flask-sqlalchemy django
-
-.. tip::
-
-    Zamiast ogólnosystemowej instalacji rozszerzonych powłok i pakietów
-    zalecamy instalację w :ref:`środowisku wirtualnym <pve>`
-    dostępną dla zwykłego użytkownika.
-
-.. note::
-
-    * Nazwy pakietów w różnych dystrybucjach mogą się nieco różnić od podanych.
-    * System *Debian* w domyślnej konfiguracji nie wykorzystuje
-      mechanizmu podnoszenia uprawnień ``sudo``, wtedy polecenia instalacji
-      należy wydawać z konta użytkownika *root*.

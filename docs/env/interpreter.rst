@@ -2,29 +2,26 @@ Podstawy Pythona
 ################
 
 Python to język interpretowany. Kod źródłowy Pythona zapisujemy w plikach tekstowych
-z rozszerzeniem ``.py``. Skrypty Pythona **uruchamiamy** w terminalu przy użyciu interpretera:
+z rozszerzeniem ``.py``. Skrypty Pythona można uruchamiać w terminalu przy użyciu interpretera:
 
 .. code-block:: bash
 
     ~$ python3 nazwa_skryptu.py
 
-– lub z poziomu edytora kodu, który oferuje taką możliwość.
-
 Ze względów praktycznych warto korzystać z programów ułatwiających pisanie kodu
-(obsługa wcięć, podświetlenia itd.), tzw. IDE,
-czyli `Integrated Development Environment <http://pl.wikipedia.org/wiki/Zintegrowane_%C5%9Brodowisko_programistyczne>`_.
+(obsługa wcięć, podświetlenia itd.) i jego uruchamianie.
 Zobacz `Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>`_.
 
 **Tryb interaktywny** interpretera Pythona jest podstawowym narzędziem nauki
-i testowania kodu. Uruchamiamy go, wydając w terminalu używanego systemu
-polecenie:
+i testowania kodu. Uruchamiamy go, wydając w terminalu polecenie:
 
 .. code-block:: bash
 
     ~$ python3
 
-Po uruchomieniu interpreter wyświetla swoją wersję, opcjonalnie wersję kompilatora C++,
-a także znak zachęty ``>>>``. Przydatne polecenia:
+– lub ``python``.
+
+Po uruchomieniu interpreter wyświetla znak zachęty ``>>>``. Przydatne polecenia:
 
 .. code-block:: bash
 
@@ -45,11 +42,14 @@ i dalszy kod wymaga wcięć.
 ====================
 
 Wirtualne środowisko Pythona (ang. *Python virtual environment*) pozwala instalować dodatkowe pakiety
-w wybranych wersjach, a także dodatkowe narzędzia bez uprawnień administratora. W praktyce to katalog
-zawierający niezbędne pliki potrzebne do działania interpretera oraz menedżer *pip*.
-Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
+w wybranych wersjach bez uprawnień administratora. W praktyce to katalog zawierający niezbędne pliki
+potrzebne do działania interpretera oraz menedżer instalacji pakietów **pip**.
 
-Utworzenie i korzystanie ze środowiska:
+.. note::
+
+    Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
+
+Utworzenie i korzystanie ze środowiska w terminalu:
 
 .. code-block:: bash
 
@@ -57,9 +57,13 @@ Utworzenie i korzystanie ze środowiska:
     ~$ source pve/bin/activate       # aktywacja w Linuksie
     > pve\\Scripts\\activate.bat     # aktywacja w Windowsie
     (pve) ~$ python skrypt.py        # uruchamianie skryptu w wirtualnym środowisku
-    (pve) ~$ deactivate              # deaktywacja
+    (pve) ~$ deactivate              # deaktywacja środowiska
 
-Przydatne polecenia instalatora pakietów *pip*:
+.. tip::
+
+    Niektóre programy dedykowane do kodowania, np. PyCharm, umożliwiają tworzenie środowiska wirtualnego.
+
+Polecenia instalatora pakietów *pip*:
 
 .. code-block:: bash
 
@@ -70,35 +74,17 @@ Przydatne polecenia instalatora pakietów *pip*:
     (pve) ~$ pip install nazwa_pakietu -U  # aktualizacja pakietu
     (pve) ~$ pip uninstall nazwa_pakietu   # usunięcie pakietu
 
-Przykład instalacji pakietów wykorzystywanych w materiałach:
+Poniżej instrukcje instalacji pakietów wykorzystywanych w materiałach:
 
 .. code-block:: bash
 
-    ~$ sudo pip3 install matplotlib
-    ~$ sudo pip3 install pygame
-    ~$ sudo pip3 install flask flask-wtf peewee sqlalchemy flask-sqlalchemy django
-
-Rozszerzone powłoki
-===================
-
-Zchęcamy do korzystania z powłok rozszerzonych *IPython* i/lub *Jupyter QtConsole*,
-oferujących podpowiedzi, dopełnianie, formatowanie kodu itp. ułatwienia.
-Najłatwiej zainstalować je w środowisku wirtualnym:
-
-.. code-block:: bash
-
-    (pve) ~$ pip install ipython3
-    (pve) ~$ pip install qtconsole pyqt5
-
-Uruchamiamy je poleceniami:
-
-.. code-block:: bash
-
-    ~$ ipython3
-    ~$ jupyter-qtconsole
+    (pve) ~$ pip3 install matplotlib
+    (pve) ~$ pip3 install pygame
+    (pve) ~$ pip3 install flask flask-wtf peewee sqlalchemy flask-sqlalchemy django
+    (pve) ~$ pip3 install pyqt6
 
 .. tip::
 
-    Do terminala skopiowane polecenia wklejamy bez znaku zachęty ``$``
-    i poprzedzającego tekstu za pomocą środkowego klawisza myszki
+    Skopiowane polecenia bez znaku zachęty ``$`` i poprzedzającego tekstu
+    możemy wkleić do terminala za pomocą środkowego klawisza myszki
     lub skrótów :kbd:`CTRL+SHIFT+V`, :kbd:`CTRL+SHIFT+Insert`.

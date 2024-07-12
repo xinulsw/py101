@@ -1,16 +1,10 @@
 System i oprogramowanie
 #######################
 
-Nasze materiały zakładają wykorzystanie języka :term:`Python` w większości w wersji 3.x,
-w dwóch przypadkach (:ref:`Gra robotów <robot-game>` i częściowo :ref:`Minecraft Pi <mcpi-app>`)
-wymagana jest wersja 2.x.
-Mogą być realizowane w dowolnym systemie operacyjnym, jednak proponujemy systemy Linux,
-w których Python 3.x i często 2.x są obecne domyślnie i nie ma problemów z instalacją
-dodatkowych narzędzi i bibliotek.
-
-Do realizacji materiałów można również wykorzystać system :ref:`Linux Live <linux-live>`
-przeznaczony do instalacji na pendrajwach. Uruchamia się z napędu USB na większości komputerów
-i ma możliwość zapamiętywania zmian i naszej pracy.
+Materiały zakładają wykorzystanie języka :term:`Python` w wersji 3.x.
+Mogą być realizowane w dowolnym systemie operacyjnym. Sugerujemy systemy Linux,
+mogą być w wersji  :ref:`Live <linux-live>`, w których Python 3.x jest domyślnie zainstalowany
+i nie ma problemów z instalacją dodatkowych narzędzi i bibliotek.
 
 .. _tools:
 
