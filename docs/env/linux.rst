@@ -13,7 +13,7 @@ Polecamy dystrybucje oparte na Debianie z dowolnym środowiskiem graficznym (zob
     Jeżeli nie masz systemu Linux i nie chcesz instalować go na dysku komputera,
     możesz wykorzystać wersję :ref:`Linux Live <linux-live>`.
 
-.. _linux-pakiety:
+.. _linux-tools:
 
 Narzędzia
 =========

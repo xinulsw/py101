@@ -76,7 +76,7 @@ Biblioteki
 .. tip::
 
     W przypadku bibliotek warto rozważyć instalację
-    w :ref:`środowisku wirtualnym <pve>` dostępną dla zwykłego użytkownika.
+    w :ref:`środowisku wirtualnym <venv>` dostępną dla zwykłego użytkownika.
 
 PyQt
 -----

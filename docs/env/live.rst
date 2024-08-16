@@ -77,7 +77,7 @@ Zapamiętywanie zmian
 Po uruchomieniu
 ---------------
 
-Po uruchomieniu systemu instalujemy omówione w dokumencie :ref:`Przygotowanie systemu Linux _linux-pakiety>` narzędzia dodatkowe.
+Po uruchomieniu systemu instalujemy omówione w dokumencie :ref:`Przygotowanie systemu Linux <linux-tools>` narzędzia.
 Zamykamy system i zgadzamy się na zapisanie dokonanych zmian! Po kolejnym uruchomieniu możemy już utworzyć
 :ref:`środowisko wirtualne Pythona <venv>` i w zależności od potrzeb instalować wymagane dla danego scenariusza pakiety.
 
