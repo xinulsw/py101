@@ -100,8 +100,6 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+# Python virtual environment
+.venv/
 .pve/
-*.sublime-project
-*.sublime-workspace
-/python101.sublime-project
-/python101.sublime-workspace
