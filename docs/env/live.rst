@@ -66,8 +66,8 @@ Zapamiętywanie zmian
   Musimy wybrać rozmiar pliku, który uzależniony jest od systemu plików użytego na kluczu USB. Dla systemu `vfat` (FAT32)
   będzie to 4GB, w przypadku systemów `NTFS` i `EXT4` ogranicza nas tylko rozmiar klucza.
 * Na pytanie, czy utworzyć *live-usb swap file* (plik wymiany) możemy odpowiedzieć "nie".
-* Ze względów bezpieczeństwa możemy podać nowe hasła dla użytkownika *root* i *demo* lub wpisać domyślne, tj. "root" i "demo".
-* Na koniec należy wybrać sposób zapisywania zmian, proponujemy opcję **Semi-Automaitc**,
+* Podczas tworzenia haseł dla użytkowników *root* i *demo* można podać domyślne, tj. **root** i **demo**.
+* Jako sposób zapisywania zmian, proponujemy opcję **Semi-Automaitc**,
   która pozwala na podjęcie decyzji podczas zamykania lub restartu systemu.
 
 .. note::
@@ -77,9 +77,11 @@ Zapamiętywanie zmian
 Po uruchomieniu
 ---------------
 
-Po uruchomieniu systemu instalujemy omówione w dokumencie :ref:`Przygotowanie systemu Linux <linux-tools>` narzędzia.
-Zamykamy system i zgadzamy się na zapisanie dokonanych zmian! Po kolejnym uruchomieniu możemy już utworzyć
-:ref:`środowisko wirtualne Pythona <venv>` i w zależności od potrzeb instalować wymagane dla danego scenariusza pakiety.
+Po uruchomieniu systemu instalujemy dodatkowe pakiety zgodnie z opisem w :ref:`Przygotowanie systemu Linux <linux-env>`.
+Zamykamy system i zgadzamy się na zapisanie dokonanych zmian!
+
+Po kolejnym uruchomieniu tworzymy :ref:`środowisko wirtualne Pythona <venv>`
+i w zależności od potrzeb doinstalowujemy wymagane dla danego scenariusza pakiety.
 
 .. tip::
 

@@ -40,7 +40,7 @@ W systemie **Windows** może to być wiersz poleceń (CMD), `Windows PowerShell`
 
 .. note::
 
-    Jeże;i korzystasz z `PowerSchella` podczas próby aktywacji środowiska możesz zobaczyć komunikat
+    Jeżeli korzystasz z `PowerSchella` podczas próby aktywacji środowiska możesz zobaczyć komunikat
     `... Activate.ps1 cannot be loaded ...` związany z brakiem praw do wykonania skryptów. Wydaj wtedy polecenie:
     
     .. code-block:: bash

@@ -19,4 +19,4 @@ for i in range(3):
             print("Miałem na myśli liczbę: ", liczba)
         else:
             print("Nie zgadłeś. Spróbuj jeszcze raz.")
-        print
+        print()

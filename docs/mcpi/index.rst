@@ -51,7 +51,6 @@ które należy pobrać i rozpakować w katalogu użytkownika. W kolejnych scenar
     algorytmy/index
     glife/index
     rgame/index
-    gloss_mcpi
 
 **Materiały**
 

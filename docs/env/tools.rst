@@ -5,7 +5,7 @@ Dodatkowe narzędzia
 
 Podane niżej narzędzia można zainstalować od razu lub w razie potrzeby, kiedy wymagane będą przez dany scenariusz.
 
-.. _git-install
+.. _git-install:
 
 Git
 ===
