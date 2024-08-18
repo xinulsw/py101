@@ -11,33 +11,63 @@ potrzebne do działania interpretera oraz menedżer instalacji pakietów **pip**
 
     Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
 
-Środowisko możemy utworzyć, a następnie aktywować i korzystać z niego w terminalu (wierszu poleceń):
+Tworzenie środowiska wirtualnego
+================================
+
+Środowisko tworzymy, a następnie aktywujemy i korzystamy z niego przy użyciu terminala.
+
+W systemie **Linux** może to być dowolny terminal:
 
 .. code-block:: bash
 
-    ~$ python3 -m venv venv           # utworzenie środowiska katalogu venv
-    ~$ source venv/bin/activate       # aktywacja w Linuksie
-    > venv\\Scripts\\activate.bat     # aktywacja w Windowsie
-    (venv) ~$ python skrypt.py        # uruchamianie skryptu w wirtualnym środowisku
-    (venv) ~$ deactivate              # deaktywacja środowiska
+    ~$ python3 -m venv .venv        # utworzenie środowiska w katalogu .venv
+    ~$ source .venv/bin/activate    # aktywacja
+    (.venv) ~$ python3              # uruchamianie interpretera w trybie interaktywnym
+    (.venv) ~$ python3 skrypt.py    # uruchamianie skryptu w wirtualnym środowisku
+    (.venv) ~$ deactivate           # deaktywacja środowiska
+
+W systemie **Windows** może to być wiersz poleceń (CMD), `Windows PowerShell` lub `Windows Terminal`:
+
+.. code-block:: bash
+
+    python -m venv .venv            # utworzenie środowiska w katalogu .venv
+    .venv\\Scripts\\activate.bat    # aktywacja w wierszu poleceń (cmd)
+    .venv\\Scripts\\Activate.ps1    # aktywacja w Windows PowerSchell
+    (.venv) python                  # uruchamianie interpretera w trybie interaktywnym
+    (.venv) python skrypt.py        # uruchamianie skryptu w wirtualnym środowisku
+    (.venv) .venv\\Scripts\\deactivate.bat  # deaktywacja w wierszu poleceń (cmd)
+    (.venv) deactivate                      # deaktywacja w Windows PowerSchell
+
+.. note::
+
+    Jeże;i korzystasz z `PowerSchella` podczas próby aktywacji środowiska możesz zobaczyć komunikat
+    `... Activate.ps1 cannot be loaded ...` związany z brakiem praw do wykonania skryptów. Wydaj wtedy polecenie:
+    
+    .. code-block:: bash
+    
+        Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 .. tip::
 
-    Niektóre edytory programistyczne lub IDE, np. PyCharm, umożliwiają tworzenie środowiska wirtualnego.
+    Niektóre edytory programistyczne, np. PyCharm, umożliwiają przygotowanie środowiska wirtualnego podczas tworzenia
+    projektu.
+
+Zarządzanie pakietami (pip)
+===========================
 
 Do zarządzania pakietami w aktywnym środowisku używamy narzędzia `pip`,
 za pomocą którego instalujemy wymagane w danym scenariuszu pakiety, np.:
 
 .. code-block:: bash
 
-    (venv) ~$ pip install matplotlib
-    (venv) ~$ pip install pygame
-    (venv) ~$ pip install flask flask-wtf peewee sqlalchemy flask-sqlalchemy django
-    (venv) ~$ pip install pyqt6
+    (.venv) pip install matplotlib
+    (.venv) pip install pygame
+    (.venv) pip install flask flask-wtf peewee sqlalchemy flask-sqlalchemy django
+    (.venv) pip install pyqt6
 
 .. tip::
 
-    Skopiowane polecenia bez znaku zachęty ``$`` i poprzedzającego tekstu
+    Skopiowane polecenia (bez nazwy katalogu z wirtualnym środowiskiem!)
     możemy wkleić do terminala za pomocą środkowego klawisza myszki
     lub skrótów :kbd:`CTRL+SHIFT+V`, :kbd:`CTRL+SHIFT+Insert`.
 
@@ -47,10 +77,11 @@ za pomocą którego instalujemy wymagane w danym scenariuszu pakiety, np.:
 
     .. code-block:: bash
 
-        (venv) ~$ pip install --upgrade pip     # aktualizacja narzędzia pip do najnowszej wersji
-        (venv) ~$ pip install biblioteka==1.4   # instalacja biblioteki we wskazanej wersji
-        (venv) ~$ pip -V                        # wersja narzędzia pip
-        (venv) ~$ pip list                      # lista zainstalowanych pakietów
-        (venv) ~$ pip install nazwa_pakietu     # instalacja pakietu
-        (venv) ~$ pip install nazwa_pakietu -U  # aktualizacja pakietu
-        (venv) ~$ pip uninstall nazwa_pakietu   # usunięcie pakietu
+        (.venv) pip install --upgrade pip     # aktualizacja narzędzia pip do najnowszej wersji
+        (.venv) pip install biblioteka==1.4   # instalacja biblioteki we wskazanej wersji
+        (.venv) pip -V                        # wersja narzędzia pip
+        (.venv) pip list                      # lista zainstalowanych pakietów
+        (.venv) pip install nazwa_pakietu     # instalacja pakietu
+        (.venv) pip install nazwa_pakietu -U  # aktualizacja pakietu
+        (.venv) pip uninstall nazwa_pakietu   # usunięcie pakietu
+

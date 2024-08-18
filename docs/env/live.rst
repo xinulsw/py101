@@ -26,7 +26,7 @@ W systemie Windows
   klikamy przycisk "Wybierz" i wskazujemy ściągnięty obraz iso.
   Klikamy "Start" i czekamy na napis "Gotowe".
 
-.. figure:: img/rufus02.jpg
+.. figure:: img/rufus00.jpg
 
 W Linuksie
 ==========
