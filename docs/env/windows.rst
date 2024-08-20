@@ -29,8 +29,8 @@ Na końcu instalacji można aktywować opcję "Disable path length limit".
 
 .. figure:: img/python03.jpg
 
-Poprawność instalacji weryfikujemy w wierszu poleceń (np. Windows PowerShell) wpisując przykładowe polecenie
-`python --version` lub `python` (uruchamia tryb interaktywny interpretera):
+Poprawność instalacji weryfikujemy w wierszu poleceń (np. *Windows PowerShell*) wpisując przykładowe polecenie
+`py --version` lub `python` (uruchamia tryb interaktywny interpretera):
 
 .. figure:: img/python05.jpg
 

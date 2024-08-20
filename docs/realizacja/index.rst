@@ -1,60 +1,59 @@
-Realizacja scenariuszy
-######################
+Podstawowe pojęcia
+##################
 
-Katalog użytkownika
-===================
+Tryb interaktywny
+=================
 
-Jeżeli w scenariuszu mowa o **katalogu domowym** użytkownika, w systemie Linux
-należy przez to rozumieć podfolder katalogu ``/home`` o nazwie zalogowanego użytkownika,
-np. ``/home/uczen``. W poleceniach wydawanych w terminalu (zob. :term:`terminal`)
-ścieżkę do tego katalogu symbolizuje znak ``~``.
+Interpreter Pythona może i powinien być używany w trybie interaktywnym do nauki i testowania kodu.
 
-Zapis typu ``~/quiz2$`` oznacza więc, że dane polecenie należy wykonać w podkatalogu
-``quiz2`` katalogu domowego użytkownika.
+Uruchamiamy go, wydając w terminalu polecenie:
 
-Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik,
-natomiast ``#`` – jako root, czyli administrator.
+.. code-block:: bash
 
-.. note::
+    python3  # system Linux
+    python   # system Windows
 
-    W przygotowanym przez nas systemie *MX Linux Live* pracujesz jako użytkownik
-    z loginem i hasłem *demo*.
+Po uruchomieniu interpreter wyświetla znak zachęty ``>>>``. Przydatne polecenia:
 
-W systemie Windows
-==================
+.. code-block:: bash
 
-Jeżeli scenariusze będziemy wykonywać w MS Windows, musimy pamiętać o różnicach:
+    >>> help()         # uruchomienie interaktywnej pomocy
+    help> quit         # wyjście z trybu interaktywnej pomocy
+    >>> help(obiekt)   # wyświetla pomoc dotyczącą dowolnego obiektu
+    >>> import math    # zaimportowanie przykładowego pakietu math
+    >>> dir(math)      # przegląd dostępnych w pakiecie stałych i funkcji
+    >>> help(math.pow) # wyświetla pomoc nt. stałej lub funkcji dostępnej w pakiecie
+    >>> exit()         # wyjście z trybu interaktywnego interpretera
 
-* Katalog domowy użytkownika w Windows nie nadaje się do przechowywania w nim
-  kodów programów lub repozytoriów, najlepiej utworzyć jakiś katalog na partycji
-  innej niż systemowa (oznaczana literą *C:*), np. :file:`D:\python` i w nim
-  tworzyć foldery dla poszczególnych scenariuszy.
-* Domyślnym terminalem jest program ``cmd``, czyli wiersz poleceń; jest on jednak
-  ograniczony i niewygodny, warto używać konsoli PowerShell lub jeszcze lepiej
-  konsoli instalowanych razem z Pythonem i klientem Git.
-* W systemie Windows znaki ``/`` (slash) w ścieżkach zmieniamy na ``\`` (backslash).
-* Zamieniamy również komendy systemu Linux na odpowiedniki wiersza poleceń Windows,
-  np. ``mkdir`` na ``md``.
-* Pamiętajmy, żeby skrypty zapisywać w plikach kodowanych jako UTF-8.
+Znaki ``...`` oznaczają, że wpisujemy instrukcję złożoną, np. warunkową lub pętlę, i dalszy kod wymaga wcięć.
 
+Skrypty Pythona
+===============
 
-Kod źródłowy
-=============
+Kod źródłowy Pythona zapisujemy w plikach tekstowych z rozszerzeniem ``.py``.
+Skrypty Pythona można uruchamiać w terminalu przy użyciu interpretera w katalogu, w którym zapisany jest skrypt:
 
-W materiałach znajdziesz przykłady kodu źródłowego, które pokazują,
-jak rozwija się program. Warto je wpisywać w wybranym edytorze samodzielnie,
-aby nauczyć się składni języka i lepiej poznać środowisko programistyczne.
-Podczas przepisywania można pominąć komentarze, czyli
-teksty zaczynające się od znaku ``#`` lub zamknięte pomiędzy potrójnymi
-cudzysłowami ``"""``.
+.. code-block:: bash
 
-W przypadku braku czasu kod można zaznaczać, kopiować i wklejać, pamiętając
-o zachowaniu wcięć.
+    python3 nazwa_skryptu.py  # system Linux
+    python nazwa_skryptu.py   # system Windows
+
+Ze względów praktycznych warto korzystać z programów ułatwiających pisanie i testowanie kodu
+(formatowanie kodu, obsługa błędów itd.) Zobacz `Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>`_.
+
+W materiałach znajdziesz przykłady kodu źródłowego :term:`kod źródłowy`, które pokazują,
+jak rozwija się program. Warto je wpisywać (ew. wklejać) w wybranym edytorze samodzielnie,
+aby nauczyć się formatowania i składni języka oraz lepiej poznać środowisko programistyczne.
+
+Podczas przepisywania można pominąć komentarze, czyli teksty zaczynające się od znaku ``#``
+lub zamknięte pomiędzy potrójnymi cudzysłowami ``"""``.
+
+Przepisując lub wklejając kod pamiętać trzeba o zachowywaniu wcięć, które służą w Pythonie do wyodrębniania bloków kodu.
 
 Większość fragmentów kodu jest numerowana, ale jeśli Twój kod różni się nieznacznie
 numeracją linii, nie musi to oznaczać błędu.
 
-Dla przykładu kod poniżej powinien zostać wklejony w linii ``51`` omawianego pliku:
+Dla przykładu poniższy kod powinien zostać wklejony w linii ``51`` skryptu:
 
 .. raw:: html
 
@@ -74,3 +73,35 @@ Dla przykładu kod poniżej powinien zostać wklejony w linii ``51`` omawianego 
                 self.ball,
             )
             self.fps_clock.tick(30)
+
+Katalog użytkownika
+===================
+
+Linux
+-----
+
+Jeżeli w scenariuszu mowa o **katalogu domowym** użytkownika, w systemie Linux
+należy przez to rozumieć podkatalog katalogu ``/home`` o nazwie zalogowanego użytkownika,
+np. ``/home/uczen``. W poleceniach wydawanych w terminalu (zob. :term:`terminal`)
+ścieżkę do tego katalogu symbolizuje znak ``~``.
+
+Zapis typu ``~/quiz2$`` oznacza więc, że dane polecenie należy wykonać w podkatalogu
+``quiz2`` katalogu domowego użytkownika.
+
+Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik, natomiast ``#`` – jako root, czyli administrator.
+
+Windows
+-------
+
+Jeżeli scenariusze będziemy wykonywać w MS Windows, musimy pamiętać o różnicach:
+
+* Katalog domowy użytkownika w Windows nie nadaje się do przechowywania w nim
+  kodów programów lub repozytoriów, najlepiej utworzyć jakiś katalog na partycji
+  innej niż systemowa (oznaczana literą *C:*), np. :file:`D:\python101` i w nim
+  tworzyć foldery dla poszczególnych scenariuszy.
+* Najstarszym terminalem jest program ``cmd``, czyli wiersz poleceń; jest on jednak
+  ograniczony i niewygodny, warto używać konsoli PowerShell lub Windows Terminal.
+* W systemie Windows znaki ``/`` (slash) w ścieżkach zmieniamy na ``\`` (backslash).
+* Zamieniamy również komendy systemu Linux na odpowiedniki wiersza poleceń Windows,
+  np. ``mkdir`` na ``md``.
+* Pamiętajmy, żeby skrypty zapisywać w plikach kodowanych jako UTF-8.

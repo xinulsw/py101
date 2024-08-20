@@ -53,8 +53,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Python 101'
-copyright = u'2014, Centrum Edukacji Obywatelskiej'
+project = u'Python 101 – materiały'
+copyright = u'2024, Robert Bednarz'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -207,7 +207,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     ('index', 'Python101.tex', u'Python 101 Documentation',
-     u'Centrum Edukacji Obywatelskiej', 'manual'),
+     u'Robert Bednarz', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -237,7 +237,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'python101', u'Python 101 Documentation',
-     [u'Centrum Edukacji Obywatelskiej'], 1)
+     [u'Robert Bednarz'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -251,7 +251,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'Python101', u'Python 101 Documentation',
-     u'Centrum Edukacji Obywatelskiej', 'Python101', 'One line description of project.',
+     u'Robert Bednarz', 'Python101', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -278,8 +278,6 @@ rst_prolog = u"""
 """
 
 rst_epilog = u"""
-.. include:: /copyright.rst
-
 .. raw:: html
 
     <style>
@@ -294,8 +292,8 @@ rst_epilog = u"""
 .. |time| date:: %H:%M
 .. |sphinx_version| replace:: {}
 
-:Utworzony: |date| o |time| w Sphinx |sphinx_version|
-:Autorzy: :doc:`Patrz plik "Autorzy" </authors>`
+:Utworzony: |date| o |time|
+:Autor: `Robert Bednarz <xinulsw@gmail.com>`_
 
 """.format(sphinx.__version__)
 

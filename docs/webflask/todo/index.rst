@@ -73,7 +73,7 @@ z nią z poziomu naszej aplikacji. W pliku :file:`todo.py` dodajemy brakujący k
 .. literalinclude:: todo_z2.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-42
+    :lines: 1-41
 
 Konfiguracja aplikacji przechowywana jest w obiekcie ``config``, który
 jest podklasą słownika i w naszym przypadku zawiera:

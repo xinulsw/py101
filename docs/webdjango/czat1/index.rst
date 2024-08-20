@@ -1,7 +1,7 @@
 .. _czat-app:
 
-Czat (cz. 1)
-###########################
+Czat I
+######
 
 .. highlight:: python
 
@@ -35,15 +35,14 @@ W katalogu domowym tworzymy wirtualne środowisko Pythona:
 
 .. code-block:: bash
 
-    ~$ virtualenv -p python3 pve3
-    ~$ source pve3/bin/activate
-    (pve3) ~$ pip install Django==1.11.2
+    ~$ virtualenv -p python3 pve
+    ~$ source pve/bin/activate
+    (pve) ~$ pip install Django==1.11.2
 
 .. warning::
 
-    Polecenie ``source pve3/bin/activate`` aktywuje wirtualne środowisko Pythona.
-    Zawsze wydajemy je przed rozpoczęciem pracy nad projektem. Innymi słowy w terminalu
-    ścieżka katalogu musi być poprzedzona prefiksem wirtualnego środowiska: ``(pve3)``.
+    Polecenie ``source pve/bin/activate`` aktywuje wirtualne środowisko Pythona.
+    Zawsze wydajemy je przed rozpoczęciem pracy nad projektem.
 
 Projekt i aplikacja
 ===================
