@@ -30,7 +30,7 @@ W systemie **Windows** może to być wiersz poleceń (CMD), `Windows PowerShell`
 
 .. code-block:: bash
 
-    python -m venv .venv            # utworzenie środowiska w katalogu .venv
+    py -m venv .venv                # utworzenie środowiska w katalogu .venv
     .venv\\Scripts\\activate.bat    # aktywacja w wierszu poleceń (cmd)
     .venv\\Scripts\\Activate.ps1    # aktywacja w Windows PowerSchell
     (.venv) python                  # uruchamianie interpretera w trybie interaktywnym
@@ -72,16 +72,24 @@ za pomocą którego instalujemy wymagane w danym scenariuszu pakiety, np.:
     lub skrótów :kbd:`CTRL+SHIFT+V`, :kbd:`CTRL+SHIFT+Insert`.
 
 .. note::
-    
-    Składnia przydatnych poleceń instalatora pakietów *pip*:
+
+    W systemie MS Windows wszystkie podane wyżej i niżej polecenia `pip` poprzedzamy wywołaniem launchera, np.:
 
     .. code-block:: bash
 
-        (.venv) pip install --upgrade pip     # aktualizacja narzędzia pip do najnowszej wersji
-        (.venv) pip install biblioteka==1.4   # instalacja biblioteki we wskazanej wersji
-        (.venv) pip -V                        # wersja narzędzia pip
-        (.venv) pip list                      # lista zainstalowanych pakietów
-        (.venv) pip install nazwa_pakietu     # instalacja pakietu
-        (.venv) pip install nazwa_pakietu -U  # aktualizacja pakietu
-        (.venv) pip uninstall nazwa_pakietu   # usunięcie pakietu
+        (.venv) py -m pip install matplotlib
+        (.venv) py -p pip install --upgrade pip
+    
+Przydatne polecenia
+-------------------
+
+.. code-block:: bash
+
+    (.venv) pip install --upgrade pip     # aktualizacja narzędzia pip do najnowszej wersji
+    (.venv) pip install biblioteka==1.4   # instalacja biblioteki we wskazanej wersji
+    (.venv) pip -V                        # wersja narzędzia pip
+    (.venv) pip list                      # lista zainstalowanych pakietów
+    (.venv) pip install nazwa_pakietu     # instalacja pakietu
+    (.venv) pip install nazwa_pakietu -U  # aktualizacja pakietu
+    (.venv) pip uninstall nazwa_pakietu   # usunięcie pakietu
 
