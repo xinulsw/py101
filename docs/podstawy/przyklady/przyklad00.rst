@@ -4,12 +4,14 @@ Mów mi Python!
 Zadanie
 *******
 
-Pobierz od użytkownika *imię*, *wiek* i powitaj go komunikatem:
+Napisz program, który pobiera od użytkownika *imię* oraz *wiek* i wypisuje komunikat:
 
 .. code::
 
     Witaj *imie*.
     Mów mi Python, mam *wiek_py* lat.
+
+Wartość zmiennej ``wiek_py``, czyli wiek Pythona, należy wyliczyć.
 
 .. raw:: html
 
@@ -17,10 +19,6 @@ Pobierz od użytkownika *imię*, *wiek* i powitaj go komunikatem:
 
 .. literalinclude:: przyklad_00.py
     :linenos:
-
-.. admonition:: Pojęcia
-    
-    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, wejście i wyjście, komentarz
 
 **Zmienne** służą do zapamiętywania używanych w programie wartości, np. napisów lub liczb.
 Tworzymy je poprzez **przypisanie wartości** określonego typu za pomocą operatora `=`.
@@ -49,3 +47,7 @@ Zmień program tak, aby wartość zmiennej `akt_rok` (aktualny rok) była podawa
 .. tip::
 
     Użyj funkcji ``input()`` oraz ``int()``.
+
+.. admonition:: Pojęcia
+    
+    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, wejście i wyjście, komentarz

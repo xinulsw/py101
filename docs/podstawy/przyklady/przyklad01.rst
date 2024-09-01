@@ -1,6 +1,10 @@
 Instrukcje warunkowe
 ####################
 
+Zadanie
+*******
+
+Napisz program, który pobiera od użytkownika *imię* oraz *wiek* i wypisuje komunikat:
 
 Instrukcja ``if wyrażenie`` (jeżeli) steruje warunkowym wykonaniem kodu. Jeżeli podane wyrażenie
 jest prawdziwe (przyjmuje wartość ``True``), wykonywana jest pierwsza instrukcja,
