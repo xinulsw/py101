@@ -1,10 +1,27 @@
-Instrukcje warunkowe
-####################
+Kto jest starszy?
+#################
 
 Zadanie
 *******
 
-Napisz program, który pobiera od użytkownika *imię* oraz *wiek* i wypisuje komunikat:
+Rozwiń program z przykładu "Mów mi Python!" tak, aby wypisywał komunikaty:
+
+.. code::
+
+    Witaj *imie*.
+    Mów mi Python, mam *wiek_py* lat.
+    Jestem starszy o *roznica_lat* lat
+    lub
+    Jestem młodszy lub mamy tyle samo lat.
+
+Wartość zmiennej ``roznica_lat`` należy wyliczyć.
+
+.. raw:: html
+
+    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. literalinclude:: przyklad_01.py
+    :linenos:
 
 Instrukcja ``if wyrażenie`` (jeżeli) steruje warunkowym wykonaniem kodu. Jeżeli podane wyrażenie
 jest prawdziwe (przyjmuje wartość ``True``), wykonywana jest pierwsza instrukcja,
@@ -13,6 +30,11 @@ wykonywana jest instrukcja druga. Części instrukcji warunkowej kończymy dwukr
 
 Charakterystyczną cechą Pythona jest używanie wcięć do zaznaczania bloków kodu.
 Standardem są 4 spacje.
+
+Składnia
+========
+
+
 
 Trzy liczby
 ===========
@@ -97,3 +119,7 @@ Działania matematyczne:
 
 * ``x**y`` – podnoszenie podstawy ``x`` do potęgi ``y``;
 * ``sqrt()`` – funkcja z modułu ``math``, oblicza pierwiastek kwadratowy.
+
+.. admonition:: Pojęcia
+    
+    :term:`instrukcja warunkowa`, wartość, :term:`typ danych`, wyrażenie, wejście i wyjście, komentarz
