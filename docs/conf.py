@@ -44,7 +44,7 @@ pngmath_latex = "/usr/bin/latex"
 pngmath_dvipng = "/usr/bin/dvipng"
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = {'.rst': 'restructuredtext'}
 
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
