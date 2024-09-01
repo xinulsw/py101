@@ -11,12 +11,10 @@ potrzebne do działania interpretera oraz menedżer instalacji pakietów **pip**
 
     Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
 
-Tworzenie środowiska wirtualnego
-================================
+Linux
+=====
 
-Środowisko tworzymy, a następnie aktywujemy i korzystamy z niego przy użyciu terminala.
-
-W systemie **Linux** może to być dowolny terminal:
+Środowisko tworzymy, a następnie aktywujemy i korzystamy z niego przy użyciu dowolnego terminala.
 
 .. code-block:: bash
 
@@ -26,17 +24,22 @@ W systemie **Linux** może to być dowolny terminal:
     (.venv) ~$ python3 skrypt.py    # uruchamianie skryptu w wirtualnym środowisku
     (.venv) ~$ deactivate           # deaktywacja środowiska
 
-W systemie **Windows** może to być wiersz poleceń (CMD), `Windows PowerShell` lub `Windows Terminal`:
+Windows
+=======
+
+W systemie **Windows** korzystamy z wiersza poleceń (CMD), `Windows PowerShell` lub `Windows Terminal`.
 
 .. code-block:: bash
 
     py -m venv .venv                # utworzenie środowiska w katalogu .venv
     .venv\\Scripts\\activate.bat    # aktywacja w wierszu poleceń (cmd)
     .venv\\Scripts\\Activate.ps1    # aktywacja w Windows PowerSchell
-    (.venv) python                  # uruchamianie interpretera w trybie interaktywnym
-    (.venv) python skrypt.py        # uruchamianie skryptu w wirtualnym środowisku
+    (.venv) py                      # uruchamianie interpretera w trybie interaktywnym
+    (.venv) py     skrypt.py        # uruchamianie skryptu w wirtualnym środowisku
     (.venv) .venv\\Scripts\\deactivate.bat  # deaktywacja w wierszu poleceń (cmd)
     (.venv) deactivate                      # deaktywacja w Windows PowerSchell
+
+.. figure:: img/venv_windows.jpg
 
 .. note::
 
@@ -52,8 +55,8 @@ W systemie **Windows** może to być wiersz poleceń (CMD), `Windows PowerShell`
     Niektóre edytory programistyczne, np. PyCharm, umożliwiają przygotowanie środowiska wirtualnego podczas tworzenia
     projektu.
 
-Zarządzanie pakietami (pip)
-===========================
+Zarządzanie pakietami
+=====================
 
 Do zarządzania pakietami w aktywnym środowisku używamy narzędzia `pip`,
 za pomocą którego instalujemy wymagane w danym scenariuszu pakiety, np.:
@@ -73,7 +76,7 @@ za pomocą którego instalujemy wymagane w danym scenariuszu pakiety, np.:
 
 .. note::
 
-    W systemie MS Windows wszystkie podane wyżej i niżej polecenia `pip` poprzedzamy wywołaniem launchera, np.:
+    W systemie MS Windows wszystkie podane polecenia `pip` poprzedzamy wywołaniem launchera, np.:
 
     .. code-block:: bash
 

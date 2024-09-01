@@ -1,6 +1,15 @@
 Instrukcje warunkowe
 ####################
 
+
+Instrukcja ``if wyrażenie`` (jeżeli) steruje warunkowym wykonaniem kodu. Jeżeli podane wyrażenie
+jest prawdziwe (przyjmuje wartość ``True``), wykonywana jest pierwsza instrukcja,
+w przeciwnym wypadku (``else``), kiedy wyrażenie jest fałszywe (wartość ``False``),
+wykonywana jest instrukcja druga. Części instrukcji warunkowej kończymy dwukropkiem.
+
+Charakterystyczną cechą Pythona jest używanie wcięć do zaznaczania bloków kodu.
+Standardem są 4 spacje.
+
 Trzy liczby
 ===========
 

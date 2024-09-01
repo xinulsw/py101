@@ -1,46 +1,51 @@
 Mów mi Python!
-###############
+##############
 
-**ZADANIE**: Pobierz od użytkownika *imię*, *wiek* i powitaj go komunikatem:
-"Mów mi Python, mam *x* lat.
-Witaj w moim świecie *imie*.
-Jesteś starszy(młodszy) ode mnie."
+Zadanie
+*******
 
-**POJĘCIA**: *zmienna, wartość, wyrażenie, wejście i wyjście danych, instrukcja warunkowa, komentarz*.
+Pobierz od użytkownika *imię*, *wiek* i powitaj go komunikatem:
+
+.. code::
+
+    Witaj *imie*.
+    Mów mi Python, mam *wiek_py* lat.
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: 00_hello.py
+.. literalinclude:: przyklad_00.py
     :linenos:
 
-Deklaracja zmiennej w Pythonie nie jest wymagana, wystarczy podanej nazwie przypisać jakąś wartość
-za pomocą operatora przypisania "=". Zmiennym często przypisujemy wartości za pomocą wyrażeń,
-czyli działań arytmetycznych lub logicznych.
+.. admonition:: Pojęcia
+    
+    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, wejście i wyjście, komentarz
 
-.. note::
+**Zmienne** służą do zapamiętywania używanych w programie wartości, np. napisów lub liczb.
+Tworzymy je poprzez **przypisanie wartości** określonego typu za pomocą operatora `=`.
+Przypisywane wartości mogą być wyrażeniami, np. działaniami arytmetycznymi lub logicznymi.
 
-    Niekiedy mówi się, że w Pythonie zmiennych nie ma, są natomiast wartości określonego typu.
+Do **pobierania danych** z klawiatury (domyślne wejście) i **wypisywania komunikatów** na ekranie (domyślne wyjście)
+służą wbudowane funkcje:
 
-Wejście i wyjście danych:
+* ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków).
+* ``print()`` – wypisuje podane argumenty oddzielone przecinkami.
+* ``int()`` – funkcja umożliwia zamianę napisu na liczbę całkowitą.
 
-* ``input()`` zwraca pobrane z klawiatury znaki jako napis, czyli typ **string**.
-* ``print()`` drukuje podane argumenty oddzielone przecinkami.
+Składnia
+========
 
-Napisy ujmujemy w cudzysłowy podwójne lub pojedyncze.
-
-Instrukcja ``if wyrażenie`` (jeżeli) steruje warunkowym wykonaniem kodu. Jeżeli podane wyrażenie
-jest prawdziwe (przyjmuje wartość ``True``), wykonywana jest pierwsza instrukcja,
-w przeciwnym wypadku (``else``), kiedy wyrażenie jest fałszywe (wartość ``False``),
-wykonywana jest instrukcja druga. Części instrukcji warunkowej kończymy dwukropkiem.
-
-Charakterystyczną cechą Pythona jest używanie wcięć do zaznaczania bloków kodu.
-Standardem są 4 spacje. Komentarze wprowadzamy po znaku ``#``.
-
-Funkcja ``int()`` umożliwia konwersję napisu na liczbę całkowitą, czyli typ **integer**.
+* Nazwy zmiennych nie powinny zawierać znaków narodowych,
+  w Pythonie preferuje się małe litery oraz łączenie członów nazwy znakiem podkreślenia `_`.
+* **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
+* Znak ``#`` oznacza 1-liniowy komentarz, który nie jest interpretowany.
 
 Zadania
-********
+=======
 
-Zmień program tak, aby zmienna *aktRok* (aktualny rok) była podawana przez użytkownika na początku programu.
+Zmień program tak, aby wartość zmiennej `akt_rok` (aktualny rok) była podawana przez użytkownika na początku programu.
+
+.. tip::
+
+    Użyj funkcji ``input()`` oraz ``int()``.

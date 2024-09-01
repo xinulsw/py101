@@ -2,7 +2,7 @@ Podstawowe pojęcia
 ##################
 
 Tryb interaktywny
-=================
+*****************
 
 Interpreter Pythona może i powinien być używany w trybie interaktywnym do nauki i testowania kodu.
 
@@ -28,30 +28,21 @@ Po uruchomieniu interpreter wyświetla znak zachęty ``>>>``. Przydatne poleceni
 Znaki ``...`` oznaczają, że wpisujemy instrukcję złożoną, np. warunkową lub pętlę, i dalszy kod wymaga wcięć.
 
 Skrypty Pythona
-===============
+***************
 
-Kod źródłowy Pythona zapisujemy w plikach tekstowych z rozszerzeniem ``.py``.
-Skrypty Pythona można uruchamiać w terminalu przy użyciu interpretera w katalogu, w którym zapisany jest skrypt:
+* Kod źródłowy Pythona zapisujemy w plikach tekstowych z rozszerzeniem ``.py``.
+* Skrypty Pythona można uruchamiać w terminalu przy użyciu interpretera w katalogu, w którym zapisany jest skrypt:
 
-.. code-block:: bash
+  .. code-block:: bash
 
-    python3 nazwa_skryptu.py  # system Linux
-    python nazwa_skryptu.py   # system Windows
+      python3 nazwa_skryptu.py  # system Linux
+      python nazwa_skryptu.py   # system Windows
 
-Ze względów praktycznych warto korzystać z programów ułatwiających pisanie i testowanie kodu
-(formatowanie kodu, obsługa błędów itd.) Zobacz `Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>`_.
-
-W materiałach znajdziesz przykłady kodu źródłowego :term:`kod źródłowy`, które pokazują,
-jak rozwija się program. Warto je wpisywać (ew. wklejać) w wybranym edytorze samodzielnie,
-aby nauczyć się formatowania i składni języka oraz lepiej poznać środowisko programistyczne.
-
-Podczas przepisywania można pominąć komentarze, czyli teksty zaczynające się od znaku ``#``
-lub zamknięte pomiędzy potrójnymi cudzysłowami ``"""``.
-
-Przepisując lub wklejając kod pamiętać trzeba o zachowywaniu wcięć, które służą w Pythonie do wyodrębniania bloków kodu.
-
-Większość fragmentów kodu jest numerowana, ale jeśli Twój kod różni się nieznacznie
-numeracją linii, nie musi to oznaczać błędu.
+* Ze względów praktycznych warto korzystać z programów ułatwiających pisanie i testowanie kodu (formatowanie kodu, obsługa błędów itd.) Zobacz `Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>`_.
+* Podczas przepisywania (kopiowanie) można pominąć komentarze, czyli teksty zaczynające się od znaku ``#``.
+* Przepisując lub wklejając kod pamiętać trzeba o zachowywaniu wcięć, które służą w Pythonie do wyodrębniania bloków kodu.
+* W niektórych materiałach znajdziesz fragmenty kodu źródłowego, które pokazują, jak rozwija się program.
+* Większość fragmentów kodu jest numerowana, ale jeśli Twój kod różni się nieznacznie numeracją linii, nie musi to oznaczać błędu.
 
 Dla przykładu poniższy kod powinien zostać wklejony w linii ``51`` skryptu:
 
@@ -74,24 +65,20 @@ Dla przykładu poniższy kod powinien zostać wklejony w linii ``51`` skryptu:
             )
             self.fps_clock.tick(30)
 
-Katalog użytkownika
-===================
+Katalog domowy
+**************
 
 Linux
------
+=====
 
-Jeżeli w scenariuszu mowa o **katalogu domowym** użytkownika, w systemie Linux
-należy przez to rozumieć podkatalog katalogu ``/home`` o nazwie zalogowanego użytkownika,
-np. ``/home/uczen``. W poleceniach wydawanych w terminalu (zob. :term:`terminal`)
-ścieżkę do tego katalogu symbolizuje znak ``~``.
-
-Zapis typu ``~/quiz2$`` oznacza więc, że dane polecenie należy wykonać w podkatalogu
-``quiz2`` katalogu domowego użytkownika.
-
-Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik, natomiast ``#`` – jako root, czyli administrator.
+* **Katalog domowy** jest podkatalogiem katalogu ``/home`` i ma nazwę zalogowanego użytkownika,
+  np. ``/home/uczen``. W poleceniach wydawanych w terminalu ścieżkę do tego katalogu symbolizuje znak ``~``.
+* Zapis typu ``~/quiz2$`` oznacza więc, że dane polecenie należy wykonać w podkatalogu
+  ``quiz2`` katalogu domowego użytkownika.
+* Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik, natomiast ``#`` – jako root, czyli administrator.
 
 Windows
--------
+=======
 
 Jeżeli scenariusze będziemy wykonywać w MS Windows, musimy pamiętać o różnicach:
 
@@ -105,3 +92,7 @@ Jeżeli scenariusze będziemy wykonywać w MS Windows, musimy pamiętać o róż
 * Zamieniamy również komendy systemu Linux na odpowiedniki wiersza poleceń Windows,
   np. ``mkdir`` na ``md``.
 * Pamiętajmy, żeby skrypty zapisywać w plikach kodowanych jako UTF-8.
+
+.. admonition:: Pojęcia
+    
+    :term:`interpreter`, :term:`terminal`, :term:`kod źródłowy`

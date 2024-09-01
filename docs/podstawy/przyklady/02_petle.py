@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# op = "t"
+# while op == "t":
+
 print("Alfabet w porządku naturalnym:")
 x = 0
 for i in range(65, 91):

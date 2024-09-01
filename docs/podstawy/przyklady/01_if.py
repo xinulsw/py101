@@ -1,8 +1,4 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-op = "t"
-while op == "t":
     a, b, c = input("Podaj trzy liczby oddzielone spacjami: ").split(" ")
 
     print("Wprowadzono liczby:", a, b, c)
