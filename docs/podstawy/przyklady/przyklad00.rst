@@ -4,15 +4,29 @@ Mów mi Python!
 Zadanie
 *******
 
-Napisz program, który pobiera od użytkownika *imię* oraz *wiek* i wypisuje komunikat:
+Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
+
+**Dane**:
+
+* ``akt_rok`` – liczba całkowita, aktualny rok,
+* ``py_rok`` – liczba całkowita, rok powstania języka Python,
+* ``imie`` – ciąg znaków pobierany z klawiatury, imię użytkownika,
+* ``rok_urodzenia`` – liczba całkowita pobierana z klawiatury, rok urodzenia użytkownika.
+
+**Wynik**:
+
+* komunikaty wypisane na ekranie:
 
 .. code::
 
-    Witaj *imie*.
-    Mów mi Python, mam *wiek_py* lat.
+    Witaj *imie*! Mów mi Python.
+    Mam *wiek_py* lat*, ty masz wiek_u*.
 
-Wartość zmiennej ``wiek_py``, czyli wiek Pythona, należy wyliczyć.
+.. tip::
 
+    Język Python powstał w 1989 roku.
+    Wiek użytkownika i wiek Pythona należy wyliczyć. Można użyć zmiennych pomocniczych, np. ``wiek_u`` i ``wiek_py``.
+    
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
@@ -29,15 +43,21 @@ służą wbudowane funkcje:
 
 * ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków).
 * ``print()`` – wypisuje podane argumenty oddzielone przecinkami.
-* ``int()`` – funkcja umożliwia zamianę napisu na liczbę całkowitą.
+
+Do przekształcania typów danych na inne korzystamy z funkcji:
+
+* ``int()`` – przekształca ciąg znaków na liczbę całkowitą,
+* ``str()`` – przekształca liczbę całkowitą (lub inny typ danych) na ciąg znaków.
+
+Ciągi znaków można łączyć ze sobą za pomocą operatora ``+``.
 
 Składnia
 ========
 
-* Nazwy zmiennych nie powinny zawierać znaków narodowych,
-  w Pythonie preferuje się małe litery oraz łączenie członów nazwy znakiem podkreślenia `_`.
+* **Nazwy zmiennych** nie powinny zawierać znaków narodowych.
+  W Pythonie preferuje się małe litery oraz łączenie członów nazwy znakiem podkreślenia ``_``.
 * **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
-* Znak ``#`` oznacza 1-liniowy komentarz, który nie jest interpretowany.
+* Znak ``#`` oznacza 1-liniowy komentarz, tj. objaśnienie kodu, które jest pomijane przez interpreter.
 
 Zadania
 =======
@@ -50,4 +70,4 @@ Zmień program tak, aby wartość zmiennej `akt_rok` (aktualny rok) była podawa
 
 .. admonition:: Pojęcia
     
-    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, wejście i wyjście, komentarz
+    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, :term:`wejście` i :term:`wyjście`, komentarz

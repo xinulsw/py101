@@ -1,51 +1,70 @@
-Instrukcje warunkowe
+Instrukcja warunkowa
 ####################
 
 Zadanie
 *******
 
-Napisz program, który pobiera od użytkownika *imię* oraz *wiek* i wypisuje komunikat:
+Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
-Instrukcja ``if wyrażenie`` (jeżeli) steruje warunkowym wykonaniem kodu. Jeżeli podane wyrażenie
-jest prawdziwe (przyjmuje wartość ``True``), wykonywana jest pierwsza instrukcja,
-w przeciwnym wypadku (``else``), kiedy wyrażenie jest fałszywe (wartość ``False``),
-wykonywana jest instrukcja druga. Części instrukcji warunkowej kończymy dwukropkiem.
+**Dane**:
 
-Charakterystyczną cechą Pythona jest używanie wcięć do zaznaczania bloków kodu.
-Standardem są 4 spacje.
+* ``imie`` – ciąg znaków pobierany z klawiatury, imię użytkownika
+* ``akt_rok`` – liczba całkowita, aktualny rok pobierany z klawiatury
+* ``py_rok`` – liczba całkowita, rok powstania języka Python
+* ``rok_urodzenia`` – liczba całkowita pobierana z klawiatury, rok urodzenia użytkownika
 
-Trzy liczby
-===========
+**Wynik**:
 
-**ZADANIE**: Pobierz od użytkownika trzy liczby, sprawdź, która jest najmniejsza i wydrukuj ją na ekranie.
+* komunikaty wypisane na ekranie:
 
-**POJĘCIA**: *pętla while, obiekt, typ danych, metoda, instrukcja warunkowa zagnieżdżona*.
+.. code::
+
+    Witaj *imie*! Mów mi Python.
+    Mam *wiek_py* lat, ty masz *wiek_u*.
+    Jestem starszy od ciebie!
+    lub:
+    Jestem młodszy od ciebie lub mamy tyle samo lat!
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: 01_if.py
+.. literalinclude:: przyklad_01.py
     :linenos:
 
-Pętla ``while warunek`` umożliwia powtarzanie bloku operacji, dopóki warunek
-jest prawdziwy. W tym wypadku dopóki zmienna *op* ma wartość "t".
-Zwróć uwagę na operator porównania: ``==``.
+Instrukcja warunkowa ``if wyrażenie:`` (jeżeli) steruje warunkowym wykonaniem kodu.
+Jeżeli podane wyrażenie logiczne jest prawdziwe (ma wartość ``True``), wykonywany jest następujący wcięty blok kodu.
+Słowo kluczowe ``else:`` (w przeciwnym razie) jest opcjonalne. Następujący po nim blok kodu wykonywany jest,
+jeżeli wyrażenie jest fałszywe (ma wartość ``False``).
 
-W Pythonie wszystko jest obiektem. Każdy obiekt przynależy do jakiegoś typu
-i ma jakąś wartość. Typ determinuje, jakie operacje można wykonać na wartości danego obiektu.
-Funkcja ``input()`` zwraca pobrane dane jako napis (typ *string*).
-Metoda ``split(separator)`` pozwala rozbić napis na składowe (w tym wypadku liczby).
+Składnia
+========
 
-Instrukcje warunkowe (``if``), jak i pętle, można zagnieżdżać stosując wcięcia.
-Instrukcje o takich samych wcięciach tworzą bloki kodu.
-W jednej złożonej instrukcji warunkowej można sprawdzać wiele warunków (``elif:``).
+* Części instrukcji warunkowej kończymy dwukropkiem, które zapowiadają bloki kodu.
+* Blok kodu może zawierać jedną lub wiele instrukcji.
+* Bloki kodu wyodrębniane są za pomocą wcięć.
+* Wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
 
 Zadania
--------
+=======
 
-Sprawdź, co się stanie, jeśli podasz liczby oddzielone przecinkiem lub podasz
-za mało liczb. Zmień program tak, aby poprawnie interpretował dane oddzielane przecinkami.
+Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
+
+.. code-block::
+
+    Jestem starszy od ciebie!
+    Jestem młodszy od ciebie!
+    Mamy tyle samo lat!
+
+.. tip::
+
+    Użyj kilku funkcji warunkowych.
+
+.. admonition:: Pojęcia
+
+    :term:`instrukcja warunkowa`, :term:`wyrażenie logiczne`, :term:`blok kodu`, :term:`formatowanie kodu`
+
+
 
 
 .. _trojkat:
@@ -83,9 +102,9 @@ na przypisaniu zmiennym z lewej strony kolejnych wartości z listy.
 
 .. note::
 
-	Pętle, które wykonują jakieś operacje na sekwencjach i zapisują je w listach
-	zastępuje się w Pythonie tzw. wyrażeniami listowymi. Zostaną one omówione
-	w kolejnych przykładach.
+    Pętle, które wykonują jakieś operacje na sekwencjach i zapisują je w listach
+    zastępuje się w Pythonie tzw. wyrażeniami listowymi. Zostaną one omówione
+    w kolejnych przykładach.
 
 Operatory logiczne:
 

@@ -1,5 +1,5 @@
 # inicjalizujemy zmienne
-akt_rok = 2024
+akt_rok = int(input('Podaj aktualny rok: '))
 py_rok = 1989
 
 # pobieramy dane

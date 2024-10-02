@@ -3,6 +3,10 @@ Słownik Pythona
 
 .. glossary::
 
+    blok kodu
+        ciąg kolejnych instrukcji wyodrębniany za pomocą wcięć, czyli należących do tego samego poziomu wcięcia;
+        dobrym przykładem są bloki kodu w instrukcjach warunkowych lub iteracyjnych
+
     filtrowanie danych
         selekcja danych na podstawie jakichś kryteriów
 
@@ -136,6 +140,14 @@ Słownik Pythona
         *boolean* – wartości logiczne `True` (prawda, 1) lub `False` (fałsz, 0), podtyp
         typu całkowitego.
 
+    wejście
+        Domyślnym wejściem dla programów uruchamianych w terminalu jest klawiatura. Wszystkie dane wprowadzane z
+        klawiatury traktowane są jako znaki.
+
+    wyjście
+        Domyślnym wyjściem dla programów uruchamianych w terminalu jest ekran, na którym wypisywane są komunikaty
+        i wyniki działania programu.
+
     wyjątki
         to komunikaty zgłaszane przez interpreter Pythona, pozwalające ustalić
         przyczyny błędnego działania kodu.
@@ -149,6 +161,9 @@ Słownik Pythona
         elementów dowolnych sekwencji, na których wykonywane są te same operacje
         i które opcjonalnie spełniają określone warunki. Składnia:
         ``[ wyrażenie for wyraz in sekwencja if warunek ]``
+
+    wyrażenie logiczne
+        wyrażenie, którego obliczona wartość to prawda (``True``) lub fałsz (``False``)
 
     zbiór
         nieuporządkowany, nieindeksowany zestaw elementów tego samego lub

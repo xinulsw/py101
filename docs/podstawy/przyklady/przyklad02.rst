@@ -1,51 +1,35 @@
-Wydrukuj alfabet
-##################
+Instrukcje warunkowe
+####################
 
-**ZADANIE**: Wydrukuj alfabet w porządku naturalnym, a następnie odwróconym w formacie:
-"mała => duża litera". W jednym wierszu trzeba wydrukować po pięć takich grup.
+Zadanie
+*******
 
-**POJĘCIA**: *iteracja, pętla, kod ASCII, lista, inkrementacja, operatory arytmetyczne, logiczne, przypisania i zawierania*.
+Napisz program, który Pobiera od użytkownika trzy liczby całkowite i wypisuje najmniejszą z nich, sprawdź, która jest najmniejsza i wydrukuj ją na ekranie.
+
+**POJĘCIA**: *pętla while, obiekt, typ danych, metoda, instrukcja warunkowa zagnieżdżona*.
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: 02_petle.py
+.. literalinclude:: 01_if.py
     :linenos:
 
-Pętla ``for`` wykorzystuje zmienną iteracyjną ``i``, która przybiera kolejne
-wartości zwracane przez funkcję ``range()``. Parametry tej funkcji określają
-wartość początkową i końcową, przy czym wartość końcowa nie jest zwracana.
-Kod ``range(122,96,-1)`` generuje wartości malejące od 122 do 97(!) z krokiem -1.
-Sprawdź w interpreterze:
+Pętla ``while warunek`` umożliwia powtarzanie bloku operacji, dopóki warunek
+jest prawdziwy. W tym wypadku dopóki zmienna *op* ma wartość "t".
+Zwróć uwagę na operator porównania: ``==``.
 
-.. code-block:: bash
+W Pythonie wszystko jest obiektem. Każdy obiekt przynależy do jakiegoś typu
+i ma jakąś wartość. Typ determinuje, jakie operacje można wykonać na wartości danego obiektu.
+Funkcja ``input()`` zwraca pobrane dane jako napis (typ *string*).
+Metoda ``split(separator)`` pozwala rozbić napis na składowe (w tym wypadku liczby).
 
-    >>> list(range(0, 100))
-    >>> list(range(122,96,-1))
-
-Operacje na znakach:
-
-
-* ``chr(kod_ascii)`` – zwraca znak odpowiadający podanemu kodowi `ASCII <https://pl.wikipedia.org/wiki/ASCII>`_;
-* ``lower()`` – zwraca napis zamieniony na małe litery;
-* ``upper()`` – zwraca napis zamieniony na duże litery;
-* ``+`` – operator łączenia (konkatenacji) naspisów.
-
-Operatory arytmetyczne i logiczne:
-
-* ``x += 1`` – dodanie do zmiennej *x* wartości po prawej stronie – *1*;
-* ``%`` – dzielenie modulo, zwraca resztę z dzielenia;
-* ``==`` – operator porównania, nie mylić z operatorem przypisania (``=``);
-* ``and`` – operator logicznej koniunkcji, obydwa warunki muszą być prawdziwe.
-
-Zob.: :term:`operatory` dostępne w Pythonie.
+Instrukcje warunkowe (``if``), jak i pętle, można zagnieżdżać stosując wcięcia.
+Instrukcje o takich samych wcięciach tworzą bloki kodu.
+W jednej złożonej instrukcji warunkowej można sprawdzać wiele warunków (``elif:``).
 
 Zadania
-*******
+-------
 
-- Uprość warunek w pierwszej pętli ``for`` drukującej alfabet w porządku
-  naturalnym tak, aby nie używać operatora modulo.
-- Wydrukuj co n-tą grupę liter alfabetu, przy czym wartość *n* podaje użytkownik.
-  Wskazówka: użyj opcjonalnego, trzeciego argumentu funkcji ``range()``.
-- Sprawdź działanie różnych operatorów Pythona w konsoli.
+Sprawdź, co się stanie, jeśli podasz liczby oddzielone przecinkiem lub podasz
+za mało liczb. Zmień program tak, aby poprawnie interpretował dane oddzielane przecinkami.
