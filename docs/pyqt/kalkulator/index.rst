@@ -1,4 +1,4 @@
-.. _kalkulator-qt5:
+.. _kalkulator-qt6:
 
 Kalkulator
 ###########################
@@ -6,10 +6,16 @@ Kalkulator
 .. highlight:: python
 
 Prosta 1-okienkowa aplikacja ilustrująca podstawy tworzenia interfejsu graficznego
-i obsługi działań użytkownika za pomocą Pythona 3, PyQt5 i biblioteki Qt5.
+i obsługi działań użytkownika za pomocą Pythona 3 i PyQt6.
 Przykład wprowadza również podstawy `programowania obiektowego <https://pl.wikipedia.org/wiki/Programowanie_obiektowe>`_ (ang. Object Oriented Programing).
 
 .. figure:: img//kalkulator05.png
+
+Bibliotekę Pyqt6 instalujemy w :ref:`środowisku wirtualnym Pythona <venv>` za pomocą polecenia:
+
+.. code-block:: bash
+
+    (.venv) pip install pyqt6
 
 .. contents::
     :depth: 1
@@ -29,15 +35,12 @@ za pomocą dowolnego edytora. Wstawiamy do niego poniższy kod:
 .. literalinclude:: kalkulator01.py
     :linenos:
 
-Import ``from __future__ import unicode_literals`` ułatwi nam obsługę napisów zawierających
-znaki narodowe, np. polskie "ogonki".
-
-Podstawą naszego programu będzie moduł ``PyQt5.QtWidgets``, z którego importujemy
-klasy ``QApplication`` i ``QWidget`` – podstawową klasę wszystkich elementów interfejsu graficznego.
+Podstawą naszego programu będzie moduł ``PyQt6.QtWidgets``, z którego importujemy
+klasy ``QApplication`` – obsługa aplikacji, i ``QWidget`` – podstawową klasę wszystkich elementów interfejsu graficznego.
 
 Wygląd okna naszej aplikacji definiować będziemy za pomocą klasy *Kalkulator*
 dziedziczącej (zob. :term:`dziedziczenie`) właściwości i metody z klasy *QWidget* (``class Kalkulator(QWidget)``).
-Instrukcja ``super(Kalkulator, self).__init__(parent)`` zwraca nam klasę rodzica i wywołuje jego :term:`konstruktor`.
+Instrukcja ``super(self).__init__(parent)`` zwraca klasę rodzica i wywołuje jego :term:`konstruktor`.
 Z kolei w konstruktorze naszej klasy wywołujemy metodę ``interfejs()``,
 w której tworzyć będziemy :term:`GUI` naszej aplikacji. Ustawiamy więc właściwości
 okna aplikacji i jego zachowanie:
@@ -48,27 +51,20 @@ okna aplikacji i jego zachowanie:
 
 .. note::
 
-    Słowa ``self`` używamy wtedy, kiedy odnosimy się do właściwości lub metod,
-    również odziedziczonych, jej instancji, czyli obiektów.
-    Słowo to zawsze występuje jako pierwszy parametr metod obiektu definiowanych
-    jako funkcje w definicji klasy. Zob. `What is self? <https://docs.python.org/3/faq/programming.html#what-is-self>`_
+    Słowo ``self`` to konwencjonalna nazwa używana wtedy, kiedy odnosimy się do właściwości lub metod obiektu
+    utworzonego jako instancja jakiejś klasy. Słowo to zawsze występuje jako pierwszy parametr metod definiowanych
+    jako funkcje klasy. Zob. `What is self? <https://docs.python.org/3/faq/programming.html#what-is-self>`_
 
-Aby uruchomić program, tworzymy obiekt reprezentujący aplikację: ``app = QApplication(sys.argv)``.
-Aplikacja może otrzymywać parametry z linii poleceń (``sys.argv``). Tworzymy również
-obiekt reprezentujący okno aplikacji, czyli instancję klasy *Kalkulator*: ``okno = Kalkulator()``.
+Instrukcja ``app = QApplication(sys.argv)`` – tworzy obiekt reprezentujący aplikację.
+Argument ``sys.argv`` wskazuje, że aplikacja może otrzymywać parametry z linii poleceń.
+W instrukcji ``okno = Kalkulator()`` tworzymy okno aplikacji, czyli obiekt będący instancją klasy ``Kalkulator``.
 
-Na koniec uruchamiamy **główną pętlę programu** (``app.exec_()``), która rozpoczyna obsługę
+Na koniec uruchamiamy **główną pętlę programu** (``app.exec()``), która rozpoczyna obsługę
 zdarzeń (zob. :term:`główna pętla programu`). Zdarzenia (np. kliknięcia) generowane są przez
-system lub użytkownika i przekazywane do widżetów aplikacji, które mogą je obsługiwać.
-
-.. note::
-
-    Jeżeli jakaś metoda, np. ``exec_()``, ma na końcu podkreślenie, to dlatego, że jej nazwa
-    pokrywa się z zarezerwowanym słowem kluczowym Pythona. Podkreślenie służy
-    ich rozróżnieniu.
+system lub użytkownika i przekazywane są do aplikacji, która może je obsługiwać.
 
 Poprawne zakończenie aplikacji zapewniające zwrócenie informacji o jej stanie do systemu
-zapewnia metoda ``sys.exit()``.
+zapewnia wywołanie ``sys.exit()``.
 
 Przetestujmy kod. Program uruchamiamy poleceniem wydanym w terminalu w katalogu ze skryptem:
 
@@ -94,8 +90,8 @@ Dodajemy wymagane importy i rozbudowujemy metodę ``interfejs()``:
 .. highlight:: python
 .. literalinclude:: kalkulator02.py
     :linenos:
-    :lineno-start: 5
-    :lines: 5-6
+    :lineno-start: 1
+    :lines: 1-3
 
 .. raw:: html
 
@@ -104,29 +100,35 @@ Dodajemy wymagane importy i rozbudowujemy metodę ``interfejs()``:
 .. highlight:: python
 .. literalinclude:: kalkulator02.py
     :linenos:
-    :lineno-start: 16
-    :lines: 16-35
+    :lineno-start: 12
+    :lines: 12-31
 
 Dodawanie etykiet zaczynamy od utworzenia obiektów na podstawie odpowiedniej klasy,
-w tym wypadku `QtLabel <http://doc.qt.io/qt-5/qlabel.html>`_. Do jej konstruktora
-przekazujemy tekst, który ma się wyświetlać na etykiecie, np.: ``etykieta1 = QLabel("Liczba 1:", self)``.
-Opcjonalny drugi argument wskazuje obiekt rodzica danej kontrolki.
+w tym wypadku `QtLabel <http://doc.qt.io/qt-6/qlabel.html>`_. Do jej konstruktora
+przekazujemy tekst, który ma się wyświetlać na etykiecie, np.: ``etykieta_1 = QLabel("Liczba 1:", self)``.
+Opcjonalny drugi argument, omówione wyżej słowo ``self``, wskazuje obiekt rodzica, tzn. widżet nadrzędny,
+danej kontrolki; w tym przypadku okno, w którym ją umieszczamy.
+
+.. note::
+
+    Tworzenie widżetów z argumentem ``self`` umożliwia dostęp do ich właściwości
+    w zasięgu całej klasy, czyli w innych metodach.
 
 Później tworzymy pomocniczy obiekt służący do rozmieszczenia etykiet w układzie
-tabelarycznym: ``ukladT = QGridLayout()``. Kolejne etykiety dodajemy do niego za
+tabelarycznym: ``uklad_t = QGridLayout()``. Kolejne etykiety dodajemy do niego za
 pomocą metody ``addWidget()``. Przyjmuje ona nazwę obiektu oraz numer wiersza i kolumny
-definiujących komórkę, w której znaleźć się ma obiekt. Zdefiniowany układ
-(ang. *layout*) musimy powiązać z oknem naszej aplikacji: ``self.setLayout(ukladT)``.
+definiujących komórkę, w której znaleźć się ma obiekt. Numeracja wierszy i kolumn zaczyna się od zera.
+Zdefiniowany układ (ang. *layout*) przypisujemy do okna aplikacji: ``self.setLayout(uklad_t)``.
 
 Na koniec używamy metody ``setGeometry()`` do określenia położenia okna aplikacji
 (początek układu jest w lewym górnym rogu ekranu) i jego rozmiaru (szerokość, wysokość).
-Dodajemy również ikonę pokazywaną w pasku tytułowym lub w miniaturze na pasku zadań:
+Dodajemy również ikonę pokazywaną w pasku tytułowym lub w miniaturze na pasku zadań:
 ``self.setWindowIcon(QIcon('kalkulator.png'))``.
 
 .. note::
 
     Plik graficzny z ikoną musimy :download:`pobrać <kalkulator.png>` i umieścić w katalogu
-    z aplikacją, czyli ze skryptem :file:`kalkulator.py`.
+    ze skryptem :file:`kalkulator.py`.
 
 Przetestuj wprowadzone zmiany.
 
@@ -145,10 +147,10 @@ Jak zwykle, zaczynamy od zaimportowania potrzebnych klas:
 .. highlight:: python
 .. literalinclude:: kalkulator03.py
     :linenos:
-    :lineno-start: 7
-    :lines: 7
+    :lineno-start: 4
+    :lines: 4
 
-Następnie przed instrukcją ``self.setLayout(ukladT)`` wstawiamy następujący kod:
+Następnie przed instrukcją ``self.setLayout(uklad_t)`` wstawiamy następujący kod:
 
 .. raw:: html
 
@@ -157,34 +159,24 @@ Następnie przed instrukcją ``self.setLayout(ukladT)`` wstawiamy następujący 
 .. highlight:: python
 .. literalinclude:: kalkulator03.py
     :linenos:
-    :lineno-start: 30
-    :lines: 30-57
+    :lineno-start: 27
+    :lines: 27-57
 
 Jak widać, dodawanie widżetów polega zazwyczaj na:
 
 * **utworzeniu obiektu** na podstawie klasy opisującej potrzebny element interfejsu,
-  np. `QLineEdit <http://doc.qt.io/qt-5/qlineedit.html>`_ – 1-liniowe pole edycyjne, lub
-  `QPushButton <http://doc.qt.io/qt-5/qpushbutton.html>`_ – przycisk;
-* **ustawieniu właściwości** obiektu, np. ``self.wynikEdt.readonly = True`` umożliwia tylko odczyt tekstu pola,
-  ``self.wynikEdt.setToolTip('Wpisz <b>liczby</b> i wybierz działanie...')`` – ustawia podpowiedź,
-  a ``koniecBtn.resize(koniecBtn.sizeHint())`` – sugerowany rozmiar obiektu;
-* **przypisaniu obiektu do układu** – w powyższym przypadku wszystkie przyciski działań dodano
-  do układu horyzontalnego `QHBoxLayout <http://doc.qt.io/qt-5/qhboxlayout.html>`_, ponieważ przycisków jest 4, a dopiero jego instancję do układu tabelarycznego: ``ukladT.addLayout(ukladH, 2, 0, 1, 3)``.
-  Liczby w tym przykładzie oznaczają odpowiednio wiersz i kolumnę, tj. komórkę, do której wstawiamy obiekt,
-  a następnie ilość wierszy i kolumn, które chcemy wykorzystać.
-
-.. note::
-
-    Jeżeli chcemy mieć dostęp do właściwości obiektów interfejsu w zasięgu całej klasy,
-    czyli w innych funkcjach, obiekty musimy definiować jako składowe klasy, a więc
-    poprzedzone słowem ``self``, np.: ``self.liczba1Edt = QLineEdit()``.
+  np. `QLineEdit <http://doc.qt.io/qt-6/qlineedit.html>`_ – 1-liniowe pole edycyjne, lub
+  `QPushButton <http://doc.qt.io/qt-6/qpushbutton.html>`_ – przycisk;
+* **ustawieniu właściwości** obiektu, np. ``self.wynik.readonly = True`` umożliwia tylko odczyt tekstu pola,
+  ``self.wynik.setToolTip('Wpisz <b>liczby</b> i wybierz działanie...')`` – ustawia podpowiedź,
+  a ``prz_koniec.resize(prz_koniec.sizeHint())`` – ustawia sugerowany rozmiar obiektu;
+* **przypisaniu obiektu do układu** – ponieważ mamy 4 przyciski działań, najpierw dodajemy je do układu horyzontalnego
+  `QHBoxLayout <http://doc.qt.io/qt-6/qhboxlayout.html>`_, a później układ horyzontalny do układu tabelarycznego:
+  ``uklad_t.addLayout(uklad_h, 2, 0, 1, 3)``. Argumenty liczbowe w tym przykładzie oznaczają odpowiednio wiersz i kolumnę,
+  tj. komórkę, do której wstawiamy obiekt, a następnie ilość wierszy i kolumn, które chcemy wykorzystać.
 
 
-W powyższym kodzie, np. ``dodajBtn = QPushButton("&Dodaj", self)``, widać również, że tworząc obiekty można
-określać ich rodzica (ang. *parent*), tzn. widżet nadrzędny, w tym wypadku ``self``, czyli okno główne
-(ang. *toplevel window*). Bywa to przydatne zwłaszcza przy bardziej złożonych interfejsach.
-
-Znak ``&`` przed jakąś literą w opisie przycisków tworzy z kolei skrót klawiaturowy dostępny po naciśnięciu :kbd:`ALT + litera`.
+Znak ``&`` przed jakąś literą w opisie przycisków tworzy skrót klawiaturowy dostępny po naciśnięciu :kbd:`ALT + litera`.
 
 Po uruchomieniu programu powinniśmy zobaczyć okno podobne do poniższego:
 
@@ -196,7 +188,7 @@ Zamykanie programu
 Mamy okienko z polami edycyjnymi i przyciskami, ale kontrolki te na nic nie reagują.
 Nauczymy się więc obsługiwać poszczególne zdarzenia. Zacznijmy od zamykania aplikacji.
 
-Na początku zaimportujmy klasę `QMessageBox <http://doc.qt.io/qt-5/qmessagebox.html>`_
+Na początku zaimportujmy klasę `QMessageBox <http://doc.qt.io/qt-6/qmessagebox.html>`_
 pozwalającą tworzyć komunikaty oraz przestrzeń nazw `Qt <http://doc.qt.io/qt-5/qt.html>`_
 zawierającą różne stałe:
 
