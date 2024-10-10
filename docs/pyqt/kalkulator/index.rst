@@ -75,7 +75,7 @@ Przetestujmy kod. Program uruchamiamy poleceniem wydanym w terminalu w katalogu 
 .. figure:: img//kalkulator01.png
 
 
-Widżety
+Etykiety
 **********
 
 Puste okno być może nie robi wrażenia, zobaczymy więc, jak tworzyć widżety (zob. :term:`widżet`).
@@ -103,7 +103,7 @@ Dodajemy wymagane importy i rozbudowujemy metodę ``interfejs()``:
     :lineno-start: 12
     :lines: 12-31
 
-Dodawanie etykiet zaczynamy od utworzenia obiektów na podstawie odpowiedniej klasy,
+Dodawanie widżetów zaczynamy od utworzenia obiektów na podstawie odpowiedniej klasy,
 w tym wypadku `QtLabel <http://doc.qt.io/qt-6/qlabel.html>`_. Do jej konstruktora
 przekazujemy tekst, który ma się wyświetlać na etykiecie, np.: ``etykieta_1 = QLabel("Liczba 1:", self)``.
 Opcjonalny drugi argument, omówione wyżej słowo ``self``, wskazuje obiekt rodzica, tzn. widżet nadrzędny,
@@ -114,11 +114,11 @@ danej kontrolki; w tym przypadku okno, w którym ją umieszczamy.
     Tworzenie widżetów z argumentem ``self`` umożliwia dostęp do ich właściwości
     w zasięgu całej klasy, czyli w innych metodach.
 
-Później tworzymy pomocniczy obiekt służący do rozmieszczenia etykiet w układzie
-tabelarycznym: ``uklad_t = QGridLayout()``. Kolejne etykiety dodajemy do niego za
-pomocą metody ``addWidget()``. Przyjmuje ona nazwę obiektu oraz numer wiersza i kolumny
+Do rozmieszczanie widżetów w oknie służą tzw. układy (ang. *layout*). Tworzymy więc
+układ tabelaryczny: ``uklad_t = QGridLayout()`` – i dodajemy do niego obiekty (etykiety) za
+pomocą metody ``addWidget()``. Jako argumenty podajemy nazwę obiektu oraz numer wiersza i kolumny
 definiujących komórkę, w której znaleźć się ma obiekt. Numeracja wierszy i kolumn zaczyna się od zera.
-Zdefiniowany układ (ang. *layout*) przypisujemy do okna aplikacji: ``self.setLayout(uklad_t)``.
+Zdefiniowany układ przypisujemy do okna nadrzędnego: ``self.setLayout(uklad_t)``.
 
 Na koniec używamy metody ``setGeometry()`` do określenia położenia okna aplikacji
 (początek układu jest w lewym górnym rogu ekranu) i jego rozmiaru (szerokość, wysokość).
@@ -134,11 +134,13 @@ Przetestuj wprowadzone zmiany.
 
 .. figure:: img//kalkulator02.png
 
-Interfejs
-**********
+Pola edycyjne i przyciski
+**************************
 
-Dodamy teraz pozostałe widżety tworzące graficzny interfejs naszej aplikacji.
-Jak zwykle, zaczynamy od zaimportowania potrzebnych klas:
+Dodamy teraz pozostałe widżety tworzące graficzny interfejs naszej aplikacji,
+czyli pola edycyjne (zob. `QLineEdit <http://doc.qt.io/qt-6/qlineedit.html>`_)
+i przyciski (zob. `QPushButton <http://doc.qt.io/qt-6/qpushbutton.html>`_).
+Jak zwykle zaczynamy od zaimportowania potrzebnych klas:
 
 .. raw:: html
 
@@ -165,16 +167,16 @@ Następnie przed instrukcją ``self.setLayout(uklad_t)`` wstawiamy następujący
 Jak widać, dodawanie widżetów polega zazwyczaj na:
 
 * **utworzeniu obiektu** na podstawie klasy opisującej potrzebny element interfejsu,
-  np. `QLineEdit <http://doc.qt.io/qt-6/qlineedit.html>`_ – 1-liniowe pole edycyjne, lub
-  `QPushButton <http://doc.qt.io/qt-6/qpushbutton.html>`_ – przycisk;
+  np. ``liczba_1 = QLineEdit(self)`` lub ``prz_dodaj = QPushButton("&Dodaj", self)``;
 * **ustawieniu właściwości** obiektu, np. ``self.wynik.readonly = True`` umożliwia tylko odczyt tekstu pola,
   ``self.wynik.setToolTip('Wpisz <b>liczby</b> i wybierz działanie...')`` – ustawia podpowiedź,
   a ``prz_koniec.resize(prz_koniec.sizeHint())`` – ustawia sugerowany rozmiar obiektu;
-* **przypisaniu obiektu do układu** – ponieważ mamy 4 przyciski działań, najpierw dodajemy je do układu horyzontalnego
-  `QHBoxLayout <http://doc.qt.io/qt-6/qhboxlayout.html>`_, a później układ horyzontalny do układu tabelarycznego:
-  ``uklad_t.addLayout(uklad_h, 2, 0, 1, 3)``. Argumenty liczbowe w tym przykładzie oznaczają odpowiednio wiersz i kolumnę,
-  tj. komórkę, do której wstawiamy obiekt, a następnie ilość wierszy i kolumn, które chcemy wykorzystać.
-
+* **przypisaniu obiektu do układu** – ponieważ mamy 4 przyciski działań, tworzymy układ horyzontalny
+  (zob. `QHBoxLayout <http://doc.qt.io/qt-6/qhboxlayout.html>`_): ``uklad_h = QHBoxLayout()``,
+  dodajemy do niego przyciski za pomocą metody ``addWidget()`` i dodajemy go do układu tabelarycznego:
+  ``uklad_t.addLayout(uklad_h, 2, 0, 1, 3)``.
+  Argumenty liczbowe w metodzie ``addLayout()`` oznaczają odpowiednio wiersz i kolumnę,
+  tj. komórkę, do której wstawiamy obiekt, oraz ilość wierszy i kolumn, które chcemy wykorzystać.
 
 Znak ``&`` przed jakąś literą w opisie przycisków tworzy skrót klawiaturowy dostępny po naciśnięciu :kbd:`ALT + litera`.
 
@@ -182,10 +184,10 @@ Po uruchomieniu programu powinniśmy zobaczyć okno podobne do poniższego:
 
 .. figure:: img//kalkulator03.png
 
-Zamykanie programu
-*******************
+Obsługa zdarzeń – zamykanie aplikacji
+*************************************
 
-Mamy okienko z polami edycyjnymi i przyciskami, ale kontrolki te na nic nie reagują.
+Mamy okno z polami edycyjnymi i przyciskami, ale kontrolki te na nic nie reagują.
 Nauczymy się więc obsługiwać poszczególne zdarzenia. Zacznijmy od zamykania aplikacji.
 
 Na początku zaimportujmy klasę `QMessageBox <http://doc.qt.io/qt-6/qmessagebox.html>`_
