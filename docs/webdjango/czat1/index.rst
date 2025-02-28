@@ -5,16 +5,16 @@ Czat I
 
 .. highlight:: python
 
-Zastosowanie Pythona i frameworka Django do stworzenia aplikacji internetowej
-Czat; prostego czata, w którym zarejestrowani użytkownicy będą mogli wymieniać się
+Zastosowanie frameworka Django do stworzenia aplikacji internetowej
+"Czat" – prostego czata, w którym zarejestrowani użytkownicy będą mogli wymieniać się
 krótkimi wiadomościami.
 
 .. attention::
 
     **Wymagane oprogramowanie**:
 
-      * Python v. 3.x
-      * Django v. 1.11.2
+      * Środowisko wirtualne Pythona v. 3.x
+      * Django v. 5.1.4
       * Interpreter bazy SQLite3
 
 .. contents::
@@ -27,7 +27,8 @@ krótkimi wiadomościami.
 Środowisko
 ==========
 
-W katalogu domowym tworzymy wirtualne środowisko Pythona:
+Tworzymy katalog :file:`projekty_django`, a w nim :ref:`środowisko wirtualne Pythona <venv>`.
+Aktywujemy środowisko wirtualne i instalujemy framework Django:
 
 .. raw:: html
 
@@ -35,19 +36,16 @@ W katalogu domowym tworzymy wirtualne środowisko Pythona:
 
 .. code-block:: bash
 
-    ~$ virtualenv -p python3 pve
-    ~$ source pve/bin/activate
-    (pve) ~$ pip install Django==1.11.2
+    (.venv) ~/projekty_django$ pip install Django==1.11.2
 
 .. warning::
 
-    Polecenie ``source pve/bin/activate`` aktywuje wirtualne środowisko Pythona.
-    Zawsze wydajemy je przed rozpoczęciem pracy nad projektem.
+    Pamiętaj o aktywacji środowiska wirtualnego przed rozpoczeciem pracy nad projektem.
 
-Projekt i aplikacja
+Projekt
 ===================
 
-Utworzymy nowy projekt Django. Wydajemy polecenia:
+Utworzymy nowy projekt Django. W katalogu :file:`projekty_django` wydajemy polecenia:
 
 .. raw:: html
 
@@ -55,42 +53,21 @@ Utworzymy nowy projekt Django. Wydajemy polecenia:
 
 .. code-block:: bash
 
-    (pve3) ~/$ django-admin.py startproject czat1
-    (pve3) ~$ cd czat1
-    (pve3) ~$ python manage.py migrate
+    (.venv) ~/projekty_django$ django-admin.py startproject czat1
+    (.venv) ~/projekty_django$ cd czat1
+    (.venv) ~/projekty_django/czat1$ python manage.py migrate
 
-- ``startproject`` – tworzy katalog :file:`czat1` z **podkatalogiem ustawień projektu**
-  o takiej samej nazwie (:file:`czat1`),
-- ``migrate`` – tworzy inicjalną bazę danych z tabelami wykorzystywanymi przez Django.
+Pierwsze polecenie utworzy katalog :file:`czat1`, który zawiera:
 
-**Struktura plików projektu** – w terminalu wydajemy jedno z poleceń:
+- podkatalog :file:`czat1` – zawiera m. in. ustawienia projektu,
+- skrypt :file:`manage.py` – służy do zarządzania projektem.
 
-.. code-block:: bash
+**Katlog projektu** :file:`projekty_django/czat1/czat1` zawiera m. in.:
 
-    (.pve) ~/czat1$ tree -L 2
-    [lub]
-    (.pve) ~/czat1$ ls -R
+    - :file:`settings.py` – plik z konfiguracją projektu;
+    - :file:`urls.py` – plik z listą obsługiwanych adresów URL.
 
-
-.. figure:: img/django_projekt.jpg
-
-
-Zewnętrzny katalog :file:`czat1` to tylko pojemnik na projekt, jego nazwę można zmieniać.
-Zawiera on:
-
-    - :file:`manage.py` – skrypt Pythona do zarządzania projektem;
-    - :file:`db.sqlite3` – bazę danych w domyślnym formacie SQLite3.
-
-
-**Katlog projektu** :file:`czat1/czat1` zawiera:
-
-    - :file:`settings.py` – konfiguracja projektu;
-    - :file:`urls.py` – lista obsługiwanych adresów URL;
-    - :file:`wsgi.py` – plik konfiguracyjny wykorzystywany przez serwery WWW.
-
-
-Plik :file:`__init__.py` obecny w danym katalogu wskazuje, że dany katalog jest modułem Pythona.
-
+Ostatnie polecenie ``manage.py migrate`` tworzy domyślną bazę danych SQLite3 zapisaną w pliku :file:`db.sqlite3`.
 
 Serwer deweloperski
 ===================
@@ -99,7 +76,7 @@ Serwer uruchamiamy poleceniem w terminalu:
 
 .. code-block:: bash
 
-    (pve3) ~/czat1$ python manage.py runserver
+    (.venv) ~/projekty_django/czat1$ python manage.py runserver
 
 Łączymy się z serwerem wpisując w przeglądarce adres: ``127.0.0.1:8000``.
 W terminalu możemy obserwować żądania obsługiwane przez serwer.
@@ -390,7 +367,7 @@ Tworzymy więc katalog:
 
 .. code-block:: bash
 
-    (pve3) ~/czat1$ mkdir -p czat/templates/czat
+    (.venv) ~/czat1$ mkdir -p czat/templates/czat
 
 Następnie tworzymy szablon :file:`templates/czat/index.html`, który zawiera:
 
