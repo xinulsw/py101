@@ -10,7 +10,7 @@ walidację danych itp. Django zawiera jednak gotowe mechanizmy, których
 użycie skraca i ulepsza pracę programisty eliminując potencjalne błędy.
 
 Będziemy rozwijać kod uzyskany po zrealizowaniu punktów **8.1.1 – 8.1.10** scenariusza
-:ref:`Czat (cz. 1) <czat-app>`. Pobierz więc :download:`archiwum <czat2_z01.zip>`
+:ref:`Czat (cz. 1) <czat-app>`. Pobierz :download:`archiwum <czat2_z01.zip>`
 i rozpakuj w katalogu domowym użytkownika. Następnie wydaj polecenia:
 
 .. raw:: html
