@@ -1,20 +1,14 @@
-# -*- coding: utf-8 -*-
-# czat/views.py
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # from django.http import HttpResponse
 from django.contrib.auth import login, logout
-from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import messages
-from czat.models import Wiadomosc
-
+from . models import Wiadomosc
 
 def index(request):
     """Strona główna aplikacji."""
     # return HttpResponse("Witaj w aplikacji Czat!")
     return render(request, 'czat/index.html')
-
 
 def loguj(request):
     """Logowanie użytkownika"""
@@ -29,13 +23,11 @@ def loguj(request):
     kontekst = {'form': AuthenticationForm()}
     return render(request, 'czat/loguj.html', kontekst)
 
-
 def wyloguj(request):
     """Wylogowanie użytkownika"""
     logout(request)
     messages.info(request, "Zostałeś wylogowany!")
     return redirect(reverse('czat:index'))
-
 
 def wiadomosci(request):
     """Dodawanie i wyświetlanie wiadomości"""

@@ -14,8 +14,8 @@ krótkimi wiadomościami.
     **Wymagane oprogramowanie**:
 
       * Środowisko wirtualne Pythona v. 3.x
-      * Django v. 5.1.4
-      * Interpreter bazy SQLite3
+      * Django v. 5.1.x
+      * Opcjonalnie: interpreter bazy SQLite3
 
 .. contents::
     :depth: 1
@@ -24,11 +24,36 @@ krótkimi wiadomościami.
 
 .. _czat1-env:
 
-Środowisko
-==========
+Środowisko pracy
+================
 
-Tworzymy katalog :file:`projekty_django`, a w nim :ref:`środowisko wirtualne Pythona <venv>`.
-Aktywujemy środowisko wirtualne i instalujemy framework Django:
+W tym materiale wykorzystamy środowisko **PyCharm Community**, ponieważ w dużym stopniu ułatwia
+pracę nad projektami w języku Python.
+
+.. note::
+
+    Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi,
+    np. terminala i ulubionego edytora kodu.
+
+Po uruchomieniu PyCharma w oknie "Welcome to PyCharm" klikamy przycisk **New Project**.
+
+.. figure:: img/pycharm_01.png
+
+W następnym oknie "New Project" w polu "Location" domyślną nazwę katalogu :file:`PythonProject` zamieniamy na
+:file:`projekty_django`.
+
+.. figure:: img/pycharm_02.png
+
+Następnie klikamy przycisk **Create**: PyCharm utworzy katalog :file:`projekty_django`,
+a w nim :ref:`środowisko wirtualne Pythona <venv>`.
+
+Po otwarciu głównego okna aplikacji klikamy ikonę "Terminal" umieszczoną na pionowym pasku narzędzi
+z lewej strony.
+
+.. figure:: img/pycharm_04.png
+
+W terminalu upewniamy się, że środowisko wirtualne zostało aktywowane, o czym świadczy
+przedrostek ``(.venv)``. Następnie instalujemy framework Django:
 
 .. raw:: html
 
@@ -36,16 +61,16 @@ Aktywujemy środowisko wirtualne i instalujemy framework Django:
 
 .. code-block:: bash
 
-    (.venv) ~/projekty_django$ pip install Django==1.11.2
+    (.venv) ~/projekty_django$ pip install django==5.1.6
 
 .. warning::
 
-    Pamiętaj o aktywacji środowiska wirtualnego przed rozpoczeciem pracy nad projektem.
+    Za każdym razem przed rozpoczęciem pracy nad projektem upewnij się, że środowisko wirtualne zostało aktywowane.
 
 Projekt
 ===================
 
-Utworzymy nowy projekt Django. W katalogu :file:`projekty_django` wydajemy polecenia:
+Tworzymy nowy projekt Django. W katalogu terminalu PyCharma wydajemy polecenia:
 
 .. raw:: html
 
@@ -57,59 +82,75 @@ Utworzymy nowy projekt Django. W katalogu :file:`projekty_django` wydajemy polec
     (.venv) ~/projekty_django$ cd czat1
     (.venv) ~/projekty_django/czat1$ python manage.py migrate
 
-Pierwsze polecenie utworzy katalog :file:`czat1`, który zawiera:
+.. figure:: img/pycharm_05.png
 
-- podkatalog :file:`czat1` – zawiera m. in. ustawienia projektu,
-- skrypt :file:`manage.py` – służy do zarządzania projektem.
+Pierwsze polecenie utworzy katalog :file:`czat1` z podkatalogiem projektu :file:`czat1`
+i skryptem :file:`manage.py`, który służy do zarządzania projektem.
 
-**Katlog projektu** :file:`projekty_django/czat1/czat1` zawiera m. in.:
+W katalogu **katalogu projektu** :file:`projekty_django/czat1/czat1` znajdziemy m. in.:
 
     - :file:`settings.py` – plik z konfiguracją projektu;
     - :file:`urls.py` – plik z listą obsługiwanych adresów URL.
 
-Ostatnie polecenie ``manage.py migrate`` tworzy domyślną bazę danych SQLite3 zapisaną w pliku :file:`db.sqlite3`.
+.. figure:: img/pycharm_06.png
+
+Polecenie ``manage.py migrate`` tworzy domyślną bazę danych SQLite3 zapisaną w pliku :file:`db.sqlite3`.
+
+.. note::
+
+    Operacje wykonywane na bazie danych nazywane są w Django **migracjami**. Każda migracja powiązana jest
+    z aplikacją tworzącą projekt. Domyślnie wykonywane są migracje dla aplikacji `admin, auth, contenttypes`
+    oraz `sessions` wchodzących w skład Django.
 
 Serwer deweloperski
 ===================
 
-Serwer uruchamiamy poleceniem w terminalu:
+Serwer można uruchomić poleceniem w terminalu:
 
 .. code-block:: bash
 
     (.venv) ~/projekty_django/czat1$ python manage.py runserver
 
+Można również skonfigurować uruchamianie serwera. Rozwijamy listę **Current File** z górnego paska narzędzi
+i wybieramy **Edit Configurations**. Następnie klikamy ikonę **plus**, a następnie **Python**.
+W polu "Name" wpisujemy nazwę, np. *Runserver*. W polu "script" klikamy ikonę katalogu i wskazujemy
+położenie skryptu :file:`manage.py`. Pod spodem jako parametr skryptu wpisujemy *runserver*.
+Jako katalog roboczy wskazujemy katalog :file:`projekty_django/czat1`.
+
+.. figure:: img/pycharm_07.png
+
+Od tej pory możemy uruchamiać serwer klikając przycisk **Run** na górnym pasku narzędzi
+lu skrótu :kbd:`SHIFT+F10`.
+
 Łączymy się z serwerem wpisując w przeglądarce adres: ``127.0.0.1:8000``.
+
+.. figure:: img/czat01_03_install_worked.png
+
 W terminalu możemy obserwować żądania obsługiwane przez serwer.
-Większość zmian w kodzie nie wymaga restartowania serwera.
-Serwer zatrzymujemy naciskając w terminalu skrót :kbd:`CTRL+C`.
+Serwer zatrzymujemy naciskając w terminalu skrót :kbd:`CTRL+C` lub za pomocą przycisku **Stop** (:kbd:`CTRL+F2`).
 
-.. figure:: img/django_it_worked.jpg
-
+.. figure:: img/pycharm_08.png
 
 Aplikacja
 =========
 
 W ramach jednego projektu (serwisu internetowego) może działać wiele aplikacji.
-Utworzymy teraz aplikację `czat` i zbadamy jej strukturę plików:
+Utworzymy teraz aplikację **czat** i zbadamy jej strukturę plików:
 
 .. code-block:: bash
 
-    (.pve) ~/czat1$ python manage.py startapp czat
-    (.pve) ~/czat1$ tree czat
-    lub:
-    (.pve) ~/czat1$ ls -R czat
+    (.venv) ~/projekty_django/czat1$ python manage.py startapp czat
+    (.venv) ~/projekty_django/czat1$ ls -R czat
 
-
-.. figure:: img/django_aplikacja.jpg
-
+.. figure:: img/django_aplikacja.png
 
 **Katalog aplikacji** :file:`czat1/czat` zawiera:
 
     - :file:`apps.py` – ustawienia aplikacji;
     - :file:`admin.py` – konfigurację panelu administracyjnego;
     - :file:`models.py` – plik definiujący modele danych przechowywanych w bazie;
-    - :file:`views.py` – plik zawierający funkcje lub klasy definiujące tzw. *widoki* (ang. *views*), obsługujące żądania klienta przychodzące do serwera.
-
+    - :file:`views.py` – plik zawierający funkcje lub klasy definiujące tzw. *widoki* (ang. *views*),
+      obsługujące żądania klienta przychodzące do serwera.
 
 Ustawienia projektu
 ===================
@@ -127,7 +168,7 @@ Edytujemy plik :file:`czat1/settings.py`:
     # czat1/settings.py
 
     INSTALLED_APPS = [
-        'czat.apps.CzatConfig', # rejestrujemy aplikacje czat
+        'czat.apps.CzatConfig',  # rejestrujemy aplikacje czat
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -142,8 +183,7 @@ Edytujemy plik :file:`czat1/settings.py`:
 
 Uruchom ponownie serwer deweloperski i sprawdź w przeglądarce, jak wygląda strona powitalna.
 
-.. figure:: img/django_zadzialalo.jpg
-
+.. figure:: img/django_spolszczone.png
 
 Model danych
 ============
@@ -155,7 +195,7 @@ materiale :ref:`MVC <mvc_wzorzec>`.
 Zaczynamy więc od zdefiniowania modelu (zob. :term:`model`), czyli klasy opisującej tabelę zawierającą
 wiadomości. Atrybuty klasy odpowiadają polom tabeli. Instancje tej klasy będą reprezentować wiadomości
 utworzone przez użytkowników, czyli rekordy tabeli. Każda wiadomość będzie zwierała treść,
-datę dodania oraz wskazanie autora (użytkownika).
+datę dodania oraz identyfikator autora (użytkownika).
 
 W pliku :file:`czat/models.py` wpisujemy:
 
@@ -164,27 +204,37 @@ W pliku :file:`czat/models.py` wpisujemy:
     <div class="code_no">Plik <i>models.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: models_z1.py
+.. literalinclude:: models.py
     :linenos:
 
 Opisując klasę ``Wiadomosc`` podajemy nazwy poszczególnych właściwości (pól)
 oraz typy przechowywanych w nich danych.
 
-.. note:: Typy pól:
+.. note::
 
-    * ``CharField`` – pole znakowe, przechowuje niezbyt długie napisy, np. nazwy;
-    * ``Date(Time)Field`` – pole daty (i czasu);
-    * ``ForeignKey`` – pole klucza obcego, czyli relacji; wymaga nazwy powiązanego modelu jako pierwszego argumentu.
+    Typy pól:
 
-  Właściwości pól:
+        * ``CharField`` – pole znakowe, przechowuje niezbyt długie napisy, np. nazwy;
+        * ``Date(Time)Field`` – pole daty (i czasu);
+        * ``ForeignKey`` – pole klucza obcego, czyli relacji;
+          wymaga nazwy powiązanego modelu jako pierwszego argumentu.
 
-    * ``verbose_name`` lub napis podany jako pierwszy argument – przyjazna nazwa pola;
-    * ``max_length`` – maksymalna długość pola znakowego;
-    * ``help_text`` – tekst podpowiedzi;
-    * ``auto_now_add=True`` – data (i czas) wstawione zostaną automatycznie.
+    Właściwości pól:
 
-**Utworzenie migracji** – po dodaniu lub zmianie modelu należy zaktualizować bazę danych,
-tworząc tzw. migrację, czyli zapis zmian:
+        * ``verbose_name`` lub napis podany jako pierwszy argument – przyjazna nazwa pola;
+        * ``max_length`` – maksymalna długość pola znakowego;
+        * ``auto_now_add=True`` – data (i czas) wstawione zostaną automatycznie.
+
+Podklasa ``Meta`` pozwala określić formy liczby pojedynczej i mnogiej oraz
+domyślny sposób sortowania wiadomości (``ordering = ['data_pub']``).
+Zadaniem metody ``__str__()`` jest "autoprezentacja" klasy,
+czyli w naszym wypadku wyświetlenie treści wiadomości, np. w panelu administracyjnym.
+
+Migracje
+========
+
+Po dodaniu lub zmianie modelu należy utworzyć migrację,
+czyli zapis zmian w bazie danych. Następnie należy te zmiany wprowadzić:
 
 .. raw:: html
 
@@ -192,22 +242,25 @@ tworząc tzw. migrację, czyli zapis zmian:
 
 .. code-block:: bash
 
-    (.pve) ~/czat1$ python manage.py makemigrations czat
-    (.pve) ~/czat1$ python manage.py migrate
+    (.venv) ~/projekty_django/czat1$ python manage.py makemigrations czat
+    (.venv) ~/projekty_django/czat1$ python manage.py migrate
 
-
-.. figure:: img/django_migrations.jpg
-
+.. figure:: img/django_migracje.png
 
 .. note::
 
+    Migracje zapisywane są w podkatalogu :file:`migrations`.
+
     Domyślnie Django korzysta z bazy SQLite zapisanej w pliku :file:`db.sqlite3`.
     Warto zobaczyć, jak wygląda. W terminalu wydajemy polecenie ``python manage.py dbshell``,
-    które otworzy bazę w interpreterze ``sqlite3``. Następnie:
-    * ``.tables`` - pokaże listę tabel;
-    * ``.schema czat_wiadomosc`` - pokaże instrukcje SQL-a użyte do utworzenia podanej tabeli
-    * ``.quit`` - wyjście z interpretera.
+    które otworzy bazę w powłoce ``sqlite3``, o ile będzie zainstalowana w systemie.
+    Następnie:
 
+        * ``.tables`` - pokaże listę tabel;
+        * ``.schema czat_wiadomosc`` - pokaże instrukcje SQL-a użyte do utworzenia podanej tabeli
+        * ``.quit`` - wyjście z interpretera.
+
+    .. figure:: img/sqlite3_tables.png
 
 Panel administracyjny
 =====================
@@ -222,14 +275,9 @@ W pliku :file:`czat/admin.py` umieszczamy kod:
 .. highlight:: python
 .. literalinclude:: admin.py
     :linenos:
-    :emphasize-lines: 5, 8
 
-Po zaimportowaniu modelu rejestrujemy go w panelu: ``admin.site.register(models.Wiadomosc)``.
-
-.. note::
-
-    Warto zapamiętać, że każdy model, funkcję, formularz czy widok, których chcemy użyć,
-    musimy najpierw zaimportować za pomocą klauzuli typu ``from <skąd> import <co>``.
+Model zdefiniowany w importowanym module :file:`models` rejestrujemy w panelu:
+`admin.site.register(models.Wiadomosc)``.
 
 **Konto administratora** tworzymy wydając w terminalu polecenie:
 
@@ -239,81 +287,49 @@ Po zaimportowaniu modelu rejestrujemy go w panelu: ``admin.site.register(models.
 
 .. code-block:: bash
 
-    (.pve) ~/czat1$ python manage.py createsuperuser
+    (.venv) ~/projekty_django/czat1$ python manage.py createsuperuser
 
 – na pytanie o nazwę, email i hasło administratora, podajemy: "admin", "", "zaq1@WSX".
+
+.. figure:: img/django_superuser.png
 
 Ćwiczenie
 ---------
 
-1) Uruchom/zrestartuj serwer, w przeglądarce wpisz adres *127.0.0.1:8000/admin/*
+1) Uruchom/zrestartuj serwer, w przeglądarce wpisz adres ``127.0.0.1:8000/admin/``
    i zaloguj się na konto administratora.
 
-.. figure:: img/django_admin.jpg
-
+.. figure:: img/django_admin_panel.png
 
 2) Dodaj użytkowników "adam" i "ewa" z hasłami "zaq1@WSX".
 
-   Na stronie, która wyświetla się po utworzeniu konta, zaznacz opcję "W zespole".
-   W sekcji "Dostępne uprawnienia" zaznacz prawa dodawania (*add*), zmieniania (*change*)
-   oraz usuwania (*del*) wiadomości (wpisy typu: "czat | wiadomosc | Can add wiadomosc")
-   i przypisz je użytkownikowi naciskając strzałkę w prawo.
+   Na stronie "Zmień użytkownik", która wyświetli się po kliknięciu przycisku **Zapisz i kontynuuj edycję**,
+   zaznacz opcję "W zespole".
 
-.. figure:: img/django_admin_uprawnienia.jpg
+.. figure:: img/django_admin_w_zespole.png
 
+   W sekcji "Uprawnienia użytkownika" zaznacz prawa dodawania (*add*), zmieniania (*change*),
+   usuwania (*del*) oraz wyświetlania (*view*) wiadomości
+   (wpisy typu: "Czat | wiadomosc | Can add wiadomosc") i przypisz je użytkownikowi
+   naciskając strzałkę w prawo.
+
+.. figure:: img/django_admin_uprawnienia.png
 
 3) Z konta "adam" dodaj dwie przykładowe wiadomości, a z konta "ewa" – jedną.
 
-.. figure:: img/django_admin_wiadomosci1.jpg
-
-
-Uzupełnienie modelu
-===================
-
-W formularzu dodawania wiadomości widać, że etykiety opisujące nasz model
-nie są spolszczone. Uzupełniamy więc plik :file:`czat/models.py`:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>models.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: models.py
-    :linenos:
-    :lineno-start: 8
-    :lines: 8-21
-    :emphasize-lines: 8-14
-
-Podklasa ``Meta`` pozwala zdefiniować formy liczby pojedynczej i mnogiej oraz
-domyślny sposób sortowania wiadomości (``ordering = ['data_pub']``).
-Zadaniem funkcji ``__str__()`` jest "autoprezentacja" klasy,
-czyli w naszym wypadku wyświetlenie treści wiadomości.
-
-Odśwież panel administracyjny (np. klawiszem :kbd:`F5`).
-
-.. figure:: img/django_admin_wiadomosci2.jpg
-
+.. figure:: img/django_admin_wiadomosci.png
 
 Strona główna
 ================
 
-Aby utworzyć stronę główną, zakodujemy pierwszy :term:`widok` (zob. :ref:`więcej »»» <mvc_widok>`),
-czyli funkcję o zwyczajowej nazwie ``index()``. W pliku :file:`views.py` umieszczamy:
+Definicja adresu URL
+--------------------
 
-.. raw:: html
+Pierwszym krokiem jest zdefiniowanie **adresu URL**, pod którym dostępna będzie strona.
+Adresy obsługiwane przez naszą aplikację definiujemy w pliku :file:`czat/urls.py`,
+który trzeba utworzyć.
 
-    <div class="code_no">Plik <i>views.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: views_z1.py
-    :linenos:
-    :emphasize-lines: 10
-
-Najprostszy widok zwraca do klienta (przeglądarki) jakiś tekst:
-``return HttpResponse("Witaj w aplikacji Czat!")``.
-
-**Adresy URL**, które ma obsługiwać nasza aplikacja, definiujemy w pliku :file:`czat/urls.py`.
-Tworzymy nowy plik i uzupełniamy go kodem:
+Tworzymy więc nowy plik :file:`czat/urls.py` i uzupełniamy go kodem:
 
 .. raw:: html
 
@@ -322,17 +338,16 @@ Tworzymy nowy plik i uzupełniamy go kodem:
 .. highlight:: python
 .. literalinclude:: urls_z1.py
     :linenos:
-    :emphasize-lines: 7-10
 
 - ``app_name = 'czat'`` – określamy przestrzeń nazw, w której dostępne będą mapowania
   między adresami url a widokami naszej aplikacji,
-- ``url()`` – funkcja, która wiąże zdefiniowany adres URL z widokiem,
-- ``r'^$'`` – wyrażenie regularne opisujące adres URL, symbol ``^`` to początek,
-  ``$`` – koniec łańcucha. Zapis ``r'^$'`` to adres główny serwera;
+- ``path()`` – funkcja, która wiąże zdefiniowany adres URL z widokiem,
+- ``''`` – pierwszym argumentem funkcji ``path()`` jest ciąg znaków definiujący adres,
+  w tym przypadku ciąg pusty ``''`` oznacza domyślny adres projektu;
 - ``views.index`` – przykładowy widok, czyli funkcja zdefiniowana w pliku :file:`czat/views.py`;
 - ``name='index'`` – nazwa, która pozwoli na generowanie adresów url dla linków w kodzie HTML.
 
-Konfigurację adresów URL naszej aplikacji musimy włączyć do konfiguracji adresów URL projektu.
+Konfigurację adresów URL aplikacji musimy jednorazowo włączyć do konfiguracji adresów URL projektu.
 W pliku :file:`czat1/urls.py` dopisujemy:
 
 .. raw:: html
@@ -342,24 +357,40 @@ W pliku :file:`czat1/urls.py` dopisujemy:
 .. highlight:: python
 .. literalinclude:: urls_p1.py
     :linenos:
-    :emphasize-lines: 1, 6
+    :emphasize-lines: 2, 5
     :lineno-start: 16
     :lines: 16-
 
-- ``include()`` – funkcja pozwala na import adresów URL wskazanej aplikacji,
-- ``'czat.urls'`` – plik konfiguracyjny aplikacji.
+- ``include()`` – funkcja pozwala na import (dołączenie) adresów URL podanej aplikacji,
+- ``'czat.urls'`` – plik konfiguracyjny adresów URL aplikacji.
 
-Przetestuj stronę główną wywołując adres ``127.0.0.1:8000``.
+Dodanie widoku
+--------------
 
-.. figure:: img/django_index1.jpg
+Drugim krokiem podczas dodawania strony jest dodanie widoku (zob. :term:`widok`, :ref:`więcej »»» <mvc_widok>`),
+czyli w tym przypadku funkcji ``index()`` w pliku :file:`views.py`:
 
+.. raw:: html
+
+    <div class="code_no">Plik <i>views.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: views_z1.py
+    :linenos:
+
+Najprostszy widok zwraca do klienta (przeglądarki) jakiś tekst:
+``return HttpResponse("Witaj w aplikacji Czat!")``.
+
+Uruchom (w razie potrzeby) serwer deweloperski i sprawdź w przeglądarce, jak wygląda strona powitalna.
+
+.. figure:: img/django_strona_glowna_1.png
 
 Widoki i szablony
 =================
 
 Typową odpowiedzią na wywołanie jakiegoś adresu URL są strony zapisane w języku HTML.
 **Szablony** takich stron umieszczamy w podkatalogu ``aplikacja/templates/aplikacja``.
-Tworzymy więc katalog:
+Tworzymy więc katalogi ``templates/czat``, a następnie plik ``index,html`` :
 
 .. raw:: html
 
@@ -367,9 +398,16 @@ Tworzymy więc katalog:
 
 .. code-block:: bash
 
-    (.venv) ~/czat1$ mkdir -p czat/templates/czat
+    (.venv) ~/projekty_django/czat1$ mkdir -p czat/templates/czat
+    (.venv) ~/projekty_django/czat1$ cd czat/templates/czat
+    (.venv) ~/projekty_django/czat1$ touch index.html
 
-Następnie tworzymy szablon :file:`templates/czat/index.html`, który zawiera:
+.. tip::
+
+    W PyCharmie możemy utworzyć wymagane katalogi i plik inaczej: klikamy prawym klawiszem katalog aplikacji
+    ``czat``, wybieramy **New / File** i wpisujemy ``templates/czat/index.html``.
+
+Do szablonu :file:`templates/czat/index.html` dodajemy kod:
 
 .. raw:: html
 
@@ -379,7 +417,7 @@ Następnie tworzymy szablon :file:`templates/czat/index.html`, który zawiera:
 .. literalinclude:: index_z2.html
     :linenos:
 
-W pliku :file:`views.py` zmieniamy instrukcję odpowiedzi:
+W pliku :file:`views.py` zmieniamy funkcję ``index()``:
 
 .. raw:: html
 
@@ -388,24 +426,34 @@ W pliku :file:`views.py` zmieniamy instrukcję odpowiedzi:
 .. highlight:: python
 .. literalinclude:: views_z2.py
     :linenos:
-    :emphasize-lines: 2, 7-8
+    :emphasize-lines: 7
     :lineno-start: 4
     :lines: 4-
 
 Funkcja ``render()`` jako pierwszy parametr pobiera obiekt typu ``HttpRequest`` zawierający informacje
 o żądaniu, jako drugi nazwę szablonu z katalogiem nadrzędnym.
 
-Po uruchomieniu serwera i wpisaniu adresu *127.0.0.1:8000* zobaczymy tekst,
-który umieściliśmy w szablonie:
+Uruchom serwer deweloperski i sprawdź w przeglądarce, jak wygląda strona powitalna
+– powinna zawierać tekst wpisany w szablonie.
 
-.. figure:: img/django_index2.jpg
-
+.. figure:: img/django_strona_glowna_1.png
 
 (Wy)logowanie
 =============
 
 Udostępnimy użytkownikom możliwość logowania i wylogowywania się,
-aby mogli dodawać i przeglądać wiadomości.
+aby mogli dodawać i przeglądać wiadomości. Zaczniemy od zdefiniowania adresów URL obsługujących (wy)logowanie.
+W pliku :file:`czat/urls.py` dopisujemy reguły:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: urls.py
+    :linenos:
+    :lineno-start: 10
+    :lines: 10-11
 
 Na początku w pliku :file:`views.py`, dopisujemy importy wymaganych obiektów,
 później dodajemy widoki ``loguj()`` i ``wyloguj()``:
@@ -488,18 +536,6 @@ uzupełnieniu szablonu :file:`index.html`. Po znaczniku ``<h1>`` wstawiamy poni�
 - ``{% if messages %}`` – sprawdzamy, czy mamy jakieś komunikaty,
 - ``{% for komunikat in messages %}`` – w pętli pobieramy kolejne komunikaty...
 - ``{{ komunikat|capfirst }}`` – i wyświetlamy z dużej litery za pomocą filtra.
-
-**Mapowanie adresów URL na widoki** – w pliku :file:`czat/urls.py` dopisujemy reguły:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: urls.py
-    :linenos:
-    :lineno-start: 10
-    :lines: 10-11
 
 Działanie dodanych funkcji testujemy pod adresami: ``127.0.0.1:8000/loguj`` i ``127.0.0.1:8000/wyloguj``.
 Używamy nazw i haseł utworzonych wcześniej użytkowników.
