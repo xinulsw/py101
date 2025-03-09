@@ -3,11 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.urls import reverse
 from django.contrib import messages
-from . models import Wiadomosc
+from docs.webdjango.czat1.source.models import Wiadomosc
 
 def index(request):
     """Strona główna aplikacji."""
-    # return HttpResponse("Witaj w aplikacji Czat!")
+    # return HttpResponse('Witaj w aplikacji Czat!')
     return render(request, 'czat/index.html')
 
 def loguj(request):
@@ -17,7 +17,7 @@ def loguj(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            messages.success(request, "Zostałeś zalogowany!")
+            messages.success(request, 'Zostałeś zalogowany!')
             return redirect(reverse('czat:index'))
 
     kontekst = {'form': AuthenticationForm()}
@@ -26,7 +26,7 @@ def loguj(request):
 def wyloguj(request):
     """Wylogowanie użytkownika"""
     logout(request)
-    messages.info(request, "Zostałeś wylogowany!")
+    messages.info(request, 'Zostałeś wylogowany!')
     return redirect(reverse('czat:index'))
 
 def wiadomosci(request):
