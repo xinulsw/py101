@@ -10,14 +10,7 @@ Sugerujemy używanie konsoli Pythona do testowania poznawanych funkcji i fragmen
 .. toctree::
     :titlesonly:
 
-    przyklady/przyklad00
-    przyklady/przyklad01
-    przyklady/przyklad02
-    przyklady/przyklad03
-    przyklady/przyklad04
-    przyklady/przyklad05
-    przyklady/przyklad06
-    przyklady/przyklad07
+    przyklady/index
     mlotek/index
     dlotek/index
     elotek/index

@@ -30,22 +30,25 @@ Słownik Pythona
     instrukcja warunkowa
         podstawowa konstrukcja w programowaniu, wykorzystuje wyrażenie logiczne
         przyjmujące wartość ``True`` (prawda) lub ``False`` (fałsz) do wyboru
-        odpowiedniego działania. Umożliwia rozgałezianie kodu.
+        odpowiedniego działania. Umożliwia rozgałęzianie kodu.
         W najprostszej postaci sprawdza, czy warunek jest prawdziwy i wykonuje działanie:
 
 .. code-block:: python
 
     if wiek < 18:
-        print "Treść zabroniona"
+        print("Treść zabroniona")
+
+.. glossary::
 
         Klauzula ``else`` ("w przeciwnym razie") pozwala określić działanie, gdy warunek jest fałszywy:
+
 
 .. code-block:: python
 
     if wiek < 18:
-        print "Treść zabroniona"
+        print("Treść zabroniona")
     else:
-        print "Zapraszamy"
+        print("Zapraszamy")
 
 .. glossary::
 
