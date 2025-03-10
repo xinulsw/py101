@@ -219,7 +219,7 @@ czyli w naszym wypadku wyświetlenie treści wiadomości, np. w panelu administr
 Migracje
 ========
 
-Operacje wykonywane na bazie danych nazywane są w Django **migracjami**. Każda migracja powiązana jest z aplikacją wchodzącą w skład projektu. Domyślnie wykonywane są migracje dla aplikacji `admin, auth, contenttypes` oraz `sessions` dostarczanych przez Django.
+Operacje wykonywane na bazie danych nazywane są w Django **migracjami**. Każda :term:`migracja` powiązana jest z aplikacją wchodzącą w skład projektu. Domyślnie wykonywane są migracje dla aplikacji `admin, auth, contenttypes` oraz `sessions` dostarczanych przez Django.
 
 Po dodaniu lub zmianie modelu należy utworzyć migrację, aby w bazie danych zostały utworzone lub zmodyfikowane tabele, w których zapisywane są przetwarzane w aplikacji dane. Następnie migrację należy wykonać:
 
