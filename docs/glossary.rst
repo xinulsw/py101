@@ -97,7 +97,8 @@ Słownik
         zwanych skryptami, które wykonywane są przez interpreter Pythona
 
     kod odpowiedzi HTTP
-    	numeryczne oznaczenie stanu realizacji zapytania klienta, np. `200 (OK)` lub `404 (Not Found)`. `Więcej o kodach HTTP »»» <https://pl.wikipedia.org/wiki/Kod_odpowiedzi_HTTP>`_
+        numeryczne oznaczenie stanu realizacji zapytania klienta, np. `200 (OK)` lub `404 (Not Found)`.
+        `Więcej o kodach HTTP »»» <https://pl.wikipedia.org/wiki/Kod_odpowiedzi_HTTP>`_
 
     konstruktor
         metoda wywoływana podczas tworzenia instancji (obiektu) klasy, zazwyczaj
@@ -105,7 +106,7 @@ Słownik
         (właściwości); w Pythonie nazywa się ``__init()__``.
 
     kontroler
-        logika aplikacji, we Flasku lub Django mechanizm obsługujący zadania HTTP
+        logika aplikacji, we Flasku lub Django mechanizm obsługujący żądania HTTP
         powiązane z określonymi adresami URL za pomocą widoków (funkcji lub klas).
 
     Linux
@@ -122,6 +123,11 @@ Słownik
         Tworzymy je używając w ciele klasy dekoratora ``@staticmethod``.
         Do metody takiej trzeba odwoływać się podając nazwę klasy, np. Klasa.metoda().
         Metoda statyczna nie otrzymuje parametru ``self``.
+
+    migracja
+        we frameworku Django jest to opis zmian w bazie danych przygotowany na podstawie modeli (klas)
+        z pliku :file:`models.py` definiujących obiekty przetwarzane w aplikacji, np. wiadomości.
+        Po każdej zmianie modelu należy migrację utworzyć, a następnie ją wykonać.
 
     model
         schemat opisujący strukturę danych w bazie, np. klasa definiująca tabele i relacje między nimi.
@@ -200,6 +206,12 @@ Słownik
         lub :kbd:`Ctrl+Alt+T`. Jeśli skróty nie działają, szukamy w menu start.
         Skrót :kbd:`Ctrl+Shift+T` pozwala otworzyć kolejną kartę terminala,
         w każdej karcie możemy robić coś innego.
+
+    typy danych
+        rodzaj danych przetwarzanych przez programy zapisane w danym języku programowania.
+        W Pythonie trzy podstawowe typy danych to: łańcuchy znaków (*str*, skrót od ang. *string*),
+        liczby całkowite (*int*, skrót od ang. *integer*), liczby zmiennoprzecinkowe
+        (*float*, skrót od ang. *floating point*), oraz wartość logiczna (*bool*, skrót od ang. *boolean*).
 
     SQL
         strukturalny język zapytań używany do tworzenia i zarządzania bazą danych.
