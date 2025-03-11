@@ -11,10 +11,24 @@ przesyła je na serwer i otrzymuje informację o wynikach.
     :depth: 1
     :local:
 
+Środowisko pracy
+================
+
+W materiale wykorzystamy środowisko **PyCharm Community**, ponieważ w dużym stopniu ułatwia
+pracę nad projektami w języku Python.
+
+.. note::
+
+    Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi,
+    np. terminala i ulubionego edytora kodu.
+
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask`` :ref:`wirtualne środowisko Pythona <venv>`
+i zainstaluj pakiet *Flask*.
+
 Projekt i aplikacja
 ===================
 
-W katalogu użytkownika tworzymy nowy katalog aplikacji o nazwie :file:`quiz`:
+W katalogu :file:`projekty_flask`` tworzymy nowy katalog aplikacji o nazwie :file:`quiz`:
 
 .. raw:: html
 
@@ -23,7 +37,8 @@ W katalogu użytkownika tworzymy nowy katalog aplikacji o nazwie :file:`quiz`:
 .. highlight:: bash
 .. code-block:: bash
 
-    ~$ mkdir quiz; cd quiz;
+    (.venv) ~/projekty_flask$ mkdir quiz
+    (.venv) ~/projekty_flask$ cd quiz
 
 Utworzymy szkielet aplikacji Flask, co pozwoli na uruchomienie testowego serwera www,
 umożliwiającego wygodne rozwijanie kodu. W nowym pliku o nazwie :file:`quiz.py`

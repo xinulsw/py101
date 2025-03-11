@@ -27,7 +27,7 @@ krótkimi wiadomościami.
 Środowisko pracy
 ================
 
-W tym materiale wykorzystamy środowisko **PyCharm Community**, ponieważ w dużym stopniu ułatwia
+W materiale wykorzystamy środowisko **PyCharm Community**, ponieważ w dużym stopniu ułatwia
 pracę nad projektami w języku Python.
 
 .. note::
@@ -53,7 +53,7 @@ i zainstaluj pakiet *Django*.
 Projekt
 ===================
 
-Tworzymy nowy projekt Django. W terminalu wydajemy polecenia:
+Tworzymy nowy projekt Django. W terminalu w katalogu :file:`projekty_django` wydajemy polecenia:
 
 .. raw:: html
 
