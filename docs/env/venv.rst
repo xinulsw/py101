@@ -7,9 +7,8 @@ Wirtualne środowisko Pythona (ang. *Python virtual environment*) pozwala instal
 w wybranych wersjach bez uprawnień administratora. W praktyce to katalog zawierający niezbędne pliki
 potrzebne do działania interpretera oraz menedżer instalacji pakietów **pip**.
 
-.. note::
-
-    Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
+Wirtualne środowisko Pythona można utworzyć za pomocą poleceń (ręcznie) lub wybranego programu
+do edycji kodu, np. PyCharm lub VSCodium. Poniżej przedstawimy obydwa sposoby.
 
 Linux
 =====
@@ -23,6 +22,10 @@ Linux
     (.venv) ~$ python3              # uruchamianie interpretera w trybie interaktywnym
     (.venv) ~$ python3 skrypt.py    # uruchamianie skryptu w wirtualnym środowisku
     (.venv) ~$ deactivate           # deaktywacja środowiska
+
+.. note::
+
+    Po utworzeniu środowiska przed każdym użyciem należy go aktywować.
 
 Windows
 =======
@@ -51,10 +54,34 @@ lub `Windows PowerShell` lub `Windows Terminal`.
     
         Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
-.. tip::
+PyCharm
+========
 
-    Niektóre edytory programistyczne, np. PyCharm, umożliwiają przygotowanie środowiska wirtualnego podczas tworzenia
-    projektu.
+Po uruchomieniu PyCharma w oknie "Welcome to PyCharm" klikamy przycisk **New Project**.
+
+.. figure:: img/pycharm_01.png
+
+W następnym oknie "New Project" w polu "Location" domyślną lokalizację i nazwę katalogu :file:`PythonProject`
+możemy zastąpić innym katalogiem wpisując jego nazwę lub wskazując istniejący katalog na dysku.
+Poniżej wpisano przykładową nazwę :file:`projekty_django`:
+
+.. figure:: img/pycharm_02.png
+
+Następnie klikamy przycisk **Create**. Jeżeli wpisany katalog nie istniał na dysku, PyCharm utworzy go,
+a w nim środowisko wirtualne Pythona w katalogu :file:`.venv`.
+W przypadku wskazania istniejącego na dysku katalogu, dodatkowo zostanie wyświetlone okno z pytaniem:
+
+.. figure:: img/pycharm_03.png
+
+Na pytanie odpowiadamy twierdząco, czyli klikamy przycisk "Create from Existing Sources".
+
+Po otwarciu głównego okna aplikacji klikamy ikonę "Terminal" umieszczoną na pionowym pasku narzędzi
+z lewej strony (skrót :kbd:`ALT+F12`).
+
+.. figure:: img/pycharm_04.png
+
+W terminalu upewniamy się, że środowisko wirtualne zostało aktywowane, o czym świadczy przedrostek ``(.venv)``.
+W aktywnym środowisku możemy instalować wymagane pakiety.
 
 Zarządzanie pakietami
 =====================

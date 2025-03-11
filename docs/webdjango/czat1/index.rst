@@ -35,24 +35,8 @@ pracę nad projektami w języku Python.
     Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi,
     np. terminala i ulubionego edytora kodu.
 
-Po uruchomieniu PyCharma w oknie "Welcome to PyCharm" klikamy przycisk **New Project**.
-
-.. figure:: img/pycharm_01.png
-
-W następnym oknie "New Project" w polu "Location" domyślną nazwę katalogu :file:`PythonProject` zamieniamy na
-:file:`projekty_django`.
-
-.. figure:: img/pycharm_02.png
-
-Następnie klikamy przycisk **Create**: PyCharm utworzy katalog :file:`projekty_django`,
-a w nim :ref:`środowisko wirtualne Pythona <venv>`.
-
-Po otwarciu głównego okna aplikacji klikamy ikonę "Terminal" umieszczoną na pionowym pasku narzędzi z lewej strony (skrót :kbd:`ALT+F12`).
-
-.. figure:: img/pycharm_04.png
-
-W terminalu upewniamy się, że środowisko wirtualne zostało aktywowane, o czym świadczy
-przedrostek ``(.venv)``. Następnie instalujemy framework Django:
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_django`` :ref:`wirtualne środowisko Pythona <venv>`
+i zainstaluj pakiet *Django*.
 
 .. raw:: html
 

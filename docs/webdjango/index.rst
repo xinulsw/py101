@@ -9,7 +9,7 @@ projektowanie serwisów oferując gotowe rozwiązania wielu powtarzalnych i prac
 mechanizmów wymaganych w serwisach internetowych. Oferuje również gotowe środowisko testowe,
 czyli deweloperski serwer WWW, nie musimy instalować żadnych dodatkowych narzędzi typu LAMP (WAMP).
 
-Przed rozpoczęciem pracy przygotuj w wybranym katalogu :ref:`wirtualne środowisko Pythona <venv>`
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_django`` :ref:`wirtualne środowisko Pythona <venv>`
 i zainstaluj pakiet *Django*.
 
 .. toctree::
