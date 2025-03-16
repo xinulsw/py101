@@ -27,16 +27,12 @@ krótkimi wiadomościami.
 Środowisko pracy
 ================
 
-W materiale wykorzystamy środowisko **PyCharm Community**, ponieważ w dużym stopniu ułatwia
+Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+Sugerujemy jednak wykorzystanie środowiska **PyCharm Community**, ponieważ w dużym stopniu ułatwia
 pracę nad projektami w języku Python.
 
-.. note::
-
-    Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi,
-    np. terminala i ulubionego edytora kodu.
-
 Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_django`` :ref:`wirtualne środowisko Pythona <venv>`
-i zainstaluj pakiet *Django*.
+i w aktywnym środowisku zainstaluj pakiet *Django*:
 
 .. raw:: html
 

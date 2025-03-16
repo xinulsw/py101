@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# quiz/quiz.py
-
 from flask import Flask
 from flask import render_template
 
@@ -12,7 +9,7 @@ app.config.update(dict(
 ))
 
 # lista pytań
-DANE = [{
+dane = [{
     'pytanie': 'Stolica Hiszpani, to:',  # pytanie
     'odpowiedzi': ['Madryt', 'Warszawa', 'Barcelona'],  # możliwe odpowiedzi
     'odpok': 'Madryt'},  # poprawna odpowiedź
@@ -26,12 +23,15 @@ DANE = [{
     'odpok': 'He'},
 ]
 
+@app.route('/pytania')
+def pytania():
+    return render_template('pytania.html', pytania=dane)
 
 @app.route('/')
 def index():
-    # return 'Cześć, tu Python!'
-    return render_template('index.html', pytania=DANE)
+    # return 'Cześć, tu Python i Flask!'
+    return render_template('index.html')
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+with app.app_context():
+    if __name__ == "__main__":
+        app.run(debug=True)

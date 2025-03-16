@@ -31,6 +31,15 @@ Słownik
         Tworzymy je definiując atrybuty klasy. Korzystamy z nich podając nazwę klasy, np.:
         ``Klasa.dana``. Wszystkie instancje klasy dzielą ze sobą jeden egzemplarz danych statycznych.
 
+    dekorator
+        funkcja, która jako argument otrzymuje inną funkcję, rozszerza jej działanie i zwraca ją.
+
+    dystrybucja Linuksa
+        określona wersja systemu operacyjnego oparta na jądrze Linux, udostępniana
+        zazwyczaj w formie obrazów *iso*. Najbardziej znane to `Debian`_ i jego odmiany:
+        `Ubuntu <http://ubuntu.pl>`_, `Linux Mint`_, `MX Linux`_.
+        Zob.: `dystrybucjach Linuksa <http://pl.wikipedia.org/wiki/Dystrybucja_Linuksa>`_
+
     CRUD
         skrót opisujący podstawowe operacje na bazie danych z wykorzystaniem języka SQL,
         *Create* (tworzenie) odpowiada zapytaniom *INSERT*, *Read* (odczyt) - zapytaniom

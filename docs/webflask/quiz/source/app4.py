@@ -1,18 +1,16 @@
-# -*- coding: utf-8 -*-
-# quiz/quiz.py
-
 from flask import Flask
 from flask import render_template
 from flask import request, redirect, url_for, flash
 
 app = Flask(__name__)
 
+# konfiguracja aplikacji
 app.config.update(dict(
     SECRET_KEY='bradzosekretnawartosc',
 ))
 
 # lista pytań
-DANE = [{
+dane = [{
     'pytanie': 'Stolica Hiszpani, to:',  # pytanie
     'odpowiedzi': ['Madryt', 'Warszawa', 'Barcelona'],  # możliwe odpowiedzi
     'odpok': 'Madryt'},  # poprawna odpowiedź
@@ -26,24 +24,25 @@ DANE = [{
     'odpok': 'He'},
 ]
 
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-
+@app.route('/pytania', methods=['GET', 'POST'])
+def pytania():
     if request.method == 'POST':
         punkty = 0
         odpowiedzi = request.form
 
         for pnr, odp in odpowiedzi.items():
-            if odp == DANE[int(pnr)]['odpok']:
+            if odp == dane[int(pnr)]['odpok']:
                 punkty += 1
 
         flash('Liczba poprawnych odpowiedzi, to: {0}'.format(punkty))
-        return redirect(url_for('index'))
+        return redirect(url_for('pytania'))
+    return render_template('pytania.html', pytania=dane)
 
-    # return 'Cześć, tu Python!'
-    return render_template('index.html', pytania=DANE)
+@app.route('/')
+def index():
+    # return 'Cześć, tu Python i Flask!'
+    return render_template('index.html')
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+with app.app_context():
+    if __name__ == "__main__":
+        app.run(debug=True)
