@@ -5,30 +5,37 @@ ToDo
 
 .. highlight:: python
 
-Realizacja aplikacji internetowej ToDo (lista zadań do zrobienia) w oparciu o :term:`framework` Flask 0.12.x.
-Aplikacja umożliwia dodawanie z określoną datą, przeglądanie i oznaczanie
-jako wykonane różnych zadań, które zapisywane będą w bazie danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
+Realizacja aplikacji internetowej ToDo (lista zadań do zrobienia) w oparciu o :term:`framework` Flask 3.1.x.
+Aplikacja umożliwia dodawanie z określoną datą, przeglądanie i oznaczanie jako wykonane różnych zadań,
+które zapisywane będą w bazie danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
 
 .. contents::
     :depth: 1
     :local:
 
-Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`.
-Wykonujemy dwa pierwsze punkty "Projekt i aplikacja" oraz "Strona główna",
-tylko katalog aplikacji nazywamy :file:`todo`, a kod zapisujemy w pliku :file:`todo.py`.
+Do pracy potrzebne nam będzie wirtualne środowisko Pythona z zainstalowanym pakietem Flask.
+Jeżeli wykonaliśmy wcześniej projekt aplikacji
+
+Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
+
+1. przygotowujemy wirtualne środowisko Pythona w katalogu :file:`projekty_flask`, chyba że
+   zrobiliśmy to wcześniej podczas realizacji aplikacji Quiz;
+2. w katalogu :file:`projekty_flask` tworzymy katalog dla aplikacji: :file:`todo`;
+3. wykonujemy 2. i 3. punkt scenariusza Quiz, tj.: "Projekt i aplikacja" oraz "Strona główna";
+4. w szablonie strony głównej zmieniamy tekst "Quiz Python" na "Lista zadań"
 
 Po wykonaniu wszystkich kroków i uruchomieniu serwera testowego powinniśmy w przeglądarce
 zobaczyć stronę główną:
 
-.. figure:: img/todo_01.png
+.. figure:: img/flask_strona_01.png
 
 Model danych i baza
 ===================
 
 Jako źródło danych aplikacji wykorzystamy tym razem bazę SQLite3 obsługiwaną za pomocą
-Pythonowego modułu `sqlite3 <https://docs.python.org/3.6/library/sqlite3.html>`_.
+modułu Pythona `sqlite3 <https://docs.python.org/3/library/sqlite3.html>`_.
 
-**Model danych**: w katalogu aplikacji tworzymy plik :file:`schema.sql`,
+**Model danych**: w katalogu aplikacji tworzymy plik :file:`todo.sql`,
 który zawiera instrukcje języka `SQL <https://pl.wikipedia.org/wiki/SQL>`_
 tworzące tabelę z zadaniami i dodające przykładowe dane.
 
@@ -37,7 +44,7 @@ tworzące tabelę z zadaniami i dodające przykładowe dane.
     <div class="code_no">plik <i>schema.pl</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: sql
-.. literalinclude:: schema.sql
+.. literalinclude:: todo.sql
     :linenos:
 
 W terminalu wydajemy teraz następujące polecenia:

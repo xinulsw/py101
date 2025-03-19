@@ -159,6 +159,11 @@ Słownik
         (ang. Object-Relational Mapping) – mapowanie obiektowo-relacyjne, oprogramowanie
         odwzorowujące strukturę relacyjnej bazy danych na obiekty danego języka oprogramowania.
 
+    szablon
+        plik zawierający znaczniki HTML oraz tagi szablonów, za pomocą których można:
+        dziedziczyć kod z szablonu bazowego, używać instrukcji sterujących i/lub
+        wstawiać przekazane do szablonu dane
+
     sygnały i sloty
         – (ang. *signals and slots*), w kontekście biblioteki Qt sygnały powstają kiedy zachodzi jakieś wydarzenie.
         W odpowiedzi na sygnał wywoływane są sloty, czyli funkcje. Wiele sygnałów
