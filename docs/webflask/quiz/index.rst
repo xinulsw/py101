@@ -37,7 +37,7 @@ W katalogu :file:`projekty_flask`` tworzymy nowy katalog aplikacji o nazwie :fil
     (.venv) ~/projekty_flask$ cd quiz
 
 Utworzymy szkielet aplikacji Flask, co pozwoli na uruchomienie testowego serwera www.
-W katalogu aplikacji :file:`quiz` tworzymy pliku o nazwie :file:`app.py` i umieszczamy w nim poniższy kod.
+W katalogu aplikacji :file:`quiz` dodajemy plik o nazwie :file:`app.py` i umieszczamy w nim poniższy kod.
 
 .. raw:: html
 
@@ -48,7 +48,7 @@ W katalogu aplikacji :file:`quiz` tworzymy pliku o nazwie :file:`app.py` i umies
     :linenos:
 
 Serwer uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
-``flask run --debug`` lub ``python3 app.py``:
+``flask run --debug`` lub ``python3 app.py`` (``py app.py`` w systemie Windows):
 
 .. raw:: html
 
@@ -61,9 +61,8 @@ Serwer uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
 .. figure:: img/flask_run_01.png
 
 Domyślnie serwer uruchamia się pod adresem ``http://127.0.0.1:5000``.
-Po otwarciu przeglądarki i wpisaniu tego adresu (można też kliknąć adres
-z wciśniętym klawiszem :kbd:`CTLR`) zobaczymy napis "Cześć, tu Python i Flask!"
-zwrócony przez aplikację.
+Po otwarciu przeglądarki i wpisaniu tego adresu (można też kliknąć adres wyświetlony w terminalu
+z wciśniętym klawiszem :kbd:`CTLR`) zobaczymy napis zwrócony przez aplikację: "Cześć, tu Python i Flask!".
 
 .. figure:: img/flask_strona_01.png
 
@@ -74,19 +73,21 @@ zwrócony przez aplikację.
 Strona główna
 =============
 
-Nasza aplikacja zwraca użytkownikowi stronę główną za pomocą widoku (zob. :term:`widok`)
-``index()``. Jest to funkcja Pythona powiązana z określonym w dekoratorze
-(zob. :term:`dekorator`) ``route()`` adresem ``/`` oznaczającym domyślny zasób serwera.
+Nasza aplikacja zwraca użytkownikowi stronę główną za pomocą widoku ``index()``.
+Jest to funkcja Pythona powiązana z określonym w dekoratorze ``route('/')``
+adresem ``/`` oznaczającym domyślny zasób serwera.
 
 Widoki obsługują podstawowe żądania protokołu :term:`HTTP` wysyłane przez przeglądarkę:
-:term:`GET` – kiedy użytkownik chce zobaczyć stronę, i :term:`POST`
-– kiedy użytkownik przesyła dane na serwer za pomocą formularza.
 
-W odpowiedzi aplikacja może odsyłać różne dane, np. tekst, ale najczęściej będzie to
-strona :term:`HTML` zawierająca informacje pobrane z bazy, np. wyniki quizu.
-Flask ułatwia tworzenie takich stron za pomocą szablonów (zob. :term:`szablon`),
-które zapisujemy w katalogu :file:`templates`.
-W katalogu projektu musimy więc ten katalog utworzyć:
+- :term:`GET` – kiedy użytkownik chce zobaczyć jakąś stronę,
+- :term:`POST` – kiedy użytkownik przesyła dane na serwer za pomocą formularza.
+
+W odpowiedzi aplikacja może odsyłać różne dane, np. predefiniowany tekst, ale najczęściej
+będzie to strona :term:`HTML` zawierająca różne w zależności od żądania informacje, np.
+formularz z pytaniami albo wyniki quizu.
+
+Flask ułatwia tworzenie takich stron za pomocą tzw. szablonów (zob. :term:`szablon`).
+Szablony umieścimy w katalogu :file:`quiz/templates`, kóry należy utworzyć:
 
 .. raw:: html
 
@@ -119,7 +120,7 @@ Na koniec modyfikujemy funkcję ``index()`` w pliku :file:`app.py`:
 
 Do renderowania szablonu (zob: :term:`renderowanie szablonu`) używamy
 funkcji ``render_template('index.html')``, która jako argument przyjmuje
-nazwę pliku szablonu. Pod otworzeniu strony głównej (``http://127.0.0.1:5000``)
+nazwę pliku szablonu. Po otworzeniu strony głównej (``http://127.0.0.1:5000``)
 zobaczymy stronę:
 
 .. figure:: img/flask_strona_02.png
@@ -127,7 +128,8 @@ zobaczymy stronę:
 Pytania i odpowiedzi
 ====================
 
-Dane aplikacji, a więc pytania i odpowiedzi, umieścimy w pliku :file:`app.py`.
+Dane aplikacji, a więc pytania i odpowiedzi, umieścimy w pliku :file:`app.py` – to najprostsze
+rozwiązanie, żeby zrozumieć działanie naszej aplikacji internetowej.
 Nowy kod wstawiamy po instrukcji ``app = Flask(__name__)``:
 
 .. raw:: html
@@ -142,8 +144,8 @@ Nowy kod wstawiamy po instrukcji ``app = Flask(__name__)``:
 Konfiguracja aplikacji przechowywana jest w słowniku ``config``, do którego dodajemy
 sekretny klucz, wykorzystywany do obsługi sesji (zob :term:`sesja`).
 
-Następnie definiujemy najprostsze źródło danych dla naszej aplikacji, wspomnianą wyżej
-listę ``dane``. Zawiera ona trzy słowniki, każdy z treścią pytania, możliwymi odpowiedziami
+Następnie definiujemy najprostsze źródło danych dla naszej aplikacji, czyli listę ``dane``.
+Zawiera ona trzy słowniki, każdy z treścią pytania, możliwymi odpowiedziami
 oraz odpowiedzią poprawną.
 
 Dalej definiujemy nowy adres URL ``/pytania``, który będzie obsługiwany przez
@@ -194,7 +196,7 @@ powinniśmy zobaczyć:
 Oceniamy odpowiedzi
 ===================
 
-Mechanizm sprawdzana liczby poprawnych odpowiedzi umieścimy w widoku ``pytania()``.
+Kod sprawdzający liczbę poprawnych odpowiedzi umieścimy w widoku ``pytania()``.
 Na początku pliku :file:`app.py` dodajemy potrzebne importy:
 
 .. raw:: html
@@ -260,3 +262,8 @@ Materiały
 =========
 
 * Szybki start z Flask https://flask.palletsprojects.com/en/stable/quickstart/
+
+.. admonition:: Pojęcia
+
+    :term:`framework`, :term:`HTTP`, :term:`GET`, :term:`POST`, :term:`sesja`,
+    :term:`dekorator`, :term:`widok`, :term:`szablon`, :term:`renderowanie szablonu`
