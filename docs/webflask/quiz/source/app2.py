@@ -1,7 +1,12 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template
 
 app = Flask(__name__)
+
+# konfiguracja aplikacji
+app.config.update(dict(
+    SECRET_KEY='bradzosekretnawartosc',
+    SITE_NAME='Quiz Python'
+))
 
 @app.route('/')
 def index():

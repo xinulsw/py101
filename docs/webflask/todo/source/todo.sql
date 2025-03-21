@@ -1,4 +1,4 @@
--- todo/todo.sql
+-- projekty_flask/todo/todo.sql
 
 -- tabela z zadaniami
 DROP TABLE IF EXISTS zadania;

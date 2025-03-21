@@ -14,20 +14,15 @@ które zapisywane będą w bazie danych `SQLite <http://pl.wikipedia.org/wiki/SQ
     :local:
 
 Do pracy potrzebne nam będzie wirtualne środowisko Pythona z zainstalowanym pakietem Flask.
-Jeżeli wykonaliśmy wcześniej projekt aplikacji
-
 Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
 
 1. przygotowujemy wirtualne środowisko Pythona w katalogu :file:`projekty_flask`, chyba że
    zrobiliśmy to wcześniej podczas realizacji aplikacji Quiz;
-2. w katalogu :file:`projekty_flask` tworzymy katalog dla aplikacji: :file:`todo`;
-3. wykonujemy 2. i 3. punkt scenariusza Quiz, tj.: "Projekt i aplikacja" oraz "Strona główna";
-4. w szablonie strony głównej zmieniamy tekst "Quiz Python" na "Lista zadań"
+2. w katalogu :file:`projekty_flask` tworzymy **katalog aplikacji**: :file:`todo`;
+3. wykonujemy 2. i 3. punkt scenariusza Quiz, tj.: "Projekt i aplikacja" oraz "Strona główna".
 
-Po wykonaniu wszystkich kroków i uruchomieniu serwera testowego powinniśmy w przeglądarce
-zobaczyć stronę główną:
-
-.. figure:: img/flask_strona_01.png
+W pliku :file:`app.py` zmieniamy w konfiguracji aplikacji nazwę serwisu
+zapisaną w kluczu ``SITE_NAME`` na "Projekty Flask".
 
 Model danych i baza
 ===================
@@ -44,64 +39,109 @@ tworzące tabelę z zadaniami i dodające przykładowe dane.
     <div class="code_no">plik <i>schema.pl</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: sql
-.. literalinclude:: todo.sql
+.. literalinclude:: source/todo.sql
     :linenos:
 
-W terminalu wydajemy teraz następujące polecenia:
+Funkcje potrzebne do obsługi bazy danych umieścimy w nowym pliku :file:`db.py`, który zapisujemy
+w katalogu aplikacji.
 
 .. raw:: html
 
-    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></div>
+    <div class="code_no">plik <i>schema.pl</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. code-block:: bash
+.. highlight:: sql
+.. literalinclude:: source/db.py
+    :linenos:
 
-    ~/todo$ sqlite3 db.sqlite < schema.sql
-    ~/todo$ sqlite3 db.sqlite
-    sqlite> select * from zadania;
-    sqlite> .quit
+.. note::
 
-Pierwsze polecenie tworzy bazę danych w pliku :file:`db.sqlite`.
-Drugie otwiera ją w interpreterze. Trzecie to zapytanie SQL, które pobiera
-wszystkie dane z tabeli *zadania*. Interpreter zamykamy poleceniem ``.quit``.
+    Podczas działania aplikacji Flask mamy dostęp do tzw. kontekstu aplikacji,
+    który tworzą ustawienia zapisane w słowniku ``config`` oraz dane w obiektach
+    ``current_app`` i ``g``.
 
-.. figure:: img/sqlite.png
+Zadaniem funkcji ``get_db()`` będzie połączenie z bazą danych i zapisanie obiektu
+``db`` reprezentującego bazę w kontekście aplikacji:
 
-Połączenie z bazą
-=================
+* ``if 'db' not in g:`` – sprawdzamy, czy w obiekcie ``g`` nie ma
+  obiektu ``db``;
+* dalsza część kodu tworzy połączenie wywołując metodę ``sqlite3.connect()``
+  i zapisuje je w kontekście aplikacji.
 
-Bazę danych już mamy, teraz pora napisać funkcje umożiwiające łączenie się
-z nią z poziomu naszej aplikacji. W pliku :file:`todo.py` dodajemy brakujący kod:
+Funkcja ``close_db()`` odpowiadać będzie za zamknięcie połączenia. Będzie ona wywoływana
+po obsłużeniu każdego żądania dzięki kolejnej funkcji ``init_app()``, która
+rejestruje funkcję ``close_db()`` w kontekście aplikacji: ``app.teardown_appcontext(close_db)``.
+
+Funkcja ``init_db()`` posłuży do utworzenia pliku bazy danych, a następnie tabel
+do przechowywania danych.
+
+.. hint::
+
+    Bazę danych można też utworzyć ręcznie za pomocą wiersza poleceń bazy Sqlite3.
+    W terminalu w katalogu aplikacji możemy użyć następujących poleceń:
+
+    .. raw:: html
+
+        <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></div>
+
+    .. code-block:: bash
+
+        ~/projekty_flask/todo$ sqlite3 db.sqlite < schema.sql
+        ~/projekty_flask/todo$ sqlite3 db.sqlite
+        sqlite> select * from zadania;
+        sqlite> .quit
+
+    Pierwsze polecenie tworzy bazę danych w pliku :file:`db.sqlite`.
+    Drugie otwiera ją w interpreterze. Trzecie to zapytanie SQL, które pobiera
+    wszystkie dane z tabeli *zadania*. Interpreter zamykamy poleceniem ``.quit``.
+
+    .. figure:: img/sqlite3_cmd.png
+
+
+Pozostaje nam uzupełnienie kodu w pliku :file:`app.py`:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: todo_z2.py
+.. literalinclude:: source/app2.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-41
+    :emphasize-lines: 1-3, 11, 14, 24-25
 
-Konfiguracja aplikacji przechowywana jest w obiekcie ``config``, który
-jest podklasą słownika i w naszym przypadku zawiera:
+Przede wszystkim uzupełniamy importy. Następnie słowniku konfiguracji dodajemy
+klucz ``DATABASE`` wskazujący na plik bazy danych :file:`db.sqlite`.
 
-* ``SECRET_KEY`` – sekretna wartość wykorzystywana do obsługi sesji;
-* ``DATABSE`` – ścieżka do pliku bazy;
-* ``SITE_NAME`` – nazwa aplikacji.
+Następnie umieszczamy wywołanie funkcji ``init_app(app)``, dzięki czemu jeżeli
+na dysku nie będzie pliku bazy danych, zostanie on utworzony, a wraz z nim
+tabele zdefiniowane w pliku :file:`todo.sql`.
 
-Funkcja ``get_db()``:
+Po uruchomieniu serwera deweloperskiego i otwarciu strony ``http://127.0.0.1:5000``
+powinniśmy zobaczyć stronę:
 
-* ``if not g.get('db'):`` – sprawdzamy, czy obiekt ``g`` aplikacji, służący
-  do przechowywania danych kontekstowych, nie zawiera właściwości ``db``,
-  czyli połączenia z bazą;
-* dalsza część kodu tworzy połączenie w zmiennej ``con`` i zapisuje
-  w kontekście (obiekcie ``g``) aplikacji.
+.. figure:: img/todo_01.png
 
-Funkcja ``close_db()``:
+– a w katalogu aplikacji powinien zostać utworzony plik bazy danych :file:`db.sqlite`.
 
-* ``@app.teardown_appcontext`` – dekorator, który rejestruje funkcję
-  zamykającą połączenie z bazą do wykonania po zakończeniu obsługi żądania;
-* ``g.db.close()`` – zamknięcie połączenia z bazą.
+Budowa modułowa
+===============
+
+Jedna aplikacja Flask może składać się z wielu modułów odpowiedzialnych np. za
+autoryzację użytkowników, system komentarzy, quiz czy listę zadań.
+Obsługę tych składników warto rozdzielić na osobne moduły, nazywane we Flasku
+<foreign lang='en'>blueprint</foreign>, co ułatwia konstruowanie i rozszerzanie aplikacji.
+
+Nasz pierwszy <foreign lang='en'>blueprint</foreign> umieścimy w pliku :file:`todo.py`,
+który tworzymy w katalogu aplikacji:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: source/todo1.py
+    :linenos:
+
 
 
 Lista zadań

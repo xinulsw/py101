@@ -24,7 +24,7 @@ i w aktywnym środowisku zainstaluj pakiet *Flask*.
 Projekt i aplikacja
 ===================
 
-W katalogu :file:`projekty_flask`` tworzymy nowy katalog aplikacji o nazwie :file:`quiz`:
+W katalogu :file:`projekty_flask`` tworzymy nowy **katalog aplikacji** o nazwie :file:`quiz`:
 
 .. raw:: html
 
@@ -107,7 +107,10 @@ Następnie w utworzonym katalogu dodajemy plik :file:`index.html` i umieszczamy 
 .. literalinclude:: source/index.html
     :linenos:
 
-Na koniec modyfikujemy funkcję ``index()`` w pliku :file:`app.py`:
+W miejsce oznaczone tagiem ``{{ config.SITE_NAME }}`` wstawiona zostanie nazwa serwisu, którą zdefiniujemy
+w ustawieniach aplikacji.
+
+Uzupełniamy i zmieniamy kod w pliku :file:`app.py`:
 
 .. raw:: html
 
@@ -116,12 +119,16 @@ Na koniec modyfikujemy funkcję ``index()`` w pliku :file:`app.py`:
 .. highlight:: python
 .. literalinclude:: source/app2.py
     :linenos:
-    :emphasize-lines: 2, 9
+    :emphasize-lines: 5-9, 14
+
+Konfiguracja aplikacji przechowywana jest w słowniku ``config``, do którego dodajemy
+sekretny klucz, wykorzystywany do obsługi sesji (zob :term:`sesja`) oraz nazwę serwisu.
 
 Do renderowania szablonu (zob: :term:`renderowanie szablonu`) używamy
-funkcji ``render_template('index.html')``, która jako argument przyjmuje
-nazwę pliku szablonu. Po otworzeniu strony głównej (``http://127.0.0.1:5000``)
-zobaczymy stronę:
+zaimportowanej na początku pliku funkcji ``render_template('index.html')``, która jako argument przyjmuje
+nazwę pliku szablonu.
+
+Po otworzeniu strony głównej (``http://127.0.0.1:5000``) zobaczymy stronę:
 
 .. figure:: img/flask_strona_02.png
 
@@ -141,12 +148,8 @@ Nowy kod wstawiamy po instrukcji ``app = Flask(__name__)``:
     :linenos:
     :emphasize-lines: 6-28
 
-Konfiguracja aplikacji przechowywana jest w słowniku ``config``, do którego dodajemy
-sekretny klucz, wykorzystywany do obsługi sesji (zob :term:`sesja`).
-
-Następnie definiujemy najprostsze źródło danych dla naszej aplikacji, czyli listę ``dane``.
-Zawiera ona trzy słowniki, każdy z treścią pytania, możliwymi odpowiedziami
-oraz odpowiedzią poprawną.
+Źródłem danych dla naszej aplikacji będzie lista ``dane``, która zawiera trzy słowniki.
+W każdym słowniku umieszczamy treść pytania, możliwe odpowiedzi oraz odpowiedź poprawną.
 
 Dalej definiujemy nowy adres URL ``/pytania``, który będzie obsługiwany przez
 funkcję ``pytania()``. W funkcji zwracamy szablon ``pytania.html``,

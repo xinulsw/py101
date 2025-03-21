@@ -1,16 +1,20 @@
 import os
-from flask import Flask, current_app, render_template
+from flask import Flask, render_template, current_app
 from db import init_app, init_db
 
 app = Flask(__name__)
 
+# konfiguracja aplikacji
 app.config.update(dict(
     SECRET_KEY='bardzosekretnawartosc',
-    DATABASE=os.path.join(app.root_path, 'db.sqlite'),
-    SITE_NAME='Moje zadania'
+    SITE_NAME='Projekty Flask',
+    DATABASE=os.path.join(app.root_path, 'db.sqlite')
 ))
 
 init_app(app)
+
+# rejestracja blueprintów
+
 
 @app.route('/')
 def index():
