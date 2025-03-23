@@ -9,3 +9,4 @@ SQLAlchemy
 django
 matplotlib
 peewee
+# texlive-latex-extra, dvipng

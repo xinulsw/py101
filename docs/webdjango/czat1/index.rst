@@ -468,10 +468,12 @@ Tworzymy i uzupełniamy **szablon logowania** :file:`templates/czat/loguj.html` 
 .. literalinclude:: source/loguj_z3.html
     :linenos:
 
-W szablonach wykorzystujemy **tagi** dwóch rodzajów:
+W szablonach wykorzystujemy specjalne **tagi** dwóch rodzajów:
 
 - ``{% instrukcja %}`` – pozwalają używać instrukcji sterujących, np. warunkowych lub pętli,
 - ``{{ zmienna }}`` – służą wyświetlaniu wartości zmiennych lub wywoływaniu metod obiektów przekazanych do szablonu.
+
+Zastosowanie:
 
 - ``{% if not user.is_authenticated %}`` – instrukcja sprawdza, czy aktualny użytkownik nie jest zalogowany,
 - ``{% csrf_token %}`` – zabezpieczenie formularza przed atakiem typu csrf,

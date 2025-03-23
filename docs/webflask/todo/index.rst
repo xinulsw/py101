@@ -5,9 +5,10 @@ ToDo
 
 .. highlight:: python
 
-Realizacja aplikacji internetowej ToDo (lista zadań do zrobienia) w oparciu o :term:`framework` Flask 3.1.x.
-Aplikacja umożliwia dodawanie z określoną datą, przeglądanie i oznaczanie jako wykonane różnych zadań,
-które zapisywane będą w bazie danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
+Aplikacja internetowa ToDo w oparciu o :term:`framework` Flask 3.1.x.
+Aplikacja umożliwi dodawanie przez zalogowanego użytkownika zadań z określoną datą,
+ich przeglądanie i oznaczanie jako wykonane.
+Dane użytkowników i zadania zapisywane będą w bazie danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
 
 .. contents::
     :depth: 1
@@ -30,17 +31,24 @@ Model danych i baza
 Jako źródło danych aplikacji wykorzystamy tym razem bazę SQLite3 obsługiwaną za pomocą
 modułu Pythona `sqlite3 <https://docs.python.org/3/library/sqlite3.html>`_.
 
-**Model danych**: w katalogu aplikacji tworzymy plik :file:`todo.sql`,
-który zawiera instrukcje języka `SQL <https://pl.wikipedia.org/wiki/SQL>`_
-tworzące tabelę z zadaniami i dodające przykładowe dane.
+**Model danych**, tj. w tym przypadku schemat bazy danych, zdefiniujemy w pliku :file:``,
+który tworzymy w katalogu aplikacji i wypełniamy kodem `SQL <https://pl.wikipedia.org/wiki/SQL>`_:
 
 .. raw:: html
 
     <div class="code_no">plik <i>schema.pl</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: sql
-.. literalinclude:: source/todo.sql
+.. literalinclude:: source/
     :linenos:
+
+Wykonanie klauzul SQL spowoduje utworzenie dwóch tabel:
+
+- ``user`` – zawierać będzie identyfikator, nazwę i hasło użytkownika,
+- ``zadanie`` – zawierać będzie identyfikator zadania, identyfikator użytkownika, treść zadania,
+  oznaczenie wykonania oraz datę dodania.
+
+Tabele zostaną również wypełnione przykładowymi danymi.
 
 Funkcje potrzebne do obsługi bazy danych umieścimy w nowym pliku :file:`db.py`, który zapisujemy
 w katalogu aplikacji.
@@ -74,6 +82,32 @@ rejestruje funkcję ``close_db()`` w kontekście aplikacji: ``app.teardown_appco
 Funkcja ``init_db()`` posłuży do utworzenia pliku bazy danych, a następnie tabel
 do przechowywania danych.
 
+Pozostaje nam uzupełnienie kodu w pliku :file:`app.py`:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: source/app1.py
+    :linenos:
+    :lineno-start: 1
+    :emphasize-lines: 1-3, 11, 14, 25-26
+
+Przede wszystkim uzupełniamy importy. Następnie w słowniku konfiguracji dodajemy
+klucz ``DATABASE`` wskazujący na plik bazy danych :file:`db.sqlite`.
+
+Następnie umieszczamy wywołanie funkcji ``init_app(app)``, dzięki czemu jeżeli
+na dysku nie będzie pliku bazy danych, zostanie on utworzony, a wraz z nim
+tabele zdefiniowane w pliku :file:`todo.sql`.
+
+Po uruchomieniu serwera deweloperskiego i otwarciu adresu ``http://127.0.0.1:5000``
+powinniśmy zobaczyć stronę:
+
+.. figure:: img/todo_01.png
+
+– a w katalogu aplikacji powinien zostać utworzony plik bazy danych :file:`db.sqlite`.
+
 .. hint::
 
     Bazę danych można też utworzyć ręcznie za pomocą wiersza poleceń bazy Sqlite3.
@@ -96,43 +130,153 @@ do przechowywania danych.
 
     .. figure:: img/sqlite3_cmd.png
 
+Użytkownicy
+===========
 
-Pozostaje nam uzupełnienie kodu w pliku :file:`app.py`:
+.. note::
+
+    Jedna aplikacja Flask może składać się z wielu modułów odpowiedzialnych np. za
+    autoryzację użytkowników, system komentarzy, quiz czy listę zadań.
+    Obsługę tych składników warto rozdzielić na osobne moduły, nazywane we Flasku
+    <foreign lang='en'>blueprint</foreign>, co ułatwi konstruowanie i rozszerzanie aplikacji.
+
+W naszej aplikacji zadania do wykonania powiązane będą z użytkownikami, dlatego na początku
+zajmiemy się blueprintem, który pozwoli na logowanie, rejestrację i usuwanie użytkownika.
+W katalogu aplikacji tworzymy plik :file:`users.py` i dodajemy do niego poniższy kod:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>users.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: source/app2.py
+.. literalinclude:: source/users1.py
     :linenos:
-    :lineno-start: 1
-    :emphasize-lines: 1-3, 11, 14, 24-25
 
-Przede wszystkim uzupełniamy importy. Następnie słowniku konfiguracji dodajemy
-klucz ``DATABASE`` wskazujący na plik bazy danych :file:`db.sqlite`.
+Blueprint jest instancją klasy (obiektem typu) ``Blueprint``. Do konstruktora przekazujemy:
 
-Następnie umieszczamy wywołanie funkcji ``init_app(app)``, dzięki czemu jeżeli
-na dysku nie będzie pliku bazy danych, zostanie on utworzony, a wraz z nim
-tabele zdefiniowane w pliku :file:`todo.sql`.
+- ``users`` – nazwę blueprinta,
+- ``__name__`` – nazwa pliku, w którym blueprint jest definiowany,
+- ``template_folder`` – podkatalog katalogu aplikacji, w którym należy szukać szablonów,
+- ``url_prefix`` – część adresu URL, który blueprint będzie obsługiwał, w tym przypadku będzie to adres
+  ``http(s)://nazwa_serwera/users/``.
 
-Po uruchomieniu serwera deweloperskiego i otwarciu strony ``http://127.0.0.1:5000``
-powinniśmy zobaczyć stronę:
+W utworzonym blueprincie za pomocą dekoratora (``@bp.route()``) definiujemy widok, czyli
+funkcję ``loguj()`` powiązaną z adresem URL ``http(s)://nazwa_serwera/users/loguj``, która obsługuje
+żądania ``GET`` i ``POST`` (``methods=['GET', 'POST']``).
 
-.. figure:: img/todo_01.png
+Jeżeli serwer otrzyma żądanie typu ``GET`` oraz w przypadku błędów logowania,
+funkcja zwróci szablon ``users/loguj.html``. Natomiast w przypadku żądania typu POST, funkcja:
 
-– a w katalogu aplikacji powinien zostać utworzony plik bazy danych :file:`db.sqlite`.
+* odczyta login i hasło z przesłanego formularza dostępnego w słowniku ``request.form``;
+* utworzy obiekt bazy danych: ``db = get_db()``;
+* wykona podane zapytanie SQL: ``db.execute('SELECT...')``,
+  czyli pobranie danych użytkownika o podanym loginie;
+* jako wynik zapytania zwrócony zostanie jeden rekord: ``fetchone()``;
+* jeżeli w bazie nie będzie użytkownika o podanym loginie (``user is None``)
+  lub jeżeli podane hasło będzie błędne (``not check_password_hash(user['haslo'], haslo)``),
+  funkcja przygotuje odpowiedni komunikat błędu w zmiennej ``error``;
+* jeżeli podany login i hasło będą poprawne, identyfikator użytkownika zostanie zapisany
+  w sesji [zob. :term:`sesja`], a zalogowany użytkownik zostanie przekierowany na stronę
+  główną ``redirect(url_for('index'))``;
+* w przypadku poprawnego logowania, jak i błędów funkcja ``flash()`` przygotuje komunikaty
+  dla użytkownika, które będzie można później odczytać w szablonie.
 
-Budowa modułowa
-===============
+Użycie blueprinta wymaga zarejestrowania go w aplikacji. W pliku :file:`app.py` dodajemy więc
+kod:
 
-Jedna aplikacja Flask może składać się z wielu modułów odpowiedzialnych np. za
-autoryzację użytkowników, system komentarzy, quiz czy listę zadań.
-Obsługę tych składników warto rozdzielić na osobne moduły, nazywane we Flasku
-<foreign lang='en'>blueprint</foreign>, co ułatwia konstruowanie i rozszerzanie aplikacji.
+.. raw:: html
+
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. code-block:: python
+
+    # rejestracja blueprintów
+    app.register_blueprint(users.bp)
+
+Szablony
+=========
+
+W rozbudowanych aplikacjach zawierających wiele blueprintów, a więc wiele widoków zwracających
+szablony, część kodu HTML powtarza się na każdej stronie, aby zachować spójność wyglądu.
+Tę wspólną część, aby jej nie powtarzać, umieszcza się w tzw. **szablonie bazowym**.
+W naszym przypadku będzie to dotychczasowy plik :fle:`templates/index.html`, którego
+kod zmieniamy na podany niżej:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>index.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: html
+.. literalinclude:: source/index1.html
+    :linenos:
+
+W szablonach wykorzystujemy specjalne **tagi** dwóch rodzajów:
+
+- ``{% instrukcja %}`` – pozwalają używać instrukcji sterujących, np. warunkowych lub pętli, oraz definiować bloki,
+  które będą uzupełniane przez szablony dziedziczące,
+- ``{{ zmienna }}`` – służą wyświetlaniu wartości zmiennych lub wywoływaniu metod obiektów przekazanych do szablonu.
+
+Zastosowanie:
+
+- ``{{ config.SITE_NAME }}`` – wstawienie nazwy serwisu zdefiniowanego w słowniku ustawień aplikacji ``config``;
+- ``{% block h1 %} {% endblock %}`` – zdefiniowanie bloku o nazwie ``h1``, którego zawartość może zostać nadpisana
+  w szablonach dziedziczących;
+- ``{% with komunikaty = get_flashed_messages() %} {% endwith %}`` – odczytanie komunikatów dla użytkownika
+  utworzonych w widokach, jeżeli zostały utworzone (``{% if komunikaty %}``), odczytujemy je w pętli
+  (``{% for komunikat in komunikaty %}``) i wstawiamy do szablonu w osobnych akapitach
+  ``<p> {{ komunikat }} </p>``;
+- ``{{ url_for('index') }}`` – funkcja ``url_for()`` zwraca adres URL powiązany z podanym jako argument widokiem,
+  poprzedzonym ewentualna nazwą blueprintu, w którym został zdefiniowany, np. ``{{ url_for('users.loguj') }}``.
+
+Szablony blueprintów mogą być zapisywane w osobnych podkatalogach. W katalogu
+:file:`projekty_flask/todo/templates` tworzymy podkatalog o takiej samej nazwie
+jak nasz blueprint, tj. :file:`users`, a w nim plik (szablon) :file:`loguj.html`.
+
+.. raw:: html
+
+    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
+
+.. code-block:: bash
+
+    (.venv) ~/projekty_flask/todo$ mkdir -p templates/users
+    (.venv) ~/projekty_flask/todo$ touch templates/users/loguj.html
+
+W szablonie :file:`projekty_flask/todo/templates/users/loguj.html` umieszczamy kod:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>loguj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: html
+.. literalinclude:: source/loguj.html
+    :linenos:
+
+Tag ``{% extends "index.html" %}`` wskazuje szablon bazowy, z którego dziedziczymy kod.
+W tagach ``{% block nazwa %} {% endblock %}`` wstawiamy kod charakterystyczny dla bieżącego szablonu,
+w tym przypadku tworzymy formularz HTML pozwalający na wpisanie loginu i hasła i przesłanie
+tych danych na adres zdefiniowany w atrybucie ``action`` obsługiwany przez widok ``loguj()``
+z blueprinta ``users``.
+
+Po uruchomieniu serwera deweloperskiego i wejściu na adres ``http://127.0.0.1:5000/users/loguj``
+powinniśmy zobaczyć stronę logowania:
+
+.. figure:: img/todo_loguj.png
+
+Ćwiczenie
+----------
+
+Spróbuj zalogować się na konto użytkownika utworzonego podczas dodawania do bazy przykładowych
+danych. W formularzu podaj login ``adam`` i hasło ``zaq1@WSX``. Po zalogowaniu
+powinniśmy zobaczyć stronę główną z odpowiednim komunikatem:
+
+.. figure:: img/todo_adam.png
+
+Lista zadań
+===========
 
 Nasz pierwszy <foreign lang='en'>blueprint</foreign> umieścimy w pliku :file:`todo.py`,
-który tworzymy w katalogu aplikacji:
+który tworzymy w katalogu aplikacji i wypełniamy kodem:
 
 .. raw:: html
 
@@ -142,49 +286,28 @@ który tworzymy w katalogu aplikacji:
 .. literalinclude:: source/todo1.py
     :linenos:
 
-
-
-Lista zadań
-===========
-
-Dodajemy widok, czyli funkcję ``zadania()`` powiązaną z adresem URL ``/zadania``:
+Wszystkie pobrane z bazy rekordy przekazujemy do szablonu w zmiennej ``zadania``.
+Szablon tworzymy w pliku :file:`projekty_flask/todo/templates/todo/index.html`:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: todo_z3.py
-    :linenos:
-    :lineno-start: 40
-    :lines: 40-45
-
-* ``db = get_db()`` – utworzenie obiektu bazy danych ();
-* ``db.execute('select...')`` – wykonanie podanego zapytania SQL,
-  czyli pobranie wszystkich zadań z bazy;
-* ``fetchall()`` – metoda zwraca pobrane dane w formie listy;
-
-Szablon tworzymy w pliku :file:`todo/templates/zadania_lista.html`:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>zadania_lista.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>index1.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: templates/zadania_lista_z3.html
+.. literalinclude:: source/index1.html
     :linenos:
 
 * ``{% %}`` – tagi używane w szablonach do instrukcji sterujących;
 * ``{{ }}`` – tagi używane do wstawiania wartości zmiennych;
-* ``{{ config.SITE_NAME }}`` – w szablonie mamy dostęp do obiektu ustawień ``config``;
+* ``{{ config.SITE_NAME }}`` – w szablonie mamy dostęp do słownika ustawień aplikacji ``config``;
 * ``{% for zadanie in zadania %}`` – pętla odczytująca zadania z listy przekazanej
-  do szablonu w zmiennej ``zadania``;
+  do szablonu w zmiennej ``zadania``.
 
-Odnośniki
+Nawigacja
 ---------
 
-W szablonie :file:`index.html` warto wstawić link do strony z listą zadań,
-czyli kod:
+W szablonie aplikacji :file:`projekty_flask/todo/templates/index.html` warto dodać
+link do strony z listą zadań przy użyciu funkcji ``url_for()``, czyli np.:
 
 .. raw:: html
 
@@ -192,7 +315,7 @@ czyli kod:
 
 .. code-block:: html
 
-    <p><a href="{{ url_for('zadania') }}">Lista zadań</a></p>
+    <p><a href="{{ url_for('todo.index') }}">Zadania »»»</a></p>
 
 * ``url_for('zadania')`` – funkcja dostępna w szablonach, generuje adres
   powiązany z podaną nazwą funkcji.
