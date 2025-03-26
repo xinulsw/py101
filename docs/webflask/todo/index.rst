@@ -149,8 +149,9 @@ W katalogu aplikacji tworzymy plik :file:`users.py` i dodajemy do niego poniższ
     <div class="code_no">Plik <i>users.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: source/users1.py
+.. literalinclude:: source/users.py
     :linenos:
+    :lines: 1-56
 
 Blueprint jest instancją klasy (obiektem typu) ``Blueprint``. Do konstruktora przekazujemy:
 
@@ -158,11 +159,26 @@ Blueprint jest instancją klasy (obiektem typu) ``Blueprint``. Do konstruktora p
 - ``__name__`` – nazwa pliku, w którym blueprint jest definiowany,
 - ``template_folder`` – podkatalog katalogu aplikacji, w którym należy szukać szablonów,
 - ``url_prefix`` – część adresu URL, który blueprint będzie obsługiwał, w tym przypadku będzie to adres
-  ``http(s)://nazwa_serwera/users/``.
+  ``http://nazwa_serwera/users/``.
+
+(Wy)Logowanie
+-------------
 
 W utworzonym blueprincie za pomocą dekoratora (``@bp.route()``) definiujemy widok, czyli
-funkcję ``loguj()`` powiązaną z adresem URL ``http(s)://nazwa_serwera/users/loguj``, która obsługuje
+funkcję ``loguj()`` powiązaną z adresem URL ``http://nazwa_serwera/users/loguj``, która obsługuje
 żądania ``GET`` i ``POST`` (``methods=['GET', 'POST']``).
+
+.. note::
+
+    Żądania typu ``GET`` występują zazwyczaj wtedy, kiedy chcemy pobrać jakieś dane z serwera,
+    np. stronę. Ewentualne dane przekazywane do serwera (np. parametry wyszukiwania)
+    widoczne są w adresie URL, np.:
+
+    ``www.google.com/search?client=firefox-b-lm&channel=entpr&q=żądania+GET+i+POST``
+
+    Żądanie typu ``POST`` służą natomiast do przesyłania na serwer danych niewidocznych w adresie URL,
+    które mają zazwyczaj zmieniać stan aplikacji, np. dodać lub zalogować użytkownika.
+    Do przesyłania danych metodą ``POST`` służą formularze.
 
 Jeżeli serwer otrzyma żądanie typu ``GET`` oraz w przypadku błędów logowania,
 funkcja zwróci szablon ``users/loguj.html``. Natomiast w przypadku żądania typu POST, funkcja:
@@ -181,6 +197,22 @@ funkcja zwróci szablon ``users/loguj.html``. Natomiast w przypadku żądania ty
 * w przypadku poprawnego logowania, jak i błędów funkcja ``flash()`` przygotuje komunikaty
   dla użytkownika, które będzie można później odczytać w szablonie.
 
+Po poprawnym zalogowaniu identyfikator użytkownika będzie dostępny w sesji podczas przetwarzania
+kolejnych żądań. Za pomocą instrukcji ``@bp.before_app_request`` rejestrujemy funkcję ``load_user()``,
+która wykonywana będzie przed każdym żądaniem. Jeżeli w sesji zapisany został identyfikator
+użytkownika, funkcja odczyta jego dane z bazy i zapisze w ``g.user``.
+
+Adres ``http://nazwa_serwera/users/wyloguj`` będzie obsługiwał widok ``wyloguj()``. Jego zadaniem
+jest usunięcie danych użytkownika z sesji, co oznacza wylogowanie, oraz przekierowanie użytkownika
+na stronę główną.
+
+Funkcja ``login_required()`` to :term:`dekorator`, którego użyjemy do zabezpieczenia dostępu niektórych widoków.
+Jeżeli użytkownik nie będzie zalogowany, dekorator przekieruje go na stronę logowania,
+w przeciwnym razie zwróci żądany widok.
+
+Rejestracja blueprinta
+----------------------
+
 Użycie blueprinta wymaga zarejestrowania go w aplikacji. W pliku :file:`app.py` dodajemy więc
 kod:
 
@@ -197,11 +229,11 @@ kod:
 Szablony
 =========
 
-W rozbudowanych aplikacjach zawierających wiele blueprintów, a więc wiele widoków zwracających
+W rozbudowanych aplikacjach zawierających wiele blueprintów i widoków zwracających
 szablony, część kodu HTML powtarza się na każdej stronie, aby zachować spójność wyglądu.
-Tę wspólną część, aby jej nie powtarzać, umieszcza się w tzw. **szablonie bazowym**.
-W naszym przypadku będzie to dotychczasowy plik :fle:`templates/index.html`, którego
-kod zmieniamy na podany niżej:
+Tę wspólną część, aby jej nie powielać, umieścimy w **szablonie bazowym**.
+Użyjemy dotychczasowego pliku :fle:`templates/index.html`, w którym
+umieszczamy poniższy kod:
 
 .. raw:: html
 
@@ -231,30 +263,20 @@ Zastosowanie:
 
 Szablony blueprintów mogą być zapisywane w osobnych podkatalogach. W katalogu
 :file:`projekty_flask/todo/templates` tworzymy podkatalog o takiej samej nazwie
-jak nasz blueprint, tj. :file:`users`, a w nim plik (szablon) :file:`loguj.html`.
+jak nasz blueprint, tj. :file:`users`, a w nim plik (szablon) :file:`user_loguj.html`.
+W utworzonym szablonie umieszczamy kod:
 
 .. raw:: html
 
-    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
-
-.. code-block:: bash
-
-    (.venv) ~/projekty_flask/todo$ mkdir -p templates/users
-    (.venv) ~/projekty_flask/todo$ touch templates/users/loguj.html
-
-W szablonie :file:`projekty_flask/todo/templates/users/loguj.html` umieszczamy kod:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>loguj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>user_loguj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: source/loguj.html
+.. literalinclude:: source/user_loguj.html
     :linenos:
 
 Tag ``{% extends "index.html" %}`` wskazuje szablon bazowy, z którego dziedziczymy kod.
-W tagach ``{% block nazwa %} {% endblock %}`` wstawiamy kod charakterystyczny dla bieżącego szablonu,
-w tym przypadku tworzymy formularz HTML pozwalający na wpisanie loginu i hasła i przesłanie
+W tagach ``{% block nazwa %} {% endblock %}`` wstawiamy kod charakterystyczny dla bieżącego szablonu.
+W tym przypadku tworzymy formularz HTML pozwalający na wpisanie loginu i hasła i przesłanie
 tych danych na adres zdefiniowany w atrybucie ``action`` obsługiwany przez widok ``loguj()``
 z blueprinta ``users``.
 
@@ -268,15 +290,80 @@ powinniśmy zobaczyć stronę logowania:
 
 Spróbuj zalogować się na konto użytkownika utworzonego podczas dodawania do bazy przykładowych
 danych. W formularzu podaj login ``adam`` i hasło ``zaq1@WSX``. Po zalogowaniu
-powinniśmy zobaczyć stronę główną z odpowiednim komunikatem:
+powinieneś zobaczyć stronę główną z odpowiednim komunikatem:
 
 .. figure:: img/todo_adam.png
 
-Lista zadań
-===========
+Po wylogowaniu podobnie:
 
-Nasz pierwszy <foreign lang='en'>blueprint</foreign> umieścimy w pliku :file:`todo.py`,
-który tworzymy w katalogu aplikacji i wypełniamy kodem:
+.. figure:: img/todo_wyloguj.png
+
+Dodawanie i usuwanie kont
+=========================
+
+W blueprincie :file:`users.py` umieścimy jeszcze dwa widoki, które umożliwią zarejestrowanie się
+użytkownika oraz usuwanie konta:
+
+.. highlight:: python
+.. literalinclude:: source/users.py
+    :linenos:
+    :lines: 58-
+
+Po wysłaniu żądania ``GET`` na adres ``http://nazwa_serwera/users/dodaj`` widok ``dodaj()``
+zwróci szablon :file:`user_dodaj.html` zawierający formularz. Po wypełnieniu i wysłaniu formularza,
+czyli w przypadku żądania typu ``POST`` odczytujemy login oraz hasło i próbujemy dodać
+do bazy nowego użytkownika wykonując klauzulę SQL ``INSERT INTO user ...``.
+Warto zwrócić uwagę, że hasło jest szyfrowane za pomocą funkcji skrótu ``generate_password_hash()``.
+
+Jeżeli podany login istnieje w bazie, zwrócony zostanie wyjątek, tj. błąd integralności, wtedy
+przygotowujemy komunikat dla użytkownika i ponownie zawracamy szablon z formularzem.
+W przeciwnym razie użytkownik zostanie przekierowany na stronę główną z komunikatem potwierdzającym
+dodanie konta.
+
+Zalogowany użytkownik będzie mógł usunąć konto po wejściu na stronę o adresie
+``http://nazwa_serwera/users/usun``. Widok ``usun()`` obsługujący ten adres zabezpieczamy dodanym
+wcześniej dekoratorem ``login_required``. Jeżeli użytkownik potwierdzi chęć usunięcia konta
+oraz wszystkich jego zadań przesyłając formularz zwrócony w szablonie ``user_usun.html``,
+wykonamy klauzulę SQL ``DELETE FROM users ...``, która usunie jego konto z bazy oraz kaskadowo
+wszystkie powiązane zadania. Na koniec przekierujemy użytkownika na stronę główną.
+
+Pozostaje dodanie szablonów zwracanych przez omówione widoki. W katalogu
+:file:`projekty_flask/todo/templates/users`:
+
+- dodajemy plik :file:`user_dodaj.html`:
+
+    .. raw:: html
+
+        <div class="code_no">Plik <i>user_dodaj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+    .. highlight:: html
+    .. literalinclude:: source/user_dodaj.html
+        :linenos:
+
+– oraz plik :file:`user_usun.html`:
+
+    .. highlight:: html
+    .. literalinclude:: source/user_usun.html
+        :linenos:
+
+Ćwiczenie
+------------
+
+1. Dodaj do szablonu bazowego we właściwych sekcjach odnośniki pozwalające na dodawanie
+   i usuwanie konta przez użytkownika.
+2. Dodaj koto użytkownika, a następnie je usuń.
+
+.. figure:: img/todo_dodaj.png
+
+.. figure:: img/todo_ewa.png
+
+.. figure:: img/todo_usun.png
+
+Lista zadań
+=============
+
+Obsługę zadań umieścimy w osobnym blueprincie. W katalogu aplikacji :file:`projekty_flask/todo`
+tworzymy plik :file:`todo.py` i wypełniamy kodem:
 
 .. raw:: html
 
@@ -286,52 +373,35 @@ który tworzymy w katalogu aplikacji i wypełniamy kodem:
 .. literalinclude:: source/todo1.py
     :linenos:
 
-Wszystkie pobrane z bazy rekordy przekazujemy do szablonu w zmiennej ``zadania``.
+Widok ``index()`` wywoływany będzie po wejściu na adres ``http://nazwa_serwera/todo``.
+Jego zadaniem jest pobranie z bazy wszystkich zadań zalogowanego użytkownika i przekazanie ich do szablonu
+w zmiennej ``zadania``.
+
 Szablon tworzymy w pliku :file:`projekty_flask/todo/templates/todo/index.html`:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>index1.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>todo/index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: source/index1.html
+.. literalinclude:: source/todo_index.html
     :linenos:
 
-* ``{% %}`` – tagi używane w szablonach do instrukcji sterujących;
-* ``{{ }}`` – tagi używane do wstawiania wartości zmiennych;
-* ``{{ config.SITE_NAME }}`` – w szablonie mamy dostęp do słownika ustawień aplikacji ``config``;
-* ``{% for zadanie in zadania %}`` – pętla odczytująca zadania z listy przekazanej
-  do szablonu w zmiennej ``zadania``.
+W pętli ``{% for zadanie in zadania %}`` odczytujemy zadania z listy przekazanej
+do szablonu, wypisujemy treść zadania i datę dodania.
 
-Nawigacja
+Ćwiczenie
 ---------
 
-W szablonie aplikacji :file:`projekty_flask/todo/templates/index.html` warto dodać
-link do strony z listą zadań przy użyciu funkcji ``url_for()``, czyli np.:
+1. Dodaj do szablonu bazowego odnośnik do listy zadań.
+2. Zaloguj się podając login ``adam`` i hasło ``zaq1@WSX``.
+3. Wejdź na stronę z listą zadań.
 
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. code-block:: html
-
-    <p><a href="{{ url_for('todo.index') }}">Zadania »»»</a></p>
-
-* ``url_for('zadania')`` – funkcja dostępna w szablonach, generuje adres
-  powiązany z podaną nazwą funkcji.
-
-**Ćwiczenie**
-
-Wstaw link do strony głównej w szablonie listy zadań.
-Po odwiedzeniu strony *127.0.0.1:5000/zadania* powinniśmy zobaczyć listę zadań.
-
-.. figure:: img/todo_03_zadania.png
+.. figure:: img/todo_zadania.png
 
 Dodawanie zadań
 ===============
 
-Po wpisaniu adresu w przeglądarce i naciśnięciu Enter, wysyłamy do serwera żądanie typu :term:`GET`,
-które obsługujemy zwracając klientowi odpowiednie dane (listę zadań).
 Dodawanie zadań wymaga przesłania danych z formularza na serwer – są to
 żądania typu :term:`POST`, które modyfikują dane aplikacji.
 

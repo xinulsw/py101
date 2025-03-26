@@ -20,12 +20,6 @@ Słownik
         (ang. *cookies*) zaszyfrowane dane tekstowe wysyłane przez serwer i zapamiętywane po stronie klienta,
         zawierają np. identyfikator sesji użytkownika.
 
-    dystrybucja Linuksa
-        określona wersja systemu operacyjnego oparta na jądrze Linux, udostępniana
-        zazwyczaj w formie obrazów *iso*. Najbardziej znane to `Debian`_ i jego odmiany:
-        `Ubuntu <http://ubuntu.pl>`_, `Linux Mint`_, `MX Linux`_.
-        Zob.: `dystrybucjach Linuksa <http://pl.wikipedia.org/wiki/Dystrybucja_Linuksa>`_
-
     dana statyczna
         – (ang. static data), dane powiązane z klasą, a nie z jej instancjami, czyli obiektami.
         Tworzymy je definiując atrybuty klasy. Korzystamy z nich podając nazwę klasy, np.:

@@ -1,18 +1,11 @@
 <!-- projekty_flask/todo/templates/todo/index.html -->
-<html>
-  <head>
-  <!-- nazwa aplikacji pobrana z ustawień -->
-    <title>{{ config.SITE_NAME }} – Lista zadań</title>
-  </head>
-  <body>
-    <h1>Lista zadań</h1>
-
+{% extends "index.html" %}
+{% block h1 %} Lista zadań {% endblock %}
+{% block body %}
     <ol>
       <!-- wypisujemy kolejno wszystkie zadania -->
       {% for zadanie in zadania %}
         <li>{{ zadanie.zadanie }} – <em>{{ zadanie.data_pub }}</em></li>
       {% endfor %}
     </ol>
-
-  </body>
-</html>
+{% endblock %}
