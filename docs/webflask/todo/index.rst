@@ -181,28 +181,27 @@ funkcję ``loguj()`` powiązaną z adresem URL ``http://nazwa_serwera/users/logu
     Do przesyłania danych metodą ``POST`` służą formularze.
 
 Jeżeli serwer otrzyma żądanie typu ``GET`` oraz w przypadku błędów logowania,
-funkcja zwróci szablon ``users/loguj.html``. Natomiast w przypadku żądania typu POST, funkcja:
+funkcja zwróci szablon ``users/loguj.html``. Natomiast kiedy serwer otrzyma dane z formularza,
+wykonamy nastęujące operacje:
 
-* odczyta login i hasło z przesłanego formularza dostępnego w słowniku ``request.form``;
-* utworzy obiekt bazy danych: ``db = get_db()``;
-* wykona podane zapytanie SQL: ``db.execute('SELECT...')``,
-  czyli pobranie danych użytkownika o podanym loginie;
-* jako wynik zapytania zwrócony zostanie jeden rekord: ``fetchone()``;
-* jeżeli w bazie nie będzie użytkownika o podanym loginie (``user is None``)
-  lub jeżeli podane hasło będzie błędne (``not check_password_hash(user['haslo'], haslo)``),
-  funkcja przygotuje odpowiedni komunikat błędu w zmiennej ``error``;
-* jeżeli podany login i hasło będą poprawne, identyfikator użytkownika zostanie zapisany
-  w sesji [zob. :term:`sesja`], a zalogowany użytkownik zostanie przekierowany na stronę
-  główną ``redirect(url_for('index'))``;
-* w przypadku poprawnego logowania, jak i błędów funkcja ``flash()`` przygotuje komunikaty
-  dla użytkownika, które będzie można później odczytać w szablonie.
+* ``request.form[]`` – odczytanie loginu i hasłu z przesłanego formularza;
+* ``db = get_db()`` – utworzenie obiektu bazy danych;
+* ``db.execute('SELECT...', lista)`` – wykonanie zapytania SQL, czyli pobranie danych użytkownika
+  o podanym loginie, przy czym znaki zapytania zostaną zastąpione wartościami z listy;
+* ``fetchone()`` – jako wynik zapytania zwrócony zostanie jeden rekord;
+* przygotowanie informacji o błędzie w zmiennej ``error``, jeżeli w bazie nie ma użytkownika o podanym
+  loginie (``user is None``) lub jeżeli podano błędne hasło (``not check_password_hash(user['haslo'], haslo)``);
+* ``session['user_id'] = user['id']`` – zapisanie identyfikatora użytkownika w sesji [zob. :term:`sesja`],
+  jeżeli dane logowania są poprawne;
+* ``redirect(url_for('index'))`` przekierowanie zalogowanego użytkownika na stronę główną;
+* ``flash()`` – zapisanie komunikatów dla użytkownika, które będzie można później odczytać w szablonie.
 
 Po poprawnym zalogowaniu identyfikator użytkownika będzie dostępny w sesji podczas przetwarzania
-kolejnych żądań. Za pomocą instrukcji ``@bp.before_app_request`` rejestrujemy funkcję ``load_user()``,
-która wykonywana będzie przed każdym żądaniem. Jeżeli w sesji zapisany został identyfikator
-użytkownika, funkcja odczyta jego dane z bazy i zapisze w ``g.user``.
+kolejnych żądań. Będzie on odczytywany przez funkcję ``load_user()``, która wykonywana będzie przed każdym
+żądaniem, na wskazuje instrukcja ``@bp.before_app_request``. Zadaniem funkcji będzie pobranie danych
+zalogowanego użytkownika z bazy i zapisnie ich w kontekście ``g.user``.
 
-Adres ``http://nazwa_serwera/users/wyloguj`` będzie obsługiwał widok ``wyloguj()``. Jego zadaniem
+Adres ``http://nazwa_serwera/users/wyloguj`` będzie obsługiwany przez widok ``wyloguj()``. Jego zadaniem
 jest usunięcie danych użytkownika z sesji, co oznacza wylogowanie, oraz przekierowanie użytkownika
 na stronę główną.
 
@@ -421,59 +420,50 @@ W pliku :file:`todo.py` dopisujemy widoki:
     :linenos:
     :lines: 17-45
 
-Widok ``dodaj()`` w odpowiedzi na żądanie typu ``GET`` zwraca szablon :file:`zadanie_dodaj.html`,
-który zawiera formularz pozwalający na wpisanie treści zadania.
+Widok ``dodaj()`` w odpowiedzi na żądanie typu ``GET`` zwróci szablon :file:`zadanie_dodaj.html`,
+który będzie zawierał formularz pozwalający na wpisanie treści zadania.
 
-Po przesłaniu formularza na serwer odczytujemy treść zadania i sprawdzamy,
-czy zawiera jakieś znaki. Jeżeli tak, wykonujemy zapytanie SQL ``INSERT INTO ...``,
-które w tabeli ``zadanie`` dodaje nowy rekord zawierający identyfikato użytkownika,
-treść zadania, wartość ``0`` oznaczającą, że zadanie nie jest wykonane.
+Po przesłaniu formularza na serwer odczytamy treść zadania i sprawdzimy,
+czy zawiera jakieś znaki. Jeżeli tak, wykonamy zapytanie SQL ``INSERT INTO ...``,
+które do tabeli ``zadanie`` doda nowy rekord zawierający identyfikato użytkownika,
+treść zadania oraz wartość ``0`` oznaczającą, że zadanie nie jest wykonane.
+
 Warto zwrócić uwagę, że nie podajemy daty publikcaji, ponieważ zostanie ona utworzona
 automatycznie przez bazę danych dzięki zdefiniowaniu wartości domyślnej
 pola ``data_pub`` w modelu danych: ``DEFAULT CURRENT_TIMESTAMP``.
 
+Widok ``zrobione()`` obsługiwał będzie tylko żądania typu ``POST``. Po otrzymaniu
+identyfikatora zadania wykonamy zapytanie SQL ``UPDATE``, które oznaczy zadanie
+wskazane w klauzuli ``WHERE`` jako zrobione: ``SET zrobione=1``.
 
-
-Następnie rozbudujemy widok listy zadań:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: todo_z4.py
-    :linenos:
-    :lineno-start: 43
-    :lines: 43-63
-    :emphasize-lines: 1, 3-16, 21
-
-* ``methods=['GET', 'POST']`` – w liście wymieniamy typy obsługiwanych żądań;
-* ``request.form['zadanie']`` – dane przesyłane w żądaniach POST odczytujemy ze
-  słownika ``form``;
-* ``db.execute(...)`` – wykonujemy zapytanie, które dodaje nowe zadanie,
-  w miejsce symboli zastępczych ``(?, ?, ?, ?)`` wstawione zostaną dane
-  z listy podanej jako drugi parametr;
-* ``flash()`` – funkcja pozwala przygotować komunikaty dla użytkownika,
-  które można będzie wstawić w szablonie;
-* ``redirect(url_for('zadanie'))`` – przekierowanie użytkownika na adres związany
-  z podanym widokiem – żądanie typu GET.
-
-Warto zauważyć, że do szablonu przekazujemy dodatkową zmienną ``error``.
-
-W szablonie :file:`zadania_lista.html` po znaczniku ``<h1>`` umieszczamy kod:
+W szablonie :file:`projekty_flask/todo/templates/todo/zadanie_dodaj.html` umieszczamy kod
+HTML formularza pozwalającego dodać zadanie:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>zadania_lista.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>zadanie_dodaj.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: templates/zadania_lista_z4.html
+.. literalinclude:: source/zadanie_dodaj.html
     :linenos:
-    :lineno-start: 10
-    :lines: 10-25
 
-* ``{% if error %}`` – sprawdzamy, czy zmienna ``error`` cokolwiek zawiera;
-* ``{% for message in get_flashed_messages() %}`` – pętla odczytująca komunikaty;
+Szablon :file:`projekty_flask/todo/templates/todo/index.html` uzupełniamy, tzn.
+kod w pętli ``{% for zadanie in zadania %}`` zmieniamy na:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>todo/index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: html
+.. literalinclude:: source/index.html
+    :linenos:
+    :lines: 7-22
+
+Ćwiczenie
+----------
+
+1. Dodaj konto dla użytkownika o loginie ``ewa`` i zaloguj się na nie.
+2. Dodaj dwa zadania i oznacz jedno z nich jako wykonane.
 
 .. figure:: img/todo_04_dodawanie.png
 
