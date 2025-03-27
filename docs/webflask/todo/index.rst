@@ -213,8 +213,10 @@ w przeciwnym razie zwróci żądany widok.
 Rejestracja blueprinta
 ----------------------
 
-Użycie blueprinta wymaga zarejestrowania go w aplikacji. W pliku :file:`app.py` dodajemy więc
-kod:
+Użycie blueprinta wymaga zarejestrowania go w aplikacji.
+
+Na początku pliku :file:`app.py` importujemy moduł ``users``, następnie poniżej komentarza
+dodajemy kod:
 
 .. raw:: html
 
@@ -222,6 +224,10 @@ kod:
 
 .. highlight:: python
 .. code-block:: python
+
+    import users
+    
+    ...
 
     # rejestracja blueprintów
     app.register_blueprint(users.bp)
@@ -370,8 +376,9 @@ tworzymy plik :file:`todo.py` i wypełniamy kodem:
     <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: source/todo1.py
+.. literalinclude:: source/todo.py
     :linenos:
+    :lines: 1-15
 
 Widok ``index()`` wywoływany będzie po wejściu na adres ``http://nazwa_serwera/todo``.
 Jego zadaniem jest pobranie z bazy wszystkich zadań zalogowanego użytkownika i przekazanie ich do szablonu
@@ -393,29 +400,39 @@ do szablonu, wypisujemy treść zadania i datę dodania.
 Ćwiczenie
 ---------
 
-1. Dodaj do szablonu bazowego odnośnik do listy zadań.
-2. Zaloguj się podając login ``adam`` i hasło ``zaq1@WSX``.
-3. Wejdź na stronę z listą zadań.
+1. W pliku :file:`app.py` zaimportuj moduł ``todo`` i zarejestruj blueprint ``todo.bp`` w aplikacji.
+2. Dodaj do szablonu bazowego odnośnik do listy zadań.
+3. Zaloguj się podając login ``adam`` i hasło ``zaq1@WSX``.
+4. Wejdź na stronę z listą zadań.
 
 .. figure:: img/todo_zadania.png
 
 Dodawanie zadań
 ===============
 
-Dodawanie zadań wymaga przesłania danych z formularza na serwer – są to
-żądania typu :term:`POST`, które modyfikują dane aplikacji.
-
-Na początku pliku :file:`todo.py` trzeba, jak zwykle, zaimportować wymagane funkcje:
+W pliku :file:`todo.py` dopisujemy widoki:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: todo_z4.py
+.. literalinclude:: todo.py
     :linenos:
-    :lineno-start: 8
-    :lines: 8-9
+    :lines: 17-45
+
+Widok ``dodaj()`` w odpowiedzi na żądanie typu ``GET`` zwraca szablon :file:`zadanie_dodaj.html`,
+który zawiera formularz pozwalający na wpisanie treści zadania.
+
+Po przesłaniu formularza na serwer odczytujemy treść zadania i sprawdzamy,
+czy zawiera jakieś znaki. Jeżeli tak, wykonujemy zapytanie SQL ``INSERT INTO ...``,
+które w tabeli ``zadanie`` dodaje nowy rekord zawierający identyfikato użytkownika,
+treść zadania, wartość ``0`` oznaczającą, że zadanie nie jest wykonane.
+Warto zwrócić uwagę, że nie podajemy daty publikcaji, ponieważ zostanie ona utworzona
+automatycznie przez bazę danych dzięki zdefiniowaniu wartości domyślnej
+pola ``data_pub`` w modelu danych: ``DEFAULT CURRENT_TIMESTAMP``.
+
+
 
 Następnie rozbudujemy widok listy zadań:
 
