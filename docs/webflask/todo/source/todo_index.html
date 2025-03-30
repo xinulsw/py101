@@ -12,7 +12,7 @@
           <form method="POST" action="{{ url_for('todo.zrobione') }}">
             <!-- wysyłamy tylko id zadania -->
             <input type="hidden" name="id" value="{{ zadanie.id }}"/>
-            <button type="submit">Wykonane</button>
+            <button type="submit">Zrobione</button>
           </form>
         {% else %}
           <!-- tu należy wstawić kod formualrza do usuwania zadania -->

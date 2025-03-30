@@ -6,6 +6,13 @@
 <body>
   <h1>{% block h1 %} {{ config.SITE_NAME }} {% endblock %}</h1>
 
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('index') }}">Strona główna »</a></li>
+      <li><a href="{{ url_for('users.loguj') }}">Zaloguj się »</a></li>
+    </ul>
+  </nav>
+
   {% with komunikaty = get_flashed_messages() %}
     {% if komunikaty %}
       {% for komunikat in komunikaty %}
@@ -15,11 +22,6 @@
   {% endwith %}
 
   {% block body %} {% endblock %}
-
-  <nav>
-    <a href="{{ url_for('index') }}">Strona główna »»»</a> –
-    <a href="{{ url_for('users.loguj') }}">Zaloguj się »»»</a>
-  </nav>
 
 </body>
 </html>

@@ -425,16 +425,16 @@ który będzie zawierał formularz pozwalający na wpisanie treści zadania.
 
 Po przesłaniu formularza na serwer odczytamy treść zadania i sprawdzimy,
 czy zawiera jakieś znaki. Jeżeli tak, wykonamy zapytanie SQL ``INSERT INTO ...``,
-które do tabeli ``zadanie`` doda nowy rekord zawierający identyfikato użytkownika,
+które do tabeli ``zadanie`` doda nowy rekord zawierający identyfikator użytkownika,
 treść zadania oraz wartość ``0`` oznaczającą, że zadanie nie jest wykonane.
 
-Warto zwrócić uwagę, że nie podajemy daty publikcaji, ponieważ zostanie ona utworzona
+Warto zwrócić uwagę, że nie podajemy daty publikacji, ponieważ zostanie ona utworzona
 automatycznie przez bazę danych dzięki zdefiniowaniu wartości domyślnej
 pola ``data_pub`` w modelu danych: ``DEFAULT CURRENT_TIMESTAMP``.
 
 Widok ``zrobione()`` obsługiwał będzie tylko żądania typu ``POST``. Po otrzymaniu
-identyfikatora zadania wykonamy zapytanie SQL ``UPDATE``, które oznaczy zadanie
-wskazane w klauzuli ``WHERE`` jako zrobione: ``SET zrobione=1``.
+identyfikatora zadania przesłanego z formularza wykonamy zapytanie SQL ``UPDATE``,
+które oznaczy zadanie wskazane w klauzuli ``WHERE`` jako zrobione: ``SET zrobione=1``.
 
 W szablonie :file:`projekty_flask/todo/templates/todo/zadanie_dodaj.html` umieszczamy kod
 HTML formularza pozwalającego dodać zadanie:
@@ -455,9 +455,15 @@ kod w pętli ``{% for zadanie in zadania %}`` zmieniamy na:
     <div class="code_no">Plik <i>todo/index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: source/index.html
+.. literalinclude:: source/todo_index.html
     :linenos:
     :lines: 7-22
+
+- ``{% if not zadanie.zrobione %}`` – jeżeli zadanie nie jest wykonane, dodajemy
+  formularz zmiany statusu zadania zawierający ukryte pole z identyfikatorem zadania.
+  Jeżeli użytkownik kliknie przycisk ``Zrobione``, do serwera zostanie wysłane
+  żądanie ``POST`` z identyfikatorem zadania, które zostanie obsłużone przez widok
+  ``zrobione()``.
 
 Ćwiczenie
 ----------
@@ -465,7 +471,7 @@ kod w pętli ``{% for zadanie in zadania %}`` zmieniamy na:
 1. Dodaj konto dla użytkownika o loginie ``ewa`` i zaloguj się na nie.
 2. Dodaj dwa zadania i oznacz jedno z nich jako wykonane.
 
-.. figure:: img/todo_04_dodawanie.png
+.. figure:: img/todo_zadania_ewy.png
 
 Style CSS
 =========
@@ -501,51 +507,10 @@ Dołącz arkusz stylów CSS również do szablonu :file:`index.html`. Odśwież 
 
 .. figure:: img/todo_05_css.png
 
-Zadania wykonane
-================
-
-Do każdego zadania dodamy formularz, którego wysłanie będzie oznaczało,
-że wykonaliśmy dane zadanie, czyli zmienimy atrybut ``zrobione`` wpisu
-z *0* (niewykonane) na *1* (wykonane). Odpowiednie żądanie typu POST
-obsłuży nowy widok w pliku :file:`todo.py`, który wstawiamy
-przed kodem uruchamiającym aplikację (``if __name__ == '__main__':``):
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>todo.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: todo_z6.py
-    :linenos:
-    :lineno-start: 65
-    :lines: 65-73
-
-* ``zadanie_id = request.form['id']`` – odczytujemy przesłany identyfikator zadania;
-* ``db.execute('UPDATE zadania SET zrobione=1 WHERE id=?', [zadanie_id])`` – wykonujemy
-  zapytanie aktualizujące staus zadania.
-
-W szablonie :file:`zadania_lista.html` modyfikujemy fragment wyświetlający
-listę zadań i dodajemy formularz:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>zadania_lista.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: html
-.. literalinclude:: templates/zadania_lista_z6.html
-    :linenos:
-    :lineno-start: 29
-    :lines: 29-50
-
-Możemy dodawać zadania oraz zmieniać ich status.
-
-.. figure:: img/todo_06_zrobione.png
-
 Zadania dodatkowe
 =================
 
 * Dodaj możliwość usuwania zadań.
-* Dodaj mechanizm logowania użytkownika tak, aby użytkownik mógł dodawać i edytować tylko swoją listę zadań.
 
 Materiały
 =========
