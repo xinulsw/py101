@@ -138,10 +138,11 @@ Użytkownicy
     Jedna aplikacja Flask może składać się z wielu modułów odpowiedzialnych np. za
     autoryzację użytkowników, system komentarzy, quiz czy listę zadań.
     Obsługę tych składników warto rozdzielić na osobne moduły, nazywane we Flasku
-    <foreign lang='en'>blueprint</foreign>, co ułatwi konstruowanie i rozszerzanie aplikacji.
+    ``blueprint``, co ułatwi konstruowanie i rozszerzanie aplikacji.
 
-W naszej aplikacji zadania do wykonania powiązane będą z użytkownikami, dlatego na początku
+Zadania do wykonania powiązane będą z użytkownikami, dlatego na początku
 zajmiemy się blueprintem, który pozwoli na logowanie, rejestrację i usuwanie użytkownika.
+
 W katalogu aplikacji tworzymy plik :file:`users.py` i dodajemy do niego poniższy kod:
 
 .. raw:: html
@@ -235,7 +236,7 @@ Szablony
 =========
 
 W rozbudowanych aplikacjach zawierających wiele blueprintów i widoków zwracających
-szablony, część kodu HTML powtarza się na każdej stronie, aby zachować spójność wyglądu.
+szablony, część kodu HTML powtarza się na każdej stronie, co zapewnia spójność wyglądu.
 Tę wspólną część, aby jej nie powielać, umieścimy w **szablonie bazowym**.
 Użyjemy dotychczasowego pliku :fle:`templates/index.html`, w którym
 umieszczamy poniższy kod:
@@ -254,7 +255,7 @@ W szablonach wykorzystujemy specjalne **tagi** dwóch rodzajów:
   które będą uzupełniane przez szablony dziedziczące,
 - ``{{ zmienna }}`` – służą wyświetlaniu wartości zmiennych lub wywoływaniu metod obiektów przekazanych do szablonu.
 
-Zastosowanie:
+Zastosowanie tagów w szablonach:
 
 - ``{{ config.SITE_NAME }}`` – wstawienie nazwy serwisu zdefiniowanego w słowniku ustawień aplikacji ``config``;
 - ``{% block h1 %} {% endblock %}`` – zdefiniowanie bloku o nazwie ``h1``, którego zawartość może zostać nadpisana
@@ -356,13 +357,13 @@ Pozostaje dodanie szablonów zwracanych przez omówione widoki. W katalogu
 
 1. Dodaj do szablonu bazowego we właściwych sekcjach odnośniki pozwalające na dodawanie
    i usuwanie konta przez użytkownika.
-2. Dodaj koto użytkownika, a następnie je usuń.
+2. Dodaj koto użytkownika ``ewa``, a następnie je usuń.
 
-.. figure:: img/todo_dodaj.png
+.. figure:: img/todo_user_dodaj.png
 
 .. figure:: img/todo_ewa.png
 
-.. figure:: img/todo_usun.png
+.. figure:: img/todo_user_usun.png
 
 Lista zadań
 =============
@@ -390,7 +391,7 @@ Szablon tworzymy w pliku :file:`projekty_flask/todo/templates/todo/index.html`:
     <div class="code_no">Plik <i>todo/index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: source/todo_index.html
+.. literalinclude:: source/todo_index1.html
     :linenos:
 
 W pętli ``{% for zadanie in zadania %}`` odczytujemy zadania z listy przekazanej
@@ -468,49 +469,66 @@ kod w pętli ``{% for zadanie in zadania %}`` zmieniamy na:
 Ćwiczenie
 ----------
 
-1. Dodaj konto dla użytkownika o loginie ``ewa`` i zaloguj się na nie.
-2. Dodaj dwa zadania i oznacz jedno z nich jako wykonane.
+1. Do szablonu wyświetlającego listę zadań dodaj na końcu odnośnik umożliwiający
+   dodawanie zadań.
+2. Dodaj konto dla użytkownika o loginie ``ewa`` i zaloguj się na nie.
+3. Dodaj dwa zadania i oznacz jedno z nich jako wykonane.
+
+.. figure:: img/todo_dodaj_zadanie.png
 
 .. figure:: img/todo_zadania_ewy.png
 
 Style CSS
 =========
 
-O wyglądzie aplikacji decydują arkusze stylów CSS. Umieszczamy je w podkatalogu ``static``
-folderu aplikacji. Tworzymy więc plik :file:`~/todo/static/style.css`
-z przykładowymi definicjami:
+O wyglądzie aplikacji decydują arkusze stylów CSS. Tego typu zasoby, podobnie jak np. obrazy,
+nie zmieniają się zbyt często, dlatego umieszczamy je w specjalnym podkatalogu :file:`static`
+w folderze aplikacji.
+
+Tworzymy więc podkatalog :file:`projekty_flask/todo/static`, a w nim plik :file:`projekty_flask/todo/static/style.css`.
+W pliku umieszczamy przykładowe definicje:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>style.css</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: css
-.. literalinclude:: static/style.css
+.. literalinclude:: source/style.css
     :linenos:
 
-Arkusz CSS dołączamy do pliku :file:`zadania_lista.html` w sekcji ``head``:
+Arkusz CSS dołączamy do szablonu bazowego :file:`projekty_flask/todo/templates/index.html` w sekcji ``head``:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>zadania_lista.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: templates/zadania_lista_z5.html
+.. literalinclude:: templates/index.html
     :linenos:
-    :lineno-start: 3
-    :lines: 3-8
-    :emphasize-lines: 4-5
+    :lines: 1-6
+    :emphasize-lines: 5
 
-**Ćwiczenie**
+Ćwiczenie
+----------
 
-Dołącz arkusz stylów CSS również do szablonu :file:`index.html`. Odśwież aplikację w przeglądarce.
+Uruchom aplikację lub odśwież stroną z listą zadań zalogowanego użytkownika po dołączeniu stylów CSS.
 
-.. figure:: img/todo_05_css.png
+.. figure:: img/todo_zadania_ewy.png
 
 Zadania dodatkowe
 =================
 
-* Dodaj możliwość usuwania zadań.
+Dodaj możliwość usuwania zadań, czyli:
+
+- w szablonie listy zadań dodaj formularz podobny do formularza oznaczania zadań
+  jako wykonane, z którego identyfikator zadania wysyłany jest do widoku ``usun``,
+- w blueprincie :file:`todo.py` dodaj wymagający zalogowania się widok ``usun()``
+  obsługujący adres URL ``/usun``, który przy użyciu klauzuli SQL ``DELETE FROM``
+  usuwa z bazy zadanie o odczytanym z formularza identyfikatorze należące
+  do zalogowanego użytkownika,
+- usuń pierwsze zadanie użytkownika ``ewa``.
+
+.. figure:: img/todo_zadanie_usunieto.png
 
 Materiały
 =========

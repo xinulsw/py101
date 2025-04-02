@@ -15,13 +15,13 @@
             <button type="submit">Zrobione</button>
           </form>
         {% else %}
-          <!-- tu należy wstawić kod formualrza do usuwania zadania -->
+          <!-- tu wstawisz kod formularza do usuwania zadania -->
         {% endif %}
 
         </li>
       {% endfor %}
     </ol>
     <p>
-        <a href="{{ url_for('todo.dodaj') }}">Dodaj zadanie »»»</a>
+        <a href="{{ url_for('todo.dodaj') }}">Dodaj zadanie »</a>
     </p>
 {% endblock %}
