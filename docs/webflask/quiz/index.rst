@@ -41,7 +41,7 @@ W katalogu aplikacji :file:`quiz` dodajemy plik o nazwie :file:`app.py` i umiesz
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: source/app1.py
@@ -77,12 +77,21 @@ Nasza aplikacja zwraca użytkownikowi stronę główną za pomocą widoku ``inde
 Jest to funkcja Pythona powiązana z określonym w dekoratorze ``route('/')``
 adresem ``/`` oznaczającym domyślny zasób serwera.
 
-Widoki obsługują podstawowe żądania protokołu :term:`HTTP` wysyłane przez przeglądarkę:
+Widoki obsługują podstawowe żądania protokołu :term:`HTTP` wysyłane przez przeglądarkę.
 
-- :term:`GET` – kiedy użytkownik chce zobaczyć jakąś stronę,
-- :term:`POST` – kiedy użytkownik przesyła dane na serwer za pomocą formularza.
+.. note::
 
-W odpowiedzi aplikacja może odsyłać różne dane, np. predefiniowany tekst, ale najczęściej
+    Żądania typu :term:`GET` występują wtedy, kiedy chcemy pobrać jakieś dane z serwera,
+    np. stronę. Ewentualne dane przekazywane do serwera (np. parametry wyszukiwania)
+    widoczne są w adresie URL, np.:
+
+    ``www.google.com/search?client=firefox-b-lm&channel=entpr&q=żądania+GET+i+POST``
+
+    Żądanie typu :term:`POST` służą natomiast do przesyłania na serwer danych niewidocznych w adresie URL,
+    które mają zazwyczaj zmieniać stan aplikacji, np. dodać lub zalogować użytkownika.
+    Do przesyłania danych metodą ``POST`` służą formularze.
+
+W odpowiedzi na żądanie aplikacja może odsyłać różne dane, np. predefiniowany tekst, ale najczęściej
 będzie to strona :term:`HTML` zawierająca różne w zależności od żądania informacje, np.
 formularz z pytaniami albo wyniki quizu.
 
@@ -101,7 +110,7 @@ Następnie w utworzonym katalogu dodajemy plik :file:`index.html` i umieszczamy 
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>index.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>index.html</i>. <span class="right"><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></span></div>
 
 .. highlight:: html
 .. literalinclude:: source/index.html
@@ -114,7 +123,7 @@ Uzupełniamy i zmieniamy kod w pliku :file:`app.py`:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: source/app2.py
@@ -136,17 +145,17 @@ Pytania i odpowiedzi
 ====================
 
 Dane aplikacji, a więc pytania i odpowiedzi, umieścimy w pliku :file:`app.py` – to najprostsze
-rozwiązanie, żeby zrozumieć działanie naszej aplikacji internetowej.
+rozwiązanie, żeby nie wprowadzać na razie obsługi bazy danych.
 Nowy kod wstawiamy po instrukcji ``app = Flask(__name__)``:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: source/app3.py
     :linenos:
-    :emphasize-lines: 6-28
+    :emphasize-lines: 5-28
 
 Źródłem danych dla naszej aplikacji będzie lista ``dane``, która zawiera trzy słowniki.
 W każdym słowniku umieszczamy treść pytania, możliwe odpowiedzi oraz odpowiedź poprawną.
@@ -160,7 +169,7 @@ do niego poniższy kod:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>pytania.html</i>. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>pytania.html</i> <span class="right"><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></span></div>
 
 .. highlight:: html
 .. literalinclude:: source/pytania.html
@@ -204,7 +213,7 @@ Na początku pliku :file:`app.py` dodajemy potrzebne importy:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: source/app4.py
@@ -216,7 +225,7 @@ Na początku pliku :file:`app.py` dodajemy potrzebne importy:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>app.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: source/app4.py
@@ -264,7 +273,7 @@ W szablonie wyświetlamy je we wspominanej pętli ``{% for komunikat in get_flas
 Materiały
 =========
 
-* Szybki start z Flask https://flask.palletsprojects.com/en/stable/quickstart/
+* `Quickstart <https://flask.palletsprojects.com/en/stable/quickstart/>`_
 
 .. admonition:: Pojęcia
 

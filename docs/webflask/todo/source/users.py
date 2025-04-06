@@ -2,10 +2,8 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from db import get_db
+from db import get_db, query_db
 
 bp = Blueprint('users', __name__, template_folder='templates', url_prefix='/users')
 
@@ -15,10 +13,8 @@ def loguj():
         login = request.form['login'].strip()
         haslo = request.form['haslo'].strip()
 
-        db = get_db()
         error = None
-
-        user = db.execute('SELECT * FROM user WHERE login = ?', [login]).fetchone()
+        user = query_db('SELECT * FROM user WHERE login = ?', [login], one=True)
 
         if user is None:
             error = 'Błędny login.'
@@ -31,6 +27,7 @@ def loguj():
             flash(f'Zalogowano użytkownika {user['login']}!')
             return redirect(url_for('index'))
         flash(error)
+
     return render_template('users/user_loguj.html')
 
 @bp.before_app_request
@@ -39,7 +36,7 @@ def load_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute('SELECT * FROM user WHERE id = ?', [user_id]).fetchone()
+        g.user = query_db('SELECT * FROM user WHERE id = ?', [user_id], one=True)
 
 @bp.route('/wyloguj')
 def wyloguj():
@@ -77,9 +74,9 @@ def dodaj():
 @login_required
 def usun():
     if request.method == 'POST':
-        db = get_db()
         login = g.user['login']
         user_id = g.user['id']
+        db = get_db()
         db.execute('DELETE FROM user WHERE id = ?', [user_id])
         db.commit()
         flash(f'Usunięto użytkownika {login}!')

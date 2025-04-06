@@ -3,13 +3,9 @@
 Quiz ORM
 #####################
 
-Realizacja aplikacji internetowej Quiz w oparciu o :term:`framework` `Flask`_ 0.12.x
-i bazę danych `SQLite`_ zarządzaną systemem ORM `Peewee`_ lub `SQLAlchemy`_.
-
-.. _Flask: http://flask.pocoo.org
-.. _SQLite: http://www.sqlite.org
-.. _Peewee: http://peewee.readthedocs.org/en/latest
-.. _SQLAlchemy: http://www.sqlalchemy.org
+Realizacja aplikacji internetowej **Quiz** w oparciu o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_ 3.1.x
+i bazę danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_ zarządzaną przez system ORM `Peewee <https://docs.peewee-orm.com/en/latest/>`_
+lub `SQLAlchemy <https://www.sqlalchemy.org/>`_.
 
 Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
 
@@ -32,6 +28,18 @@ Wykorzystywane biblioteki instalujemy przy użyciu instalatora ``pip``:
 .. contents::
     :depth: 1
     :local:
+
+Do pracy potrzebne nam będzie wirtualne środowisko Pythona z zainstalowanymi frameworkami
+Flask, Peewee, SQLAlchemy, Flask-WTF.
+Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
+
+1. przygotowujemy wirtualne środowisko Pythona w katalogu :file:`projekty_flask`, chyba że
+   zrobiliśmy to wcześniej podczas realizacji aplikacji Quiz lub ToDo;
+2. instalujemy wymagane pakiety:
+
+.. code-block:: bash
+
+    (.venv) ~/projekty_flask$ pip install flask peewee sqlalchemy flask-wtf
 
 Modularyzacja
 =============
@@ -697,8 +705,14 @@ używamy metody dostępnej w SQLAlchemy.
     :lineno-start: 120
     :emphasize-lines: 2-3
 
-Źródła
-======
+Materiały
+=========
 
-* :download:`quiz-orm-peewee.zip <quiz-orm-peewee.zip>`
-* :download:`quiz-orm-sqlalchemy.zip <quiz-orm-sqlalchemy.zip>`
+* `SQLite <https://www.sqlite.org/>`_
+* `SQLAlchemy in Flask <https://flask.palletsprojects.com/en/stable/patterns/sqlalchemy/>`_
+* `Flask WTF <https://flask-wtf.readthedocs.io/en/1.2.x/>`_
+
+.. admonition:: Pojęcia
+
+    :term:`framework`, :term:`HTTP`, :term:`GET`, :term:`POST`, :term:`sesja`,
+    :term:`dekorator`, :term:`widok`, :term:`szablon`, :term:`renderowanie szablonu`

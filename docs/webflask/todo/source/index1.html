@@ -9,7 +9,12 @@
   <nav>
     <ul>
       <li><a href="{{ url_for('index') }}">Strona główna »</a></li>
+    {% if g.user %}
+      <li><a href="{{ url_for('users.wyloguj') }}">Wyloguj się »</a></li>
+      <li><span>Zalogowany: {{ g.user['login'] }}</span></li>
+    {% else %}
       <li><a href="{{ url_for('users.loguj') }}">Zaloguj się »</a></li>
+    {% endif %}
     </ul>
   </nav>
 
