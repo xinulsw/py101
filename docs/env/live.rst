@@ -32,14 +32,14 @@ W Linuksie
 ==========
 
 * Pobieramy :term:`obraz iso` `MX Linux XFCE <https://mxlinux.org/download-links/>`_.
-* Pobieramy archiwum programu `live-usb-maker-qt-21.11 appimage <https://github.com/dolphinoracle/lum-qt-appimage/releases>`_
-  i rozpakowujemy go w dowolnym katalogu.
+* Pobieramy archiwum ostatniej wersji programu `MX_Live_USB_Maker appimage <https://github.com/dolphinoracle/lum-qt-appimage/releases>`_
+  i rozpakowujemy w dowolnym katalogu.
 * Wpinamy pendrajwa o pojemności min. 4 GB.
-* Rozpakowany program uruchamiamy w terminalu:
+* Rozpakowany program uruchamiamy w terminalu, np.:
 
   .. code-block:: bash
 
-      ~$ sudo ./live-usb-maker-qt-21.11.glibc2.28-x86_64.AppImage
+      ~$ sudo ./MX_Live_USB_Maker-24.6.glibc2.28-x86_64.AppImage
 
 * Po uruchomieniu programu klikamy przycisk "Wybierz" i wskazujemy ściągnięty obraz iso.
   Klikamy "Dalej" i czekamy na nagranie obrazu.

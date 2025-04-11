@@ -5,11 +5,12 @@ Podstawy Pythona
 
 Poznawanie Pythona zrealizujemy poprzez rozwiązywanie prostych zadań,
 które pozwolą zaprezentować elastyczność i łatwość tego języka.
-Sugerujemy używanie konsoli Pythona do testowania poznawanych funkcji i fragmentów kodu.
+Sugerujemy używanie powłoki Pythona do testowania poznawanych funkcji i fragmentów kodu.
 
 .. toctree::
     :titlesonly:
 
+    podstawy
     przyklady/index
     mlotek/index
     dlotek/index

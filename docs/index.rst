@@ -9,14 +9,14 @@ Python – materiały
     Zobacz: `oryginalne repozytorium <https://github.com/koduj-z-klasa/python101/>`_
     i `wersję HTML dokumentacji <http://python101.rtfd.io>`_.
 
-Celem materiałów jest nauczenie podstaw programowania w języku :term:`Python`
+Celem materiałów jest nauczenie programowania w języku :term:`Python`
 oraz pokazanie :doc:`zastosowań tego języka <opythonie>` w bardziej rozbudowanych projektach
 opartych na wybranych bibliotekach dodatkowych.
 
 ..  toctree::
     :maxdepth: 1
 
-    opythonie
+    env/opythonie
 
 Realizacja materiałów
 #####################
@@ -28,7 +28,7 @@ Realizacja niektórych materiałów wymaga dodatkowych pakietów i narzędzi.
     :maxdepth: 2
 
     env/index
-    realizacja/index
+    env/realizacja
 
 Materiały
 =========

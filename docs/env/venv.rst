@@ -7,8 +7,8 @@ Wirtualne środowisko Pythona (ang. *Python virtual environment*) pozwala instal
 w wybranych wersjach bez uprawnień administratora. W praktyce to katalog zawierający niezbędne pliki
 potrzebne do działania interpretera oraz menedżer instalacji pakietów **pip**.
 
-Wirtualne środowisko Pythona można utworzyć za pomocą poleceń (ręcznie) lub wybranego programu
-do edycji kodu, np. PyCharm lub VSCodium. Poniżej przedstawimy obydwa sposoby.
+Wirtualne środowisko Pythona można utworzyć w terminalu za pomocą poleceń. Można też wykorzystać
+edytor lub środowisko programistyczne, np. PyCharm lub VSCodium. Poniżej przedstawimy obydwa sposoby.
 
 Linux
 =====
