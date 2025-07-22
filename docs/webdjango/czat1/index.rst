@@ -27,9 +27,11 @@ krótkimi wiadomościami.
 Środowisko pracy
 ================
 
-Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
-Sugerujemy jednak wykorzystanie środowiska **PyCharm Community**, ponieważ w dużym stopniu ułatwia
-pracę nad projektami w języku Python.
+.. tip::
+
+    Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+    Sugerujemy jednak wykorzystanie środowiska **PyCharm Community**, ponieważ w dużym stopniu ułatwia
+    pracę nad projektami w języku Python.
 
 Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_django`` :ref:`wirtualne środowisko Pythona <venv>`
 i w aktywnym środowisku zainstaluj pakiet *Django*:
@@ -158,7 +160,7 @@ Budowanie aplikacji w Django nawiązuje do wzorca projektowego :term:`MVC`, czyl
 Model-Widok-Kontroler. Więcej informacji na ten temat umieściliśmy w osobnym
 materiale :ref:`MVC <mvc_wzorzec>`.
 
-Zaczynamy więc od zdefiniowania modelu (zob. :term:`model`), czyli klasy opisującej tabelę zawierającą
+Zaczynamy od zdefiniowania modelu (zob. :term:`model`), czyli klasy opisującej tabelę zawierającą
 wiadomości. Atrybuty klasy odpowiadają polom tabeli. Instancje tej klasy będą reprezentować wiadomości
 utworzone przez użytkowników, czyli rekordy tabeli. Każda wiadomość będzie zwierała treść,
 datę dodania oraz identyfikator autora (użytkownika).
@@ -173,14 +175,14 @@ W pliku :file:`czat/models.py` wpisujemy:
 .. literalinclude:: source/models.py
     :linenos:
 
-Opisując klasę ``Wiadomosc`` podajemy nazwy poszczególnych właściwości (pól)
+Definiując klasę ``Wiadomosc`` podajemy nazwy poszczególnych właściwości (pól)
 oraz typy przechowywanych w nich danych.
 
 .. note::
 
     Typy pól:
         * ``CharField`` – pole znakowe, przechowuje niezbyt długie napisy, np. nazwy;
-        * ``Date(Time)Field`` – pole daty (i czasu);
+        * ``DateTimeField`` – pole daty i czasu;
         * ``ForeignKey`` – pole klucza obcego, czyli relacji;
           wymaga nazwy powiązanego modelu jako pierwszego argumentu.
 
@@ -189,7 +191,7 @@ oraz typy przechowywanych w nich danych.
         * pierwszy argument w definicji pola, np. ``treść wiadomości`` określa przyjazną nazwę używaną np. w formularzach;
         * ``on_delete=models.CASCADE`` – jeżeli klucz obcy, w tym przypadku wskazujący autora, zostanie usunięty, usunięte zostaną również dodane przez niego wiadomości;
         * ``max_length`` – maksymalna długość pola znakowego;
-        * ``auto_now_add=True`` – data (i czas) wstawione zostaną automatycznie.
+        * ``auto_now_add=True`` – data i czas wstawione zostaną automatycznie.
 
 Podklasa ``Meta`` pozwala określić formy liczby pojedynczej (``verbose_name``) i mnogiej (``verbose_name_plural``) używane podczas wypisywania obiektów, a także domyślny sposób sortowania wiadomości (``ordering = ['data_pub']``) wg daty dodania.
 
@@ -199,9 +201,12 @@ czyli w naszym wypadku wyświetlenie treści wiadomości, np. w panelu administr
 Migracje
 ========
 
-Operacje wykonywane na bazie danych nazywane są w Django **migracjami**. Każda :term:`migracja` powiązana jest z aplikacją wchodzącą w skład projektu. Domyślnie wykonywane są migracje dla aplikacji `admin, auth, contenttypes` oraz `sessions` dostarczanych przez Django.
+Operacje wykonywane na bazie danych nazywane są w Django **migracjami**.
+Każda :term:`migracja` powiązana jest z aplikacją wchodzącą w skład projektu.
+Domyślnie wykonywane są migracje dla aplikacji `admin, auth, contenttypes` oraz `sessions` dostarczanych przez Django.
 
-Po dodaniu lub zmianie modelu należy utworzyć migrację, aby w bazie danych zostały utworzone lub zmodyfikowane tabele, w których zapisywane są przetwarzane w aplikacji dane. Następnie migrację należy wykonać:
+Po dodaniu lub zmianie modelu należy utworzyć migrację, aby w bazie danych zostały utworzone lub zmodyfikowane tabele,
+w których zapisywane są przetwarzane w aplikacji dane. Następnie migrację należy wykonać. W tym celu wydajemy polecenia:
 
 .. raw:: html
 
@@ -243,8 +248,8 @@ W pliku :file:`czat/admin.py` umieszczamy kod:
 .. literalinclude:: source/admin.py
     :linenos:
 
-Na początku importujemy zawartość pliku :file:`models.py`, a następnie rejestrujemy w panelu zdefiniowany wcześniej model ``Wiadomość``:
-``admin.site.register(models.Wiadomosc)``.
+Na początku importujemy zawartość pliku :file:`models.py`, a następnie rejestrujemy w panelu zdefiniowany wcześniej
+model ``Wiadomość``: ``admin.site.register(models.Wiadomosc)``.
 
 **Konto administratora** tworzymy wydając w terminalu polecenie:
 
@@ -291,9 +296,9 @@ Strona główna
 Definicja adresu URL
 --------------------
 
-Pierwszym krokiem jest zdefiniowanie **adresu URL**, pod którym dostępna będzie strona.
-Adresy obsługiwane przez naszą aplikację definiujemy w pliku :file:`czat/urls.py`,
-który trzeba utworzyć.
+Podczas tworzenia nowych stron pierwszym krokiem jest zdefiniowanie **adresu URL**, pod którym dostępna będzie strona,
+i powiązanie go z odpowiednim widokiem, tj. najczęściej funkcją, która będzie go obsługiwała.
+Konfigurację adresów aplikacji zapisujemy w pliku :file:`czat/urls.py`, który trzeba utworzyć.
 
 Tworzymy więc nowy plik :file:`czat/urls.py` i uzupełniamy go kodem:
 
@@ -311,9 +316,9 @@ Tworzymy więc nowy plik :file:`czat/urls.py` i uzupełniamy go kodem:
 - ``''`` – pierwszym argumentem funkcji ``path()`` jest ciąg znaków definiujący adres,
   w tym przypadku ciąg pusty ``''`` oznacza domyślny adres projektu;
 - ``views.index`` – przykładowy widok, czyli funkcja zdefiniowana w pliku :file:`czat/views.py`;
-- ``name='index'`` – nazwa, która pozwoli na generowanie adresów url dla linków w kodzie HTML.
+- ``name='index'`` – nazwa, która pozwoli na generowanie adresów URL dla linków w kodzie HTML.
 
-Konfigurację adresów URL aplikacji musimy jednorazowo włączyć do konfiguracji adresów URL projektu.
+Konfigurację adresów URL aplikacji musimy włączyć do konfiguracji adresów URL projektu.
 W pliku :file:`czat1/urls.py` dopisujemy:
 
 .. raw:: html
@@ -344,15 +349,23 @@ czyli w tym przypadku funkcji ``index()`` w pliku :file:`views.py`:
 .. literalinclude:: source/views_z1.py
     :linenos:
 
-Każdy widok powinien zwracać do klienta (przeglądarki) obiekt typu ``HttpResponse``. W najprostszym przypadku może on zawierać tylko tekst, np.: ``return HttpResponse("Witaj w aplikacji Czat!")``.
+Każdy widok powinien zwracać do klienta (przeglądarki) obiekt typu ``HttpResponse``.
+W najprostszym przypadku może on zawierać tylko tekst, np.: ``return HttpResponse("Witaj w aplikacji Czat!")``.
+
+Ćwiczenie
+^^^^^^^^^
+
+Uruchom serwer deweloperski i wejdź na stronę główną, tj. adres URL: ``127.0.0.1:8000/admin/`` –
+powinieneś zobaczyć tekst podany jako argument metody ``HttpResponse()``.
 
 Dodanie szablonu
 ----------------
 
-Typową odpowiedzią na żądanie jest zwrócenie do przeglądarki strony HTML. Takie zadanie realizujemy za pomocą szablonów.
+Typową odpowiedzią na żądanie jest zwrócenie do przeglądarki strony HTML.
+Takie zadanie realizujemy za pomocą szablonów.
 
 **Szablony** stron umieszczamy w podkatalogu ``aplikacja/templates/aplikacja``.
-Tworzymy więc katalogi ``templates/czat``, a następnie plik ``index.html`` :
+W katalogu aplikacji tworzymy więc katalogi ``templates/czat``, a następnie plik ``index.html``:
 
 .. raw:: html
 
@@ -394,15 +407,23 @@ W pliku :file:`views.py` zmieniamy funkcję ``index()``:
 Funkcja ``render()`` jako pierwszy parametr pobiera obiekt typu ``HttpRequest`` zawierający informacje
 o żądaniu, jako drugi nazwę szablonu z katalogiem nadrzędnym.
 
-Uruchom serwer deweloperski i sprawdź w przeglądarce, jak wygląda strona powitalna – powinna zawierać tekst wpisany w szablonie.
+Ćwiczenie
+^^^^^^^^^
+
+Uruchom serwer deweloperski i sprawdź w przeglądarce, jak wygląda strona powitalna
+– powinna zawierać tekst wpisany w szablonie.
 
 .. figure:: img/django_strona_glowna_2.png
 
 (Wy)logowanie
 =============
 
-Udostępnimy użytkownikom możliwość logowania i wylogowywania się,
-aby mogli dodawać i przeglądać wiadomości. Zaczniemy od zdefiniowania adresów URL obsługujących (wy)logowanie.
+Udostępnimy użytkownikom możliwość logowania i wylogowywania się, aby mogli dodawać i przeglądać wiadomości.
+Podobnie jak w przypadku strony głównej zaczniemy od zdefiniowania adresów URL, następnie dodamy powiązane z nimi
+widoki, a na końcu utworzymy szablony.
+
+Adresy URL
+----------
 
 W pliku :file:`czat/urls.py` definiujemy adresy URL:
 
@@ -415,7 +436,10 @@ W pliku :file:`czat/urls.py` definiujemy adresy URL:
     :linenos:
     :lineno-start: 5
     :lines: 5-8
-    :emphasize-lines: 7-8
+    :emphasize-lines: 3-4
+
+Widoki
+------
 
 W pliku :file:`views.py` uzupełniamy importy:
 
@@ -441,22 +465,28 @@ W pliku :file:`views.py` uzupełniamy importy:
     :lineno-start: 13
     :lines: 13-30
 
-**Logowanie** rozpoczyna się od żadania typu :term:`GET` wysłanego na adres ``/loguj``. Widok ``loguj()`` zwraca wtedy szablon: ``return render(request, 'czat/loguj.html', kontekst)``, do którego w słowniku ``kontekst`` w kluczu ``form`` przekazujemy pusty formularz logowania
-utworzony w instrukcji ``AuthenticationForm()``.
+**Logowanie** rozpoczyna się od żadania typu :term:`GET` wysłanego na adres ``/loguj``.
+Widok ``loguj()`` zwraca wtedy szablon: ``return render(request, 'czat/loguj.html', kontekst)``.
+W słowniku ``kontekst`` w kluczu ``form`` przekazujemy do szablonu pusty formularz logowania
+przygotowany przez metodę ``AuthenticationForm()``.
 
 Kiedy użytkownik wypełni formularz logowania danymi i kliknie przycisk "Zaloguj", otrzymamy żądanie typu :term:`POST`.
-Wykrywamy je w instrukcji ``if request.method == 'POST':``. Następnie tworzymy instancję
+Po wykryciu takiego żądania (``if request.method == 'POST':``) tworzymy instancję
 formularza wypełnioną przesłanymi danymi: ``form = AuthenticationForm(request, request.POST)``.
 Jeżeli dane są poprawne ``if form.is_valid():``, możemy zalogować użytkownika
 za pomocą funkcji ``login(request, form.get_user())``.
 
-Tworzymy również informację zwrotną dla użytkownika, wykorzystując system komunikatów: ``messages.success(request, "...")``. Tak utworzone komunikaty możemy odczytać w każdym szablonie ze zmiennej ``messages``.
+Tworzymy również informację zwrotną dla użytkownika, wykorzystując system komunikatów: ``messages.success(request, '...')``.
+Tak utworzone komunikaty możemy odczytać w każdym szablonie ze zmiennej ``messages``.
 
 Po utworzeniu informacji zwrotnej przekierowujemy użytkownika
 na stronę główną (``return redirect(reverse('index'))``) z żądaniem jej wyświetlenia (typu GET).
 
 **Wylogowanie** polega na użyciu funkcji ``logout(request)`` – wyloguje ona
 użytkownika, którego dane zapisane są w przesłanym żądaniu.
+
+Szablony
+--------
 
 Tworzymy i uzupełniamy **szablon logowania** :file:`templates/czat/loguj.html` kodem:
 
@@ -471,14 +501,15 @@ Tworzymy i uzupełniamy **szablon logowania** :file:`templates/czat/loguj.html` 
 W szablonach wykorzystujemy specjalne **tagi** dwóch rodzajów:
 
 - ``{% instrukcja %}`` – pozwalają używać instrukcji sterujących, np. warunkowych lub pętli,
-- ``{{ zmienna }}`` – służą wyświetlaniu wartości zmiennych lub wywoływaniu metod obiektów przekazanych do szablonu.
+- ``{{ zmienna }}`` – służą stawianiu wartości zmiennych lub wywoływaniu metod obiektów przekazanych do szablonu.
 
 Zastosowanie:
 
 - ``{% if not user.is_authenticated %}`` – instrukcja sprawdza, czy aktualny użytkownik nie jest zalogowany,
 - ``{% csrf_token %}`` – zabezpieczenie formularza przed atakiem typu csrf,
 - ``{{ form.as_p }}`` – wyświetla pola formularza w akapitach,
-- ``{% url 'czat:index' %}`` – generuje adres URL: w cudzysłowach podajemy przestrzeń nazw naszej aplikacji (``app_name``), a później nazwę widoku (``name``) zdefiniowane w pliku :file:`czat/urls.py`,
+- ``{% url 'czat:index' %}`` – generuje adres URL: w cudzysłowach podajemy przestrzeń nazw naszej aplikacji
+  (``app_name``), a później nazwę widoku (``name``) zdefiniowane w pliku :file:`czat/urls.py`,
 - ``{{ user.username }}`` – obiekt ``user`` zawiera dane zalogowanego użytkownika, m. in. jego nazwę, którą wyświetlamy.
 
 Uzupełniamy szablon :file:`index.html`. Po znaczniku ``<h1>`` wstawiamy poniższy kod:
@@ -496,11 +527,16 @@ Uzupełniamy szablon :file:`index.html`. Po znaczniku ``<h1>`` wstawiamy poniżs
 
 - ``{% if messages %}`` – sprawdzamy, czy mamy jakieś komunikaty zwrotne,
 - ``{% for komunikat in messages %}`` – w pętli odczytujemy kolejne komunikaty i ...
-- ``{{ komunikat|capfirst }}`` – wyświetlamy z dużej litery za pomocą filtra.
+- ``{{ komunikat|capfirst }}`` – wyświetlamy z dużej litery z użyciem filtra.
 
-Jeżeli użytkownik został zalogowany, wyświetlamy przycisk "Wyloguj się" jako jedyny element formularza, który przesyła dane do serwera jako żądania typu POST.
+Jeżeli użytkownik został zalogowany, wyświetlamy przycisk "Wyloguj się" jako jedyny element formularza,
+który przesyła dane do serwera jako żądania typu POST.
 
-Po uruchomieniu serwera możemy przetestować logowanie pod adresem ``127.0.0.1:8000/loguj``. Poniżej przykład formularza logowania:
+Ćwiczenie
+^^^^^^^^^
+
+Uruchom serwer deweloperski i zaloguj się pod adresem ``127.0.0.1:8000/loguj`` podając dane utworzonego
+wcześniej użytkownika.
 
 .. figure:: img/django_zaloguj_form.png
 
@@ -508,7 +544,7 @@ Po zalogowaniu się powinniśmy zobaczyć komunikat potwierdzający oraz przycis
 
 .. figure:: img/django_wyloguj_form.png
 
-Po kliknięciu przycisku "Wyloguj się" powinniśmy zobaczyć komunikat o wylogowaniu:
+Wyloguj się – powinniśmy zobaczyć komunikat o wylogowaniu:
 
 .. figure:: img/django_wyloguj.png
 
@@ -574,8 +610,7 @@ i listę wiadomości:
 
 - ``<input type="text" name="tekst" />`` – "ręczne" przygotowanie formularza,
   czyli wstawienie kodu HTML pola do wprowadzania tekstu wiadomości,
-- ``{{ wiadomosc.tekst }}`` – wyświetlenie właściwości obiektu przekazanego
-  w kontekście.
+- ``{{ wiadomosc.tekst }}`` – wyświetlanie treści wiadomości odczytywanych z listy przekazanej w kontekście.
 
 **Adres URL**, obsługiwany przez widok ``wiadomosci()``, definiujemy w
 pliku :file:`czat/urls.py`, nadając mu nazwę *wiadomosci*:
