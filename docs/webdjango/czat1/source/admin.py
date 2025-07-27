@@ -1,4 +1,4 @@
-from docs.webdjango.czat1.source import models
+from .models import Wiadomosc
 
 # rejestrujemy model Wiadomosc w panelu administracyjnym
-admin.site.register(models.Wiadomosc)
+admin.site.register(Wiadomosc)

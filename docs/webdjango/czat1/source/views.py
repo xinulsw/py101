@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.urls import reverse
 from django.contrib import messages
-from docs.webdjango.czat1.source.models import Wiadomosc
+from .models import Wiadomosc
 
 def index(request):
     """Strona główna aplikacji."""
