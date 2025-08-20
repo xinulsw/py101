@@ -1,17 +1,41 @@
-.. _czat-app2:
+.. _czat2:
 
 Czat (cz. 2)
 #########################
 
 Dodawanie, edycja, usuwanie czy przeglądanie danych zgromadzonych w bazie
-są typowymi czynnościami w aplikacjach internetowych. Utworzony w scenariuszu :ref:`Czat (cz. 1) <czat-app>`
-kod ilustruje "ręczną" obsługę żądań GET i POST, w tym tworzenie formularzy,
-walidację danych itp. Django zawiera jednak gotowe mechanizmy, których
-użycie skraca i ulepsza pracę programisty eliminując potencjalne błędy.
+są typowymi czynnościami w aplikacjach internetowych określanymi angielskim skrótem :term:`CRUD`.
+Utworzony w scenariuszu :ref:`Czat (cz. 1) <czat1>` kod ilustruje krok po korku obsługę żądań GET i POST
+oraz niektórych operacji CRUD (odczyt i dodawanie danych).
 
-Będziemy rozwijać kod uzyskany po zrealizowaniu punktów **8.1.1 – 8.1.10** scenariusza
-:ref:`Czat (cz. 1) <czat-app>`. Pobierz :download:`archiwum <czat2_z01.zip>`
-i rozpakuj w katalogu domowym użytkownika. Następnie wydaj polecenia:
+Django zawiera gotowe rozwiązania, które skracają realizację typowych zadań eliminując również potencjalne błędy.
+W tym scenariuszu poznasz m. in. widoki wbudowane oparte na klasach służące zarządzaniu użytkownikami oraz
+odczytywaniu, dodawaniu, edytowaniu i usuwaniu danych.
+
+.. attention::
+
+    **Wymagane oprogramowanie**:
+
+      * Środowisko wirtualne Pythona v. 3.x
+      * Django v. 5.1.x
+      * Opcjonalnie: interpreter bazy SQLite3
+
+    **Zalecana wiedza i umiejętności**:
+
+      Zrealizowany scenariusz :ref:`Czat (cz. 1) <czat1>`.
+
+.. contents::
+    :depth: 1
+    :local:
+
+Środowisko pracy
+=================
+
+Do pracy potrzebujemy katalogu z utworzonym środowiskiem wirtualnym Pythona, w którym zainstalowano
+pakiet Django. Możemy wykorzystać katalog :file:`projekty_django` ze scenariusza :ref:`Czat (cz. 1) <czat1>`
+lub przygotować ten katalog od początku zgodnie z instrukcjami z tego scenariusza (zob. :ref:`Czat (cz. 1) <czat1-env>`
+
+Następnie w katalogu :file:`projekty_django` tworzymy nowy projekt o nazwie **czat2**:
 
 .. raw:: html
 
@@ -19,131 +43,180 @@ i rozpakuj w katalogu domowym użytkownika. Następnie wydaj polecenia:
 
 .. code-block:: bash
 
-    ~$ source pve3/bin/activate
-    (pve3) ~$ cd czat2
-    (pve3) ~/czat2$ python manage.py check
+    (.venv) ~/projekty_django$ django-admin startproject czat2
+    (.venv) ~/projekty_django$ cd czat2
 
+Lista użytkowników
+==================
 
-.. warning::
+Na początku zajmiemy się obsługą użytkowników, która realizowana będzie przez osobną aplikację.
 
-    Przypominamy, że pracujemy w wirtualnym środowisku Pythona z zainstalowanym frameworkiem
-    Django, które powinno znajdować się w katalogu :file:`pve3`. Zobacz w scenariuszu Czat (cz. 1),
-    jak utworzyć takie :ref:`środowisko <czat1-env>`.
+W katalogu :file:`projekty_django/czat2` tworzymy aplikację o nazwie **users**:
 
+.. raw:: html
 
-Rejestrowanie
-=============
+    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
 
-Na początku zajmiemy się obsługą użytkowników. Umożliwimy im samodzielne
-zakładanie kont w serwisie, logowanie i wylogowywanie się. Inaczej niż w cz. 1
-zadania te zrealizujemy za pomocą tzw. widoków wbudowanych opartych na klasach
-(ang. `class-based generic views <https://docs.djangoproject.com/en/1.11/topics/class-based-views/>`_).
+.. code-block:: bash
 
-Na początku pliku :file:`czat2/czat/urls.py` importujemy formularz tworzenia użytkownika
-(``UserCreationForm``) oraz wbudowany widok przeznaczony do dodawania danych (``CreateView``):
+    (.venv) ~/projekty_django/czat2$ python manage.py startapp users
+
+Następnie tworzymy plik :file:`czat2/users/urls.py`, w którym umieszczamy poniższy kod:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: urls.py
+.. literalinclude:: source/users_urls_01.py
     :linenos:
-    :lineno-start: 6
-    :lines: 6-7
+    :lineno-start: 1
+    :lines: 1-7
 
-Następnie do listy ``urlpatterns`` dopisujemy:
+W liście ``urlpatterns`` definiujemy powiązanie między domyślnym adresem URL aplikacji i widokiem ``index``.
+
+Dalej w pliku :file:`czat2/users/views.py` umieszczamy kod widoku, czyli funkcję ``index()``:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>views.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: urls.py
+.. literalinclude:: source/users_views.py
     :linenos:
-    :lineno-start: 18
-    :lines: 18-20
+    :lineno-start: 1
+    :lines: 1-7
 
-Powyższy kod łączy adres URL */rejestruj* z wywołaniem widoku wbudowanego jako funkcji
-``CreateView.as_view()``. Przekazujemy jej trzy parametry:
+Zadaniem widoku jest pobranie z bazy danych wszystkich użytkowników i przekazanie ich do szablonu.
 
-* ``template_name`` – szablon, który zostanie użyty do zwrócenia odpowiedzi;
-* ``form_class`` – formularz, który zostanie przekazany do szablonu;
-* ``success_url`` – adres, na który nastąpi przekierowanie w przypadku braku błędów
-  (np. po udanej rejestracji).
-
-Teraz tworzymy szablon formularza rejestracji, który zapisać należy w pliku :file:`templates/czat/rejestruj.html`:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>rejestruj.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: html
-.. literalinclude:: rejestruj_z2.html
-    :linenos:
-
-Na koniec wstawimy link na stronie głównej, a więc uzupełniamy plik :file:`index.html`:
+Kolejnym krokiem jest utworzenie odpowiednich podkatalogów i umieszczenie kodu szablonu
+w pliku :file:`czat2/users/templates/users/index.html`:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>index.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. highlight:: html
-.. literalinclude:: index_z2.html
+.. highlight:: HTML
+.. literalinclude:: source/users_index_01.html
     :linenos:
+    :lineno-start: 1
 
-**Ćwiczenie:** dodaj link do strony głównej w szablonie :file:`rejestruj.html`.
+W pierwszym tagu warunkowym ``{% if users %}`` sprawdzamy, czy lista ``users`` zawiera jakichś użytkowników.
+Jeżeli tak, za pomocą tagu ``for`` wypiszemy ich nazwy, w przeciwnym razie komunikat "Brak użytkowników".
 
-Uruchom aplikację (``python manage.py runserver``) i przetestuj dodawanie użytkowników:
-spróbuj wysłać niepełne dane, np. bez hasła; spróbuj dodać dwa razy tego samego użytkownika.
+W drugim tagu warunkowym ``{% if user.is_authenticated %}`` sprawdzamy, czy jakiś użytkownik jest zalogowany.
+Jeżeli tak, wypiszemy komunikat "Jesteś już zalogowany jako ...", w przeciwnym razie wypisany zostanie
+link do utworzenia konta.
 
-.. figure:: img/django_rejestracja.png
+Dodawanie użytkowników
+======================
 
-Wy(logowanie)
-=============
+Użytkownicy będą mogli samodzielnie zakładać konta, logować i wylogowywać się.
+Inaczej niż w cz. 1 zadania te zrealizujemy za pomocą tzw. widoków wbudowanych opartych na klasach
+(ang. `class-based generic views <https://docs.djangoproject.com/en/1.11/topics/class-based-views/>`_).
 
-Na początku pliku :file:`urls.py` aplikacji dopisujemy wymagany import:
-
-.. raw:: html
-
-    <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: urls.py
-    :linenos:
-    :lineno-start: 8
-    :lines: 8-9
-
-– a następnie:
+W pliku :file:`czat2/users/urls.py` importujemy formularz tworzenia użytkownika (``UserCreationForm``)
+oraz wbudowany widok przeznaczony do dodawania danych (``CreateView``):
 
 .. raw:: html
 
     <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: urls.py
+.. literalinclude:: source/users_urls_02.py
     :linenos:
-    :lineno-start: 22
-    :lines: 22-27
+    :lineno-start: 1
+    :lines: 1-4
+    :emphasize-lines: 3, 4
 
-Widać, że z adresami */loguj* i */wyloguj* wiążemy wbudowane w Django widoki ``login``
-i ``logout`` importowane z modułu ``django.contrib.auth.views``. Jedynym nowym
-parametrem jest ``next_page``, za pomocą którego wskazujemy stronę
-wyświetlaną po wylogowaniu (``reverse_lazy('czat:index')``).
-
-Logowanie wymaga szablonu :file:`loguj.html`, który tworzymy i zapisujemy w podkatalogu :file:`templates/czat`:
+W tym samym pliku :file:`czat2/users/urls.py` w liście ``urlpatterns`` definiujemy adres URL */rejestruj*,
+który obsługiwany będzie przez zaimportowany wyżej widok wywołany jako funkcja.
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>loguj.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. highlight:: html
-.. literalinclude:: loguj_z3.html
+.. highlight:: python
+.. literalinclude:: source/users_urls_02.py
+    :linenos:
+    :lineno-start: 10
+    :lines: 10-14
+
+Widok ``CreateView`` otrzymuje trzy argumenty, które przekazujemy do metody ``as_view()``:
+
+    * ``template_name`` – nazwa pliku szablonu, w którym umieścimy formularz tworzenia użytkownika,
+    * ``form_class`` – nazwa klasy definiującej formularz tworzenia użytkownika,
+    * ``success_url`` – adres, na który nastąpi przekierowanie w przypadku braku błędów, np. po udanej rejestracji.
+
+Zawartość szablonu umieszczamy w pliku :file:`templates/users/rejestruj.html`:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>rejestruj.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: HTML
+.. literalinclude:: source/rejestruj.html
     :linenos:
 
-Musimy jeszcze określić stronę, na którą powinien zostać przekierowany
-użytkownik po udanym zalogowaniu. W tym wypadku na końcu pliku :file:`czat2/settings.py`
-definiujemy wartość zmiennej ``LOGIN_REDIRECT_URL``:
+Jeżeli zalogowany użytkownik wejdzie na stronę, zobaczy komunikat "Jesteś już zalogowany jako ...", natomiast
+użytkownik niezalogowany zobaczy formularz zakładania konta.
+
+Ćwiczenie
+---------
+
+1) W ustawieniach projektu *czat2*:
+
+    - zarejestruj aplikację *users*,
+    - ustaw polską wersję językową,
+    - zlokalizuj datę i czas.
+
+2) W konfiguracji adresów URL projektu powiąż adres URL ``users/`` z adresami URL aplikacji *users*.
+3) Uruchom serwer deweloperski i w przeglądarce wejdź na adres *127.0.0.1:8000/users/*.
+4) Dodaj użytkowników *adam* i *ewa* z hasłem *zaq1@WSX*.
+
+.. figure:: img/django_rejestracja.png
+
+.. figure:: img/django_lista_uzytkownikow.png
+
+Wy(logowanie)
+=============
+
+Na początku pliku :file:`czat2/users/urls.py` aplikacji dopisujemy wymagany import:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: source/users_urls_02.py
+    :linenos:
+    :lineno-start: 5
+    :lines: 5
+
+– a następnie uzupełniamy listę ``urlpatterns``:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: source/users_urls_02.py
+    :linenos:
+    :lineno-start: 15
+    :lines: 15-21
+
+Z adresami */loguj* i */wyloguj* wiążemy wbudowane w Django widoki ``LoginView`` i ``LogoutView``
+zaimportowane z modułu ``django.contrib.auth.views``. Widoki wywołujemy jako funkcje za pomocą metody ``as_view()``,
+która otrzymuje argumenty:
+
+    * ``template_name`` – nazwę pliku szablonu, w którym umieścimy formularz logowania użytkownika,
+    * ``next_page`` – nazwa adresu URL, na który przekierowujemy użytkownika po zalogowaniu lub wylogowaniu się.
+
+.. note::
+
+    Adresy, na które zostaje przekierowany użytkownik po zalogowaniu lub wylogowaniu za pomocą widoków wbudowanych,
+    mogą być określane również za pomocą stałych ``LOGIN_REDIRECT_URL`` i ``LOGOUT_REDIRECT_URL`` zdefiniowanych w pliku
+    ustawień projektu. W naszym przypadku na końcu pliku :file:`czat2/settings.py` moglibyśmy umieścić kod:
 
 .. raw:: html
 
@@ -151,14 +224,64 @@ definiujemy wartość zmiennej ``LOGIN_REDIRECT_URL``:
 
 .. code-block:: python
 
-    # czat2/settings.py
+    LOGIN_REDIRECT_URL = '/users/'
+    LOGOUT_REDIRECT_URL = '/users/'
 
-    from django.core.urlresolvers import reverse_lazy
-    LOGIN_REDIRECT_URL = reverse_lazy('czat:index')
+Logowanie wymaga szablonu, który tworzymy i zapisujemy w pliku :file:`templates/users/loguj.html`:
 
-**Ćwiczenie:** Uzupełnij plik :file:`index.html` o linki służące do logowania i wylogowania.
+.. raw:: html
+
+    <div class="code_no">Plik <i>loguj.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: HTML
+.. literalinclude:: source/loguj.html
+    :linenos:
+
+Ćwiczenie
+---------
+
+1) W pliku :file:`index.html` umieść linki służące do logowania i wylogowania. Użyj metody POST.
+
+.. figure:: img/django_zaloguj.png
+
+2) Zaloguj się jako użytkownik.
 
 .. figure:: img/django_logowanie.png
+
+3) Wyloguj się.
+
+.. figure:: img/django_wyloguj.png
+
+Początek pracy będzie taki sam jak w przypadku aplikacji "Czat 1". Dla powtórzenia:
+
+1) W katalogu :file:`projekty_django` tworzymy projekt "czat2".
+2) W katalogu :file:`projekty_django/czat2` tworzymy aplikację "czat".
+3) Zmieniamy ustawienia projektu: rejestrujemy aplikację w projekcie, ustawimy polską wersję językową,
+   lokalizujemy datę i czas.
+4) Dodajemy model danych, tj. klasę `Wiadomości`.
+
+5) Przygotowujemy migrację dla aplikacji "czat" i wykonujemy migracje.
+
+Przypomnijmy kolejne polecenia wydawane w aktywnym środowisku wirtualnym w katalogu :file:`projekty_django`:
+
+.. code-block:: bash
+
+    (.venv) ~/projekty_django$ django-admin startproject czat2
+    (.venv) ~/projekty_django$ cd czat2
+    (.venv) ~/projekty_django/czat2$ python manage.py startapp czat
+    (.venv) ~/projekty_django/czat2$ python manage.py makemigrations czat
+    (.venv) ~/projekty_django/czat2$ python manage.py migrate
+    (.venv) ~/projekty_django/czat2$ python manage.py check
+
+Ostatnie wydane polecenie sprawdza poprawność projektu i powinno zwrócić komunikat
+*System check identified no issues (0 silenced)*.
+
+.. ::tip
+
+    Jeżeli masz problem z wykonaniem powyższych czynności, zajrzyj do punktów 8.1.1 – 8.1.7 ze scenariusza
+    :ref:`Czat (cz. 1) <czat1>`.
+
+
 
 Lista wiadomości
 ================
@@ -230,7 +353,7 @@ zobaczyć listę wiadomości:
 
 .. raw:: html
 
-    <hr />
+    <hr>
 
 Potrzebujemy szablonu, którego Django szuka pod domyślną nazwą
 *<nazwa modelu>_list.html*, czyli w naszym przypadku tworzymy plik :file:`czat/wiadomosc_list.html`:

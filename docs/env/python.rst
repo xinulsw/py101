@@ -1,3 +1,5 @@
+.. _opythobie:
+
 O Pythonie
 ##########
 

@@ -4,7 +4,7 @@ Quiz ORM
 #####################
 
 Realizacja aplikacji internetowej **Quiz** w oparciu o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_ 3.1.x
-i bazę danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_ zarządzaną przez system ORM `Peewee <https://docs.peewee-orm.com/en/latest/>`_
+i `bazę danych SQLite <http://pl.wikipedia.org/wiki/SQLite>`_ zarządzaną przez system ORM `Peewee <https://docs.peewee-orm.com/en/latest/>`_
 lub `SQLAlchemy <https://www.sqlalchemy.org/>`_.
 
 Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
@@ -96,16 +96,13 @@ umieścimy w szablonie podstawowym :file:`templates/szkielet.html`:
 .. highlight:: html
 .. literalinclude:: quiz2_pw/templates/szkielet.html
     :linenos:
-    :emphasize-lines: 9-18, 83-90
+    :emphasize-lines: 9-12, 77-80
 
 Szablon oparty jest na frameworku `Bootstrap <http://getbootstrap.com/>`_.
-Odpowiednie linki do stylów CSS, pobieranych z systemu
-`CDN <https://pl.wikipedia.org/wiki/Content_Delivery_Network>`_
-zostały skopiowane ze strony
-`Getting started <http://getbootstrap.com/getting-started/>`_
+Odpowiednie linki do stylów CSS, pobieranych z systemu `CDN <https://pl.wikipedia.org/wiki/Content_Delivery_Network>`_
+zostały skopiowane ze strony `Getting started <http://getbootstrap.com/getting-started/>`_
 i wklejone w podświetlonych liniach. Do szablonu dołączono również wymaganą
 przez Bootstrapa bibliotekę `jQuery <https://jquery.com/>`_.
-
 
 * ``{{ url_for('static', filename='style.css') }}`` – funkcja ``url_for()``
   pozwala wygenerować ścieżkę do zasobów umieszczonych w podkatalogu :file:`static`;

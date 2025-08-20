@@ -5,7 +5,7 @@ Czat (cz. 3)
 
 Poniższy materiał koncentruje się na obsłudze szablonów (ang. *templates*)
 wykorzystywanych w Django. Stanowi kontynuację projektu zrealizowanego
-w scenariuszu :ref:`Czat (cz. 2) <czat-app2>`.
+w scenariuszu :ref:`Czat (cz. 2) <czat2>`.
 
 Na początku pobierz :download:`archiwum <czat3_z01.zip>` z potrzebnymi plikami
 i rozpakuj je w katalogu domowym użytkownika. Następnie wydaj polecenia:

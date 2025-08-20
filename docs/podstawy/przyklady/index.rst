@@ -8,9 +8,3 @@ Python w przykładach
 
     przyklad00
     przyklad01
-    przyklad02
-    przyklad03
-    przyklad04
-    przyklad05
-    przyklad06
-    przyklad07

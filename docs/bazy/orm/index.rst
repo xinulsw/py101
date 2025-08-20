@@ -304,7 +304,7 @@ Zadania
   jako relatywnie szybki i łatwy sposób obsługi danych. Zobacz,
   jak to zrobić na przykładzie scenariusza aplikacji :ref:`Quiz ORM <quiz-orm>`.
 
-- Przejrzyj scenariusz aplikacji internetowej :ref:`Czat <czat-app>`, zbudowanej z wykorzystaniem
+- Przejrzyj scenariusz aplikacji internetowej :ref:`Czat <czat1>`, zbudowanej z użyciem
   frameworku *Django*, korzystającego z własnego modelu ORM.
 
 Źródła

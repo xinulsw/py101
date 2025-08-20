@@ -1,7 +1,7 @@
 .. _czat1:
 
-Czat I
-######
+Czat I (cz .1)
+##############
 
 .. highlight:: python
 
@@ -51,7 +51,7 @@ i w aktywnym środowisku zainstaluj pakiet *Django*:
 Projekt i aplikacja
 ===================
 
-Tworzymy nowy projekt Django. W terminalu w katalogu :file:`projekty_django` wydajemy polecenia:
+Tworzymy nowy projekt o nazwie **czat1**. W terminalu w katalogu :file:`projekty_django` wydajemy polecenia:
 
 .. raw:: html
 
@@ -422,7 +422,7 @@ W pliku :file:`views.py` zmieniamy funkcję ``index()`` tak, aby zwracała utwor
 .. literalinclude:: source/views_z2.py
     :linenos:
     :lineno-start: 4
-    :lines: 4-
+    :lines: 4-7
     :emphasize-lines: 7
 
 Funkcja ``render()`` jako pierwszy parametr pobiera obiekt typu ``HttpRequest`` zawierający informacje
@@ -578,8 +578,96 @@ Po zalogowaniu się powinniśmy zobaczyć komunikat potwierdzający oraz przycis
 
 .. figure:: img/django_wyloguj.png
 
-Dodawanie wiadomości
-====================
+Django ORM
+==========
+
+Obsługa żądania typu GET, czyli wyświetlenie wiadomości wymaga odczytu (ang. *Read*) danych z bazy.
+W języku SQL używamy do tego klauzuli SELECT. Z kolei żądania typu POST wiążą się z dodawaniem (ang. *Create*),
+modyfikacją (ang. *Update*) i usuwaniem (ang. *Delete*) danych w bazie. W języku SQL służą do tego klauzule
+INSERT, UPDATE i DELETE.
+
+Django nie wymaga zapytań w języku SQL, chociaż są one obsługiwane. Zamiast tego oferuje niezależny od konkretnej
+bazy danych interfejs programistyczny (API) działający jak system :term:`ORM`. Jego podstawowym założeniem jest to,
+że każdy model danych odpowiada tablicy w bazie danych, jego instancje (obiekty) reprezentują konkretne rekordy,
+a właściwości modelu (obiektu) odpowiadają polom rekordu.
+
+Odczyt danych
+-------------
+
+Do odczytu danych (ang. *Read*) używamy managera ``objects``, który zwraca kolekcję obiektów ``QuerySet`` odpowiadającą
+klauzuli SQL ``SELECT``. Rekordy w kolekcji można filtrować, co odpowiada klauzulom SQL ``WHERE`` i ``LIMIT``.
+
+Przećwiczmy kilka przykładów. W terminalu w katalogu :file:`projekty_django/czat1` wydajemy polecenie:
+
+.. raw:: html
+
+    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
+
+.. code-block:: bash
+
+    (.venv) ~/projekty_django/czat1$ python manage.py shell -v 2
+    >>> import datetime
+    >>> from django.utils import timezone
+
+Uruchomiona zostanie powłoka Pythona w trybie interaktywnym z zaimportowanymi obiektami. Dodatkowo importujemy
+moduły potrzebne do operacji na datach i czasie.
+
+Teraz możemy wpisywać po kolei poniższe przykłady kodu:
+
+- ``wiadomosci = Wiadomosc.objects.all()`` – za pomocą metody ``all()`` pobieramy wszystkie obiekty typu ``Wiadomosc``
+  z bazy i zapisujemy pod nazwą ``wiadomosci``,
+- ``wiadomosci`` – zobaczymy, że ``wiadomosci`` to typ ``QuerySet`` zawierający listę obiektów typu ``Wiadomosc``,
+- ``wiadomosci.filter(autor_id=2)`` – metoda ``filter()`` z kolekcji rekordów wyodrębni te,
+  których autor ma identyfikator (pole ``id`` obiektu typu ``User``) równy *2*;
+- ``wiadomosci.filter(autor__username__exact='adam')`` – z kolekcji rekordów wyodrębniamy te,
+  których nazwa autora (właściwość ``username`` obiektu typu ``User``) równa jest 'adam',
+- ``wiadomosci.exclude(tekst__contains='Pierwsza')`` – z kolekcji rekordów usunie te,
+  które zawierają ciąg znaków *Pierwsza*,
+- ``Wiadomosc.objects.filter(data_pub__lte=timezone.now()-datetime.timedelta(days=10))`` –
+  zwróci wiadomości opublikowane przed 10 dniami,
+- ``w1 = Wiadomosc.objects.get(pk=1)`` – metoda ``get()`` zwraca jeden obiekt, który spełnia podany jako argument warunek,
+  w tym przypadku identyfikator obiektu (ang. *pk* to skrót od *primary key* – klucz główny) musi być równy *1*,
+- ``w1`` – zobaczymy, że ``w1`` zawiera obiekt typu ``Wiadomosc``.
+
+.. note::
+
+    Metody ``filter(**kwargs)`` i ``get(**kwargs)`` przyjmują argumenty w ogólnej postaci
+    **field__lookuptype=value**, gdzie:
+
+    - **field** – to nazwa właściwości modelu odpowiadająca polu rekordu,
+    - **__** – podwójne podkreślenie,
+    - **lookuptype=value** – rodzaj dopasowania podanej wartości,
+      tj. warunek, jaki ma spełniać dana właściwość (pole rekordu).
+
+    Często używane rodzaje dopasowań wartości sprawdzanego pola:
+
+    - ``__exact='ciąg_znaków')`` – musi odpowiadać dokładnie ciągowi znaków,
+    - ``__contains='ciąg_znaków'`` – musi zawierać ciąg znaków,
+    - ``__in=obiekt_iterowalny`` – zawiera się w obiekcie iterowalnym, tj. tupli, liście, queryset lub ciągu znaków,
+    - ``__gt``, ``__gte`` – większe od, większe lub równe,
+    - ``__lt``, ``__lte`` – mniejsze od, mniejsze lub równe,
+
+Dodawanie danych
+----------------
+
+Dodawanie danych do bazy (ang. *Create*) polega na utworzeniu instancji wybranego modelu z wykorzystaniem
+nazwanych argumentów i wywołaniu metody ``save()``, która zapisze go w bazie, czyli wykona operację INSERT SQL.
+Poniżej przykład, który wykonujemy w uruchomionej wcześniej powłoce:
+
+- ``user = User.objects.get(username__exact='adam')`` – utworzenie obiektu użytkownika o nazwie 'adam',
+- ``Wiadomosc.objects.filter(autor=user)`` – odczyt wiadomości danego użytkownika,
+- ``wiadomosc = Wiadomosc(tekst='Trzecia wiadomość Adama', autor=user)`` – utworzenie instancji nowej wiadomości,
+- ``wiadomosc.save()`` – zapisanie wiadomości w bazie.
+
+Inną metodą utworzenia i zapisania obiektu w bazie danych jest użycie metody ``create()``, np.:
+
+- ``Wiadomosc.objects.create(tekst='Czwarta wiadomość Adama', autor=user)`` – tworzy i od razu zapisuje nową wiadomość
+  w bazie,
+- ``Wiadomosc.objects.filter(autor=user)`` – ponowny odczyt wiadomości danego użytkownika, powinniśmy zobaczyć dwie
+  nowe wiadomości.
+
+Wiadomości
+==========
 
 Chcemy, by zalogowani użytkownicy mogli przeglądać i dodawać wiadomości.
 
@@ -618,10 +706,6 @@ Następnie dodajemy **widok** o nazwie ``wiadomosci()``. W pliku :file:`views.py
     :lineno-start: 32
     :lines: 32-49
 
-Obsługa żądania typu GET, czyli wyświetlenie wiadomości i formularza:
-
-- ``wiadomosci = Wiadomosc.objects.all()`` – pobieramy wszystkie wiadomości z bazy,
-  używając wbudowanego w Django systemu ORM.
 - ``return render(request, 'czat/wiadomosci.html', kontekst)`` – zwracamy szablon,
   do którego przekazujemy słownik ``kontekst`` zawierający wiadomości.
 

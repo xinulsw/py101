@@ -7,7 +7,8 @@ Kalkulator
 
 Prosta 1-okienkowa aplikacja ilustrująca podstawy tworzenia interfejsu graficznego
 i obsługi działań użytkownika za pomocą Pythona 3 i PyQt6.
-Przykład wprowadza również podstawy `programowania obiektowego <https://pl.wikipedia.org/wiki/Programowanie_obiektowe>`_ (ang. Object Oriented Programing).
+Przykład wprowadza również podstawy `programowania obiektowego <https://pl.wikipedia.org/wiki/Programowanie_obiektowe>`_
+(ang. Object Oriented Programing).
 
 .. figure:: img//kalkulator05.png
 
@@ -255,7 +256,7 @@ Do klasy ``Kalkulator()`` dopiszmy następujący kod:
 
 W nadpisanej metodzie `closeEvent() <http://doc.qt.io/qt-5/qwidget.html#closeEvent>`_
 wyświetlamy użytkownikowi prośbę o potwierdzenie zamknięcia
-za pomocą metody ``question()`` (ang. pytanie) klasy `QMessageBox <http://doc.qt.io/qt-5/qmessagebox.html>`_.
+za pomocą metody ``question()`` (ang. pytanie) klasy ``QMessageBox``.
 Do konstruktora metody przekazujemy:
 
 * obiekt rodzica – ``self`` oznacza okno główne;

@@ -10,13 +10,13 @@ Python – materiały
     i `wersję HTML dokumentacji <http://python101.rtfd.io>`_.
 
 Celem materiałów jest nauczenie programowania w języku :term:`Python`
-oraz pokazanie :doc:`zastosowań tego języka <opythonie>` w bardziej rozbudowanych projektach
+oraz pokazanie zastosowań tego języka w bardziej rozbudowanych projektach
 opartych na wybranych bibliotekach dodatkowych.
 
 ..  toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
-    env/opythonie
+    env/python
 
 Realizacja materiałów
 #####################

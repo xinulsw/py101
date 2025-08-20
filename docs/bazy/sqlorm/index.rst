@@ -215,8 +215,8 @@ Zadania
 - Wykonaj scenariusz aplikacji :ref:`Quiz ORM <quiz-orm>`, aby zobaczyć przykład
   wykorzystania systemów ORM w aplikacjach internetowych.
 
-- Wykonaj scenariusz aplikacji internetowej :ref:`Czat (cz. 1) <czat-app>`,
-  zbudowanej z wykorzystaniem frameworku *Django*, korzystającego z własnego modelu ORM.
+- Wykonaj scenariusz aplikacji internetowej :ref:`Czat (cz. 1) <czat1>`,
+  zbudowanej z użyciem frameworku *Django*, korzystającego z własnego modelu ORM.
 
 Źródła
 *******************
