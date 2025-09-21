@@ -1,6 +1,6 @@
 .. _pyqt6:
 
-Aplikacje okienkowe Qt5
+Aplikacje okienkowe Qt6
 ###########################
 
 `PyQt <https://pl.wikipedia.org/wiki/PyQt>`_ to zbiór bibliotek `Pythona <https://www.python.org/>`_

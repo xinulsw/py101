@@ -1,7 +1,7 @@
 .. _czat1:
 
-Czat I (cz .1)
-##############
+Czat 1
+######
 
 .. highlight:: python
 
@@ -175,6 +175,8 @@ Zaczynamy od zdefiniowania **modelu** (zob. :term:`model`), czyli klasy, która 
 w bazie danych zawierającej wiadomości. Atrybuty klasy odpowiadają polom tabeli. Instancje (obiekty) tej klasy
 reprezentować będą wiadomości utworzone przez użytkowników, czyli rekordy tabeli.
 Każda wiadomość będzie zwierała treść, datę dodania oraz identyfikator autora (użytkownika).
+
+.. _model_czat1:
 
 W pliku :file:`czat/models.py` wpisujemy:
 
@@ -423,7 +425,7 @@ W pliku :file:`views.py` zmieniamy funkcję ``index()`` tak, aby zwracała utwor
     :linenos:
     :lineno-start: 4
     :lines: 4-7
-    :emphasize-lines: 7
+    :emphasize-lines: 4
 
 Funkcja ``render()`` jako pierwszy parametr pobiera obiekt typu ``HttpRequest`` zawierający informacje
 o żądaniu, jako drugi nazwę szablonu z katalogiem nadrzędnym.

@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class Wiadomosc(models.Model):
 
     """Klasa reprezentująca wiadomość w systemie"""
     tekst = models.CharField('treść wiadomości', max_length=250)
-    data_pub = models.DateTimeField('data publikacji', auto_now_add=True)
+    data_pub = models.DateTimeField('data publikacji', default=timezone.now)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:  # ustawienia dodatkowe

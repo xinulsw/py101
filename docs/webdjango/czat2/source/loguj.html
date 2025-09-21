@@ -6,6 +6,7 @@
     <title>Logowanie użytkownika</title>
 </head>
 <body>
+    <h1>Logowanie użytkownika</h1>
     {% if user.is_authenticated %}
         <p>Jesteś już zalogowany jako {{ user.username }}.</p>
         <form method="POST" action="{% url 'users:wyloguj' %}">
