@@ -240,7 +240,7 @@ Logowanie wymaga szablonu, który tworzymy i zapisujemy w pliku :file:`templates
 Ćwiczenie
 ---------
 
-1) W szablonie :file:`index.html` umieść linki służące do logowania i wylogowania. Użyj metody POST.
+1) W szablonie :file:`users/index.html` umieść linki służące do logowania i wylogowania. Użyj metody POST.
 
 .. figure:: img/django_zaloguj.png
 
@@ -523,7 +523,7 @@ W szablonie :file:`templates/czat/index.html` wstawiamy jeszcze po nagłówku ``
 Ćwiczenie
 ----------
 
-1) Umieść link do dodawanie wiadomości na końcu strony *Lista wiadomości*.
+1) Umieść link do dodawania wiadomości na końcu strony *Lista wiadomości*.
 
 .. figure:: img/django_dodawanie.png
 
@@ -564,30 +564,27 @@ Do pliku :file:`views.py` dopisujemy kod klasy ``EdytujWiadomosc``, która dosto
     :lineno-start: 38
     :lines: 38-55
 
-Najważniejsza jest tu metoda ``get_object()``, która pobiera i zwraca wskazaną przez
-identyfikator w zmiennej *pk* wiadomość: ``wiadomosc = Wiadomosc.objects.get(id=self.kwargs['pk'])``.
+Nowe metody to:
 
-* ``get_context_data()`` – metoda pozwala przekazać do szablonu dodatkowe dane,
-  w tym wypadku jest to lista wszystkich wiadomości: ``context['wiadomosci'] = Wiadomosc.objects.all()``.
+- ``get_object()`` – pobiera i zwraca wskazaną przez identyfikator w zmiennej *pk* wiadomość:
+  ``wiadomosc = Wiadomosc.objects.get(id=self.kwargs['pk'])``.
+- ``get_context_data()`` – pozwala przekazać do szablonu dodatkowe dane,
+  w tym przypadku listę wiadomości, ale tylko zalogowanego użytkownika:
+  (``context['wiadomosci'] = Wiadomosc.objects.filter(autor=self.request.user)``).
 
-Omawianą już metodę ``get_context_data()`` wykorzystujemy, aby przekazać
-do szablonu listę wiadomości, ale tylko zalogowanego użytkownika
-(``context['wiadomosci'] = Wiadomosc.objects.filter(autor=self.request.user)``).
-
-Właściwości ``model``, ``context_object_name``, ``template_name`` i ``success_url``
-wyjaśniliśmy wcześniej. Jak widać, do edycji wiadomości można wykorzystać ten sam szablon,
+Pozostałe właściwości ``model``, ``context_object_name``, ``template_name`` i ``success_url``
+wyjaśniliśmy wcześniej. Jak widać, do edycji wiadomości wykorzystamy ten sam szablon,
 którego użyliśmy podczas dodawania.
 
 Formularz jednak dostosujemy. Wykorzystamy właściwość ``form_class``,
-której przypisujemy utworzoną w nowym pliku :file:`forms.py` klasę zmieniającą
-domyślne ustawienia:
+której przypisujemy utworzoną w nowym pliku :file:`czat/forms.py` klasę zmieniającą domyślne ustawienia:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>forms.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: forms_z6.py
+.. literalinclude:: source/czat_forms.py
     :linenos:
 
 Klasa ``EdytujWiadomoscForm`` oparta jest na wbudowanej klasie ``ModelForm``.
@@ -599,78 +596,86 @@ Właściwości formularza określamy w podklasie ``Meta``:
 * ``widgets`` – słownik, którego klucze oznaczają pola danych, a ich wartości
   odpowiadające im w formularzach HTML typy pól i ich właściwości, np. rozmiar.
 
-Żeby przetestować aktualizowanie wiadomości, w szablonie :file:`wiadomosc_list.html`
-trzeba wygenerować linki *Edytuj* dla wiadomości utworzonych przez zalogowanego użytkownika.
-Wstaw w odpowiednie miejsce szablonu, tzn po tagu wyświetlającym tekst wiadomości
-(``{{ wiadomosc.tekst }}``) poniższy kod:
+Teraz w szablonie :file:`wiadomosc_list.html` musimy dodać link, aby zalogowany użytkownik mógł
+edytować swoje wiadomości. Kod wypisujący wiadomości w znaczniku ``<li>`` przyjmie następującą postać:
 
 .. raw:: html
 
-    <div class="code_no">Plik wiadomosc_lista.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>wiadomosc_lista.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: wiadomosc_list_z6.html
+.. literalinclude:: source/wiadomosc_list_02.html
     :linenos:
-    :lineno-start: 20
-    :lines: 20-22
+    :lineno-start: 21
+    :lines: 21-27
+    :emphasize-lines: 4-6
 
-**Ćwiczenie:** Ten sam link "Edytuj" umieść również w szablonie dodawania.
+Ćwiczenie
+----------
 
-.. figure:: img/django_edycja.png
+1) Wejdź na stronę "Lista wiadomości" i kliknij link *Edytuj*:
+
+.. figure:: img/django_edycja_01.png
+
+2) Zmień treść wiadomości i kliknij przycisk *Zapisz*:
+
+.. figure:: img/django_edycja_02.png
 
 Usuwanie wiadomości
 ===================
 
-**Usuwanie danych** realizujemy za pomocą widoku ``DeleteView``, który importujemy
-na początku pliku :file:`urls.py`:
+Do usuwania wiadomości wykorzystamy – podobnie jak w przypadku edycji – adres zawierający jej identyfikator:
+**/edytuj/<pk>**. Uzupełniamy więc plik :file:`urls.py`:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: urls.py
+.. literalinclude:: source/czat_urls_02.py
     :linenos:
-    :lineno-start: 13
-    :lines: 13
+    :lineno-start: 12
+    :lines: 12
 
-Podobnie, jak w przypadku edycji, usuwanie powiążemy z adresem URL zawierającym
-identyfikator wiadomości */usun/id_wiadomości*. W pliku :file:`urls.py` dopisujemy:
-
+Na końcu pliku :file:`views.py` umieszczamy kod klasy ``UsunWiadomosc``, która wykorzystuje wbudowany widok ``DeleteView``:
 
 .. raw:: html
 
-    <div class="code_no">Plik <i>urls.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>views.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: urls.py
+.. literalinclude:: source/czat_views_02.py
     :linenos:
-    :lineno-start: 42
-    :lines: 42-48
-
-Warto zwrócić uwagę, że podobnie jak w przypadku listy wiadomości, o ile wystarcza nam
-domyślna funkcjonalność widoku wbudowanego, nie musimy niczego implementować w pliku :file:`views.py`.
+    :lineno-start: 57
+    :lines: 57-60
 
 Domyślny szablon dla tego widoku przyjmuje nazwę *<nazwa-modelu>_confirm_delete.html*,
-dlatego uprościliśmy jego nazwę we właściwości ``template_name``. Tworzymy więc plik
-:file:`wiadomosc_usun.html`:
+dlatego uprościliśmy jego nazwę we właściwości ``template_name``. Tworzymy więc plik :file:`wiadomosc_usun.html`:
 
 .. raw:: html
 
     <div class="code_no">Plik <i>wiadomosc_usun.html</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
-.. literalinclude:: wiadomosc_usun_z7.html
+.. literalinclude:: source/wiadomosc_usun.html
     :linenos:
 
-Tag ``{{ object }}`` zostanie zastąpiony treścią wiadomości zwróconą przez funkcję
-"autoprezentacji" ``__str__()`` modelu.
+Tag ``{{ object }}`` zostanie zastąpiony treścią wiadomości zwróconą przez funkcję ``__str__()`` modelu.
 
-**Ćwiczenie:** Wstaw link "Usuń" (``&bull; <a href="{% url 'czat:usun' wiadomosc.id %}">Usuń</a>``) za linkiem "Edytuj" w szablonach wyświetlających listę wiadomości.
+Ćwiczenie
+----------
 
-.. figure:: img/django_edycja_usun.png
+1) W szablonie :file:`wiadomosc_list.html` za linkiem *Edytuj* wstaw podobny link *Usuń*:
+   ``&bull; <a href="{% url 'czat:usun' wiadomosc.id %}">Usuń</a>``, aby zalogowany użytkownik mógł
+   usunąć wiadomość.
 
-.. figure:: img/django_usun.png
+2) Wejdź na stronę "Lista wiadomości" i kliknij link *Usuń*:
+
+.. figure:: img/django_usun_01.png
+
+3) Potwierdź usunięcie wiadomości:
+
+.. figure:: img/django_usun_02.png
 
 Materiały
 =========
@@ -680,6 +685,3 @@ Materiały
 3. Co to jest framework? http://pl.wikipedia.org/wiki/Framework
 4. Co nieco o HTTP i żądaniach GET i POST http://pl.wikipedia.org/wiki/Http
 
-**Źródła:**
-
-* :download:`czat2.zip <czat2.zip>`

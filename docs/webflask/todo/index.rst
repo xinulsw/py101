@@ -575,7 +575,7 @@ Dodaj możliwość usuwania zadań, czyli:
 Materiały
 =========
 
-* `SQLite <https://www.sqlite.org/>`_
+* `Strona główna SQLite <https://www.sqlite.org/>`_
 * `Using SQLite 3 with Flask <https://flask.palletsprojects.com/en/stable/patterns/sqlite3/>`_
 
 .. admonition:: Pojęcia

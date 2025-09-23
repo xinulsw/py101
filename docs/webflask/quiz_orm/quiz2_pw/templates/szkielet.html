@@ -41,7 +41,7 @@
             <ul class="nav navbar-nav">
 
             {% for href, id, tekst in navigation_bar %}
-              <li{% if id == active_page %} class="active"{% endif %}>
+              {% if id == active_page %} <li class="active"> {% else %} <li> {% endif %}
                 <a href="{{ href|e }}">{{ tekst|e }}</a>
               </li>
             {% endfor %}

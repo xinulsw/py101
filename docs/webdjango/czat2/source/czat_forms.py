@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-# czat/forms.py
-
 from django.forms import ModelForm, TextInput
-from czat.models import Wiadomosc
+from .models import Wiadomosc
 
 
 class EdytujWiadomoscForm(ModelForm):
