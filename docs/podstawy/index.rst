@@ -10,7 +10,8 @@ Sugerujemy używanie powłoki Pythona do testowania poznawanych funkcji i fragme
 .. toctree::
     :titlesonly:
 
-    przyklady/index
+    przyklady/przyklad00
+    przyklady/przyklad01
     mlotek/index
     dlotek/index
     elotek/index

@@ -1,8 +1,15 @@
 Mów mi Python!
 ##############
 
-Zadanie
-*******
+.. note::
+
+    W tym przykładzie poznasz instrukcje wejścia i wyjścia oraz podstawowe typy danych,
+    użyjesz zmiennych i wykonasz proste operacje arytmetyczne.
+
+Specyfikacja
+*************
+
+**Zadanie:**
 
 Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
@@ -44,23 +51,23 @@ służą wbudowane funkcje:
 * ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków).
 * ``print()`` – wypisuje podane argumenty oddzielone przecinkami.
 
-Do przekształcania typów danych na inne korzystamy z funkcji:
+Do **przekształcania typów danych** na inne korzystamy z funkcji:
 
-* ``int()`` – przekształca ciąg znaków na liczbę całkowitą,
-* ``str()`` – przekształca liczbę całkowitą (lub inny typ danych) na ciąg znaków.
+* ``int()`` – przekształca ciąg znaków na **liczbę całkowitą** (ang. *integer*),
+* ``str()`` – przekształca liczbę całkowitą (lub inny typ danych) na **ciąg znaków** (ang. *string*).
 
 Ciągi znaków można łączyć ze sobą za pomocą operatora ``+``.
 
 Składnia
-========
+********
 
 * **Nazwy zmiennych** nie powinny zawierać znaków narodowych.
   W Pythonie preferuje się małe litery oraz łączenie członów nazwy znakiem podkreślenia ``_``.
 * **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
 * Znak ``#`` oznacza 1-liniowy komentarz, tj. objaśnienie kodu, które jest pomijane przez interpreter.
 
-Zadania
-=======
+Ćwiczenia
+*********
 
 Zmień program tak, aby wartość zmiennej `akt_rok` (aktualny rok) była podawana przez użytkownika na początku programu.
 

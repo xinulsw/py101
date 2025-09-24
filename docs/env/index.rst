@@ -14,7 +14,6 @@ oraz podstawowe informacje nt. realizacji scenariuszy.
     linux
     live
     windows
-    podstawy
     venv
     tools
     Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>

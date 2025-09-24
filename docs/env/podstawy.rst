@@ -1,19 +1,22 @@
-Podstawowe pojęcia
-##################
+Co musisz wiedzieć i umieć?
+###########################
 
 Tryb interaktywny
-*****************
+=================
 
-Interpreter Pythona może i powinien być używany w trybie interaktywnym do nauki i testowania kodu.
-
-Uruchamiamy go, wydając w terminalu wybranego systemu polecenie:
+Interpreter (inaczej: powłoka) Pythona może być używany w trybie interaktywnym do nauki i testowania kodu.
+Uruchamiamy go, wydając w terminalu polecenie:
 
 .. code-block:: bash
 
     python3  # system Linux
     py       # system Windows
 
-Po uruchomieniu interpreter wyświetla znak zachęty ``>>>``. Przydatne polecenia:
+.. note::
+
+    Powłokę można również uruchomić w środowisku programistycznym, np. PyCharm lub VSCodium.
+
+Po uruchomieniu powłoka wyświetli znak zachęty ``>>>``. Przydatne polecenia:
 
 .. code-block:: bash
 
@@ -34,7 +37,7 @@ Tryb interaktywny może być również uruchomiony za pomocą domyślnego dla Py
 Znaki ``...`` oznaczają, że wpisujemy instrukcję złożoną, np. warunkową lub pętlę, i kod wymaga wcięć.
 
 Skrypty Pythona
-***************
+=================
 
 * Kod źródłowy Pythona zapisujemy w plikach tekstowych z rozszerzeniem ``.py``.
 * Skrypty Pythona można uruchamiać w terminalu przy użyciu interpretera w katalogu, w którym zapisany jest skrypt:
@@ -44,11 +47,12 @@ Skrypty Pythona
       python3 nazwa_skryptu.py  # system Linux
       py nazwa_skryptu.py       # system Windows
 
-* Ze względów praktycznych warto korzystać z edytorów programistycznych lub środowisk IDE ułatwiających pisanie i testowanie
-  kodu (formatowanie kodu, obsługa błędów itd.)
+* Ze względów praktycznych warto korzystać z edytorów lub środowisk programistycznych ułatwiających pisanie i uruchamianie
+  programów (m. in. kolorowanie kodu, sprawdzanie błędów itd.)
+  Zobacz `Edytory kodu <https://linetc.readthedocs.io/pl/latest/tools/edytory/index.html>`_.
 * Podczas przepisywania (kopiowanie) można pominąć komentarze, czyli teksty zaczynające się od znaku ``#``.
 * Przepisując lub wklejając kod pamiętać trzeba o zachowywaniu wcięć, które służą w Pythonie do wyodrębniania bloków kodu.
-* W wielu scenariuszach kod rozwijany jest krok po kroku, trzeba uważać, żeby któregoś nie pominąć.
+* W niektórych materiałach znajdziesz fragmenty kodu źródłowego, które pokazują, jak rozwija się program.
 * Większość fragmentów kodu jest numerowana, ale jeśli Twój kod różni się nieznacznie numeracją linii, nie musi to oznaczać błędu.
 
 Dla przykładu poniższy kod powinien zostać wklejony w linii ``51`` skryptu:
@@ -72,33 +76,59 @@ Dla przykładu poniższy kod powinien zostać wklejony w linii ``51`` skryptu:
             )
             self.fps_clock.tick(30)
 
-Katalog domowy
-**************
+Katalogi i pliki
+==================
+
+Terminal
+---------
+
+W scenariuszach często wykorzystujemy terminal, inaczej wiersz poleceń.
+
+* Zarówno w Linuksie, jak i Windowsie terminal otwieramy wpisując i uruchamiając aplikację "Terminal" w Menu Start.
+  W Linuskie można też użyć ikony na pasku zadań. W obydwu systemach można również w menedżerze plików kliknąć prawym
+  klawiszem w otwartym katalogu i wybrać polecenie "Otwórz w terminalu".
+* Przydatne polecenia:
+
+  .. code-block:: bash
+
+      ~$ mkdir nazwa_katalogu  # utworzenie katalogu
+      ~$ cd nazwa_katalogu     # wejście do katalogu
+      ~$ cd ..                 # przejście do katalogu nadrzędnego
+      ~$ ls                    # wypisanie zawartości katalogu
+      ~$ touch nazwa_pliku     # utworzenie pustego pliku w Linuskie
+      ~$ ni nazwa_pliku        # utworzenie pustego pliku w Windowsie
+      ~$ rm nazwa_pliku        # usunięcie pliku
+
+.. note::
+
+  Katalogi i pliki można tworzyć nie tylko w terminalu, ale również za pomocą menedżera plików,
+  edytora lub środowiska programistycznego.
 
 Linux
-=====
+--------
 
-* **Katalog domowy** jest podkatalogiem katalogu ``/home`` i ma nazwę zalogowanego użytkownika,
-  np. ``/home/uczen``. W poleceniach wydawanych w terminalu ścieżkę do tego katalogu symbolizuje znak ``~``.
-* Zapis typu ``~/quiz2$`` oznacza więc, że dane polecenie należy wykonać w podkatalogu
-  ``quiz2`` katalogu domowego użytkownika.
-* Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik, natomiast ``#`` – jako root, czyli administrator.
+* Katalogi dla realizowanych projektów można tworzyć w katalogu domowym lub
+  w jednym nadrzędnym katalogu, np.: :file:`python101`.
+* **Katalog domowy** w Linuksie jest podkatalogiem katalogu :file:`/home`
+  i ma nazwę zalogowanego użytkownika, np. ``/home/uczen``. W poleceniach wydawanych
+  w terminalu ścieżka do tego katalogu oznaczana jest przez znak tyldy: ``~``.
+* Zapisy typu ``~/quiz$`` oznaczają, że dane polecenie należy wykonać w podkatalogu
+  ``quiz`` w katalogu domowego użytkownika.
+* Znak ``$`` oznacza, że komendy wydajemy jako zwykły użytkownik, natomiast ``#`` – jako
+  użytkownik z uprawnieniami administratora lub administrator (root).
 
 Windows
-=======
-
-Jeżeli scenariusze będziemy wykonywać w MS Windows, musimy pamiętać o różnicach:
+---------
 
 * Katalog domowy użytkownika w Windows nie nadaje się do przechowywania w nim
-  kodów programów lub repozytoriów. Katalog do programowania można utworzyć
-  na Pulpicie lub w katalogu głównym wybranej partycji, np. :file:`C:\\python101`,
-  i w nim tworzyć foldery dla poszczególnych scenariuszy.
-* Najstarszym terminalem jest program ``cmd``, czyli wiersz poleceń; jest on jednak
-  ograniczony, warto używać konsoli PowerShell lub Windows Terminal.
-* W systemie Windows znaki ``/`` (slash) w ścieżkach zmieniamy na ``\\`` (backslash).
-* Zamieniamy również komendy systemu Linux na odpowiedniki wiersza poleceń Windows,
-  np. ``mkdir`` na ``md``.
-* Pamiętaj, że skrypty powinny być zapisywane w plikach z rozszerzeniem ``.py`` i kodowaniem UTF-8.
+  kodów programów lub repozytoriów, najlepiej utworzyć jakiś katalog na partycji
+  innej niż systemowa (oznaczana literą *C:*), np. :file:`D:\\python101` i w nim
+  tworzyć podfoldery dla poszczególnych scenariuszy.
+* Terminal otwieramy uruchamiając z Menu Start aplikację "Terminal", tj, Windows PowerShell.
+  Można również w Eksploratorze kliknąć prawym klawiszem w otwartym katalogu
+  i wybrać polecenie "Otwórz w Terminalu".
+* W systemie Windows znaki ``/`` (slash) w ścieżkach zmieniamy na ``\`` (backslash).
+* Pamiętajmy, żeby skrypty zapisywać w plikach kodowanych jako UTF-8.
 
 .. admonition:: Pojęcia
     

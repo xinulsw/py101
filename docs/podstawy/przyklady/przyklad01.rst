@@ -1,8 +1,14 @@
 Instrukcja warunkowa
 ####################
 
-Zadanie
-*******
+.. note::
+
+    W tym przykładzie poznasz instrukcje warunkową, która steruje działaniem programu.
+
+Specyfikacja zadania 1
+**********************
+
+**Zadanie:**
 
 Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
@@ -38,15 +44,15 @@ Słowo kluczowe ``else:`` (w przeciwnym razie) jest opcjonalne. Następujący po
 jeżeli wyrażenie jest fałszywe (ma wartość ``False``).
 
 Składnia
-========
+********
 
 * Części instrukcji warunkowej kończymy dwukropkiem, które zapowiadają bloki kodu.
 * Blok kodu może zawierać jedną lub wiele instrukcji.
 * Bloki kodu wyodrębniane są za pomocą wcięć.
 * Wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
 
-Zadania
-=======
+Ćwiczenia
+*********
 
 Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
 
@@ -64,15 +70,14 @@ Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunika
 
     :term:`instrukcja warunkowa`, :term:`wyrażenie logiczne`, :term:`blok kodu`, :term:`formatowanie kodu`
 
-
-
-
 .. _trojkat:
 
-Trójkąt
-=======
+Specyfikacja zadania 2
+**********************
 
-**ZADANIE**: Napisz program, który na podstawie danych pobranych od użytkownika,
+**Zadanie**:
+
+Napisz program, który na podstawie danych pobranych od użytkownika,
 czyli długości boków, sprawdza, czy da się zbudować trójkąt i czy jest to trójkąt prostokątny.
 Jeżeli da się zbudować trójkąt, należy wydrukować jego obwód i pole, w przeciwnym wypadku
 komunikat, że nie da się utworzyć trójkąta.

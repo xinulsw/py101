@@ -3,3 +3,4 @@ span.caption-text { font-size: 0.65em; font-weight: bold; }
 .highlight .hll {
   background-color: #ffd8cc;
 }
+figure img { border: 1px solid black; }
