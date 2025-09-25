@@ -33,8 +33,9 @@ Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisu
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>witaj.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
+.. highlight:: python
 .. literalinclude:: przyklad_01.py
     :linenos:
 
@@ -51,10 +52,10 @@ Składnia
 * Bloki kodu wyodrębniane są za pomocą wcięć.
 * Wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
 
-Ćwiczenia
-*********
+Ćw. 1 – kilka warunków
+***********************
 
-1) Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
+Zmień program :file:`witaj.py` tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
 
 .. code-block::
 
@@ -62,16 +63,75 @@ Składnia
     Jestem młodszy od ciebie!
     Mamy tyle samo lat!
 
+Można użyć kilku osobnych instrukcji warunkowych:
+
+.. code-block::
+
+    if warunek_1:
+        pass
+    if warunek_2:
+        pass
+    if warunek_3:
+        pass
+
+Można użyć instrukcji warunkowych zagnieżdżonych:
+
+.. code-block::
+
+    if warunek_1:
+        pass
+    else:
+        if warunek_2:
+            pass
+        else:
+            pass
+
+Można użyć jednej złożonej instrukcji warunkowej:
+
+.. code-block::
+
+    if warunek_1:
+        pass
+    elif warunek_2:
+        pass
+    else:
+        pass
+
+Ćw. 2 – najmniejsza liczba
+***************************
+
+Napisz program :file:`najmniejsza.py`, który pobiera trzy liczby całkowite i wypisuje najmniejszą z nich.
+
+Ćw. 3 – trójkąt
+****************
+
+Napisz program :file:`trojkat.py`, który pobiera długości trzech boków trójkąta i sprawdza, czy da się
+z nich zbudować trójkąt. Jeżeli tak, program powinien wypisać komunikat "Da się", w przeciwnym razie "Nie da się".
+
 .. tip::
 
-    Użyj kilku funkcji warunkowych.
+    Trójkąt mozna zbudować wtedy, kiedy suma dwóch dowolnych boków jest większa od trzeciego.
+    Do sprawdzenia są więc trzy warunki.
 
-2) Napisz program :file:`najmniejsza.py`, który pobiera trzy liczby całkowite i wypisuje najmniejszą z nich.
-3) Napisz program :file:`trojkat.py`, który pobiera długości trzech boków trójkąta i sprawdza, czy da się
-   z nich zbudować trójkąt. Jeżeli tak, program powinien wypisać komunikat "Da się", w przeciwnym razie "Nie da się".
+Jeżeli kilka warunków ma być spełnionych jednocześnie, można je połączyć za pomocą operatora logicznej
+koniunkcji ``and``:
+
+.. code-block::
+
+    if warunek1 and warunek2:
+        pass
+
+Jeżeli szukamy przynajmniej jednego prawdziwego warunku, warunki można połączyć za pomocą operatora logicznej
+alternatywy ``or``:
+
+.. code-block::
+
+    if warunek1 or warunek2:
+        pass
+
 4) Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, sprawdzi, czy jest to
    trójkąt prostokątny i wypisze komunikat "Prostokątny" lub "Nieprostokątny".
-5)
+5) Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, obliczy i wypisze obwód oraz pole.
 
 .. admonition:: Pojęcia
 

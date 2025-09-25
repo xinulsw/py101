@@ -11,7 +11,7 @@ Specyfikacja
 
 **Zadanie:**
 
-Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
+Napisz program :file:`witaj.py`, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
 **Dane**:
 
@@ -36,8 +36,9 @@ Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisu
     
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>witaj.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
+.. highlight:: python
 .. literalinclude:: przyklad_00.py
     :linenos:
 
@@ -66,10 +67,10 @@ Składnia
 * **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
 * Znak ``#`` oznacza 1-liniowy komentarz, tj. objaśnienie kodu, które jest pomijane przez interpreter.
 
-Ćwiczenia
-*********
+Ćwiczenie 1
+************
 
-Zmień program tak, aby wartość zmiennej `akt_rok` (aktualny rok) była podawana przez użytkownika na początku programu.
+Zmień program tak, aby wartość zmiennej ``akt_rok`` (aktualny rok) była podawana przez użytkownika na początku programu.
 
 .. tip::
 
