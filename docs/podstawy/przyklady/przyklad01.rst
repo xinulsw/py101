@@ -54,7 +54,7 @@ Składnia
 Ćwiczenia
 *********
 
-Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
+1) Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
 
 .. code-block::
 
@@ -65,6 +65,13 @@ Zmień program tak, aby na końcu wypisany został tylko jeden z trzech komunika
 .. tip::
 
     Użyj kilku funkcji warunkowych.
+
+2) Napisz program :file:`najmniejsza.py`, który pobiera trzy liczby całkowite i wypisuje najmniejszą z nich.
+3) Napisz program :file:`trojkat.py`, który pobiera długości trzech boków trójkąta i sprawdza, czy da się
+   z nich zbudować trójkąt. Jeżeli tak, program powinien wypisać komunikat "Da się", w przeciwnym razie "Nie da się".
+4) Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, sprawdzi, czy jest to
+   trójkąt prostokątny i wypisze komunikat "Prostokątny" lub "Nieprostokątny".
+5)
 
 .. admonition:: Pojęcia
 
@@ -81,6 +88,14 @@ Napisz program, który na podstawie danych pobranych od użytkownika,
 czyli długości boków, sprawdza, czy da się zbudować trójkąt i czy jest to trójkąt prostokątny.
 Jeżeli da się zbudować trójkąt, należy wydrukować jego obwód i pole, w przeciwnym wypadku
 komunikat, że nie da się utworzyć trójkąta.
+
+**Dane**:
+
+**Wynik**:
+
+.. admonition:: Pojęcia
+
+    :term:`pętla`, :term:`wyrażenie logiczne`, :term:`blok kodu`, :term:`formatowanie kodu`
 
 **POJĘCIA**: *pętla for, obiekt, typ danych, metoda, lista, instrukcja warunkowa zagnieżdżona*.
 
