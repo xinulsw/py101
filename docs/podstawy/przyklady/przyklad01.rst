@@ -3,21 +3,12 @@ Instrukcja warunkowa
 
 .. note::
 
-    W tym przykładzie poznasz instrukcje warunkową, która steruje działaniem programu.
+    W tym przykładzie poznasz różne postaci instrukcji warunkowej, za pomocą której sterujemy działaniem programu.
 
-Specyfikacja zadania 1
-**********************
+Zadanie
+************
 
-**Zadanie:**
-
-Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
-
-**Dane**:
-
-* ``imie`` – ciąg znaków pobierany z klawiatury, imię użytkownika
-* ``akt_rok`` – liczba całkowita, aktualny rok pobierany z klawiatury
-* ``py_rok`` – liczba całkowita, rok powstania języka Python
-* ``rok_urodzenia`` – liczba całkowita pobierana z klawiatury, rok urodzenia użytkownika
+Uzupełnij program :file:`witaj.py` z :ref:`przykładu 1 <przyklad1>`, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
 **Wynik**:
 
@@ -38,6 +29,7 @@ Napisz program, który pobiera od użytkownika imię oraz rok urodzenia i wypisu
 .. highlight:: python
 .. literalinclude:: przyklad_01.py
     :linenos:
+    :emphasize-lines: 17-21
 
 Instrukcja warunkowa ``if wyrażenie:`` (jeżeli) steruje warunkowym wykonaniem kodu.
 Jeżeli podane wyrażenie logiczne jest prawdziwe (ma wartość ``True``), wykonywany jest następujący wcięty blok kodu.
@@ -55,7 +47,7 @@ Składnia
 Ćw. 1 – kilka warunków
 ***********************
 
-Zmień program :file:`witaj.py` tak, aby na końcu wypisany został tylko jeden z trzech komunikatów:
+Zmień program :file:`witaj.py` tak, aby na końcu wypisany został **tylko jeden** z trzech komunikatów:
 
 .. code-block::
 
@@ -86,7 +78,8 @@ Można użyć instrukcji warunkowych zagnieżdżonych:
         else:
             pass
 
-Można użyć jednej złożonej instrukcji warunkowej:
+Można użyć jednej złożonej instrukcji warunkowej, w której sprawdzamy kolejne warunki za pomocą
+słowa kluczowego ``elif``:
 
 .. code-block::
 
@@ -97,12 +90,16 @@ Można użyć jednej złożonej instrukcji warunkowej:
     else:
         pass
 
-Ćw. 2 – najmniejsza liczba
+Ćw. 2 – Najmniejsza liczba
 ***************************
 
 Napisz program :file:`najmniejsza.py`, który pobiera trzy liczby całkowite i wypisuje najmniejszą z nich.
 
-Ćw. 3 – trójkąt
+.. tip::
+
+    Zadanie wymaga użycia zagnieżdżonych instrukcji warunkowych.
+
+Ćw. 3 – Trójkąt
 ****************
 
 Napisz program :file:`trojkat.py`, który pobiera długości trzech boków trójkąta i sprawdza, czy da się
@@ -137,7 +134,8 @@ alternatywy ``or``:
     Przydatne działania matematyczne:
 
     * ``x**y`` – podnoszenie podstawy ``x`` do potęgi ``y``;
-    * ``sqrt()`` – oblicza pierwiastek kwadratowy.
+    * ``sqrt()`` – funkcja oblicza pierwiastek kwadratowy, aby jej użyć na początku skryptu umieszczamy
+      import: ``from math import sqrt``.
 
 - Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, obliczy i wypisze obwód oraz pole.
 

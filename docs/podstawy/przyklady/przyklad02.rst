@@ -1,18 +1,37 @@
-Instrukcje warunkowe
-####################
+Pętle
+#####
+
+.. note::
+
+    W tym przykładzie poznasz instrukcje iteracyjne, tzw. pętle,
+    pozwalające powtrzać określone operacje.
 
 Zadanie
-*******
+********
 
-Napisz program, który Pobiera od użytkownika trzy liczby całkowite i wypisuje najmniejszą z nich, sprawdź, która jest najmniejsza i wydrukuj ją na ekranie.
+Napisz program :file:`alfabet.py`, który wypisze ``n`` początkowych małych i dużych liter alfabetu
+w formacie: "mała - litera, duża - litera". Jeżeli ``n`` jest większe od 2, wypisuj po 2 litery w wierszu.
 
-**POJĘCIA**: *pętla while, obiekt, typ danych, metoda, instrukcja warunkowa zagnieżdżona*.
+**Dane**:
+
+* ``n`` – liczba całkowita oznaczająca liczbę liter do wypisania.
+
+**Wynik**:
+
+* wypisane pary małych i dużyc liter na ekranie, np.:
+
+.. code::
+
+    a - A, b - B
+    c - C, d - D
+    e - E
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>alfabet.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. literalinclude:: 01_if.py
+.. highlight:: python
+.. literalinclude:: przyklad02.py
     :linenos:
 
 Pętla ``while warunek`` umożliwia powtarzanie bloku operacji, dopóki warunek
@@ -33,3 +52,5 @@ Zadania
 
 Sprawdź, co się stanie, jeśli podasz liczby oddzielone przecinkiem lub podasz
 za mało liczb. Zmień program tak, aby poprawnie interpretował dane oddzielane przecinkami.
+
+**POJĘCIA**: *pętla while, obiekt, typ danych, metoda, instrukcja warunkowa zagnieżdżona*.

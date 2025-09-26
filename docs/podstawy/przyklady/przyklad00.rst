@@ -1,3 +1,5 @@
+.. _przyklad1:
+
 Mów mi Python!
 ##############
 
@@ -6,10 +8,8 @@ Mów mi Python!
     W tym przykładzie poznasz instrukcje wejścia i wyjścia oraz podstawowe typy danych,
     użyjesz zmiennych i wykonasz proste operacje arytmetyczne.
 
-Specyfikacja
+Zadanie
 *************
-
-**Zadanie:**
 
 Napisz program :file:`witaj.py`, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
 
@@ -49,7 +49,7 @@ Przypisywane wartości mogą być wyrażeniami, np. działaniami arytmetycznymi 
 Do **pobierania danych** z klawiatury (domyślne wejście) i **wypisywania komunikatów** na ekranie (domyślne wyjście)
 służą wbudowane funkcje:
 
-* ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków).
+* ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków, ang. *string*).
 * ``print()`` – wypisuje podane argumenty oddzielone przecinkami.
 
 Do **przekształcania typów danych** na inne korzystamy z funkcji:
