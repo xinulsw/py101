@@ -26,7 +26,6 @@ Słownik Pythona
         (ang. *generator expressions*) – zwięzły w notacji sposób tworzenia
         iteratorów według składni: ``( wyrażenie for wyraz in sekwencja if warunek )``
 
-
     instrukcja warunkowa
         podstawowa konstrukcja w programowaniu, wykorzystuje wyrażenie logiczne
         przyjmujące wartość ``True`` (prawda) lub ``False`` (fałsz) do wyboru
@@ -111,13 +110,18 @@ Słownik Pythona
         podstawowa konstrukcja w programowaniu, umożliwia powtarzanie fragmentów
         kodu zadaną ilość razy (pętla ``for``) lub dopóki podane wyrażenie
         logiczne jest prawdziwe (pętla ``while``). Należy zadbać, aby pętla
-        była skończona za pomocą odpowiedniego warunku lub instrukcji przeywającej
+        była skończona za pomocą odpowiedniego warunku lub instrukcji przerywającej
         powtarzanie. Np.:
 
 .. code-block:: python
 
     for i in range(11):
-        print i
+        print(i)
+
+    i = 0
+    while i < 10:
+        print(i)
+        i = i + 1
 
 .. glossary::
 

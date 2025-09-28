@@ -1,14 +1,24 @@
-Instrukcja warunkowa
-####################
+.. _przyklad1:
+
+Mów mi Python!
+##############
 
 .. note::
 
-    W tym przykładzie poznasz różne postaci instrukcji warunkowej, za pomocą której sterujemy działaniem programu.
+    W tym przykładzie poznasz instrukcje wejścia i wyjścia oraz podstawowe typy danych,
+    użyjesz zmiennych i wykonasz proste operacje arytmetyczne.
 
 Zadanie
-************
+*************
 
-Uzupełnij program :file:`witaj.py` z :ref:`przykładu 1 <przyklad1>`, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
+Napisz program :file:`witaj.py`, który pobiera od użytkownika imię oraz rok urodzenia i wypisuje podane niżej komunikaty.
+
+**Dane**:
+
+* ``akt_rok`` – liczba całkowita, aktualny rok,
+* ``py_rok`` – liczba całkowita, rok powstania języka Python,
+* ``imie`` – ciąg znaków pobierany z klawiatury, imię użytkownika,
+* ``rok_urodzenia`` – liczba całkowita pobierana z klawiatury, rok urodzenia użytkownika.
 
 **Wynik**:
 
@@ -17,128 +27,55 @@ Uzupełnij program :file:`witaj.py` z :ref:`przykładu 1 <przyklad1>`, który po
 .. code::
 
     Witaj *imie*! Mów mi Python.
-    Mam *wiek_py* lat, ty masz *wiek_u*.
-    Jestem starszy od ciebie!
-    lub:
-    Jestem młodszy od ciebie lub mamy tyle samo lat!
+    Mam *wiek_py* lat*, ty masz wiek_u*.
 
+.. tip::
+
+    Język Python powstał w 1989 roku.
+    Wiek użytkownika i wiek Pythona należy wyliczyć. Można użyć zmiennych pomocniczych, np. ``wiek_u`` i ``wiek_py``.
+    
 .. raw:: html
 
     <div class="code_no">Plik <i>witaj.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: przyklad_01.py
+.. literalinclude:: przyklad01.py
     :linenos:
-    :emphasize-lines: 17-21
 
-Instrukcja warunkowa ``if wyrażenie:`` (jeżeli) steruje warunkowym wykonaniem kodu.
-Jeżeli podane wyrażenie logiczne jest prawdziwe (ma wartość ``True``), wykonywany jest następujący wcięty blok kodu.
-Słowo kluczowe ``else:`` (w przeciwnym razie) jest opcjonalne. Następujący po nim blok kodu wykonywany jest,
-jeżeli wyrażenie jest fałszywe (ma wartość ``False``).
+**Zmienne** służą do zapamiętywania używanych w programie wartości, np. napisów lub liczb.
+Tworzymy je poprzez **przypisanie wartości** określonego typu za pomocą operatora `=`.
+Przypisywane wartości mogą być wyrażeniami, np. działaniami arytmetycznymi lub logicznymi.
+
+Do **pobierania danych** z klawiatury (domyślne wejście) i **wypisywania komunikatów** na ekranie (domyślne wyjście)
+służą wbudowane funkcje:
+
+* ``input()`` – zwraca pobrane z klawiatury znaki jako napis (ciąg znaków, ang. *string*).
+* ``print()`` – wypisuje podane argumenty oddzielone przecinkami.
+
+Do **przekształcania typów danych** na inne korzystamy z funkcji:
+
+* ``int()`` – przekształca ciąg znaków na **liczbę całkowitą** (ang. *integer*),
+* ``str()`` – przekształca liczbę całkowitą (lub inny typ danych) na **ciąg znaków** (ang. *string*).
+
+Ciągi znaków można łączyć ze sobą za pomocą operatora ``+``.
 
 Składnia
 ********
 
-* Części instrukcji warunkowej kończymy dwukropkiem, które zapowiadają bloki kodu.
-* Blok kodu może zawierać jedną lub wiele instrukcji.
-* Bloki kodu wyodrębniane są za pomocą wcięć.
-* Wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
+* **Nazwy zmiennych** nie powinny zawierać znaków narodowych.
+  W Pythonie preferuje się małe litery oraz łączenie członów nazwy znakiem podkreślenia ``_``.
+* **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
+* Znak ``#`` oznacza 1-liniowy komentarz, tj. objaśnienie kodu, które jest pomijane przez interpreter.
 
-Ćw. 1 – kilka warunków
-***********************
+Ćwiczenie 1
+************
 
-Zmień program :file:`witaj.py` tak, aby na końcu wypisany został **tylko jeden** z trzech komunikatów:
-
-.. code-block::
-
-    Jestem starszy od ciebie!
-    Jestem młodszy od ciebie!
-    Mamy tyle samo lat!
-
-Można użyć kilku osobnych instrukcji warunkowych:
-
-.. code-block::
-
-    if warunek_1:
-        pass
-    if warunek_2:
-        pass
-    if warunek_3:
-        pass
-
-Można użyć instrukcji warunkowych zagnieżdżonych:
-
-.. code-block::
-
-    if warunek_1:
-        pass
-    else:
-        if warunek_2:
-            pass
-        else:
-            pass
-
-Można użyć jednej złożonej instrukcji warunkowej, w której sprawdzamy kolejne warunki za pomocą
-słowa kluczowego ``elif``:
-
-.. code-block::
-
-    if warunek_1:
-        pass
-    elif warunek_2:
-        pass
-    else:
-        pass
-
-Ćw. 2 – Najmniejsza liczba
-***************************
-
-Napisz program :file:`najmniejsza.py`, który pobiera trzy liczby całkowite i wypisuje najmniejszą z nich.
+Zmień program tak, aby wartość zmiennej ``akt_rok`` (aktualny rok) była podawana przez użytkownika na początku programu.
 
 .. tip::
 
-    Zadanie wymaga użycia zagnieżdżonych instrukcji warunkowych.
-
-Ćw. 3 – Trójkąt
-****************
-
-Napisz program :file:`trojkat.py`, który pobiera długości trzech boków trójkąta i sprawdza, czy da się
-z nich zbudować trójkąt. Jeżeli tak, program powinien wypisać komunikat "Da się", w przeciwnym razie "Nie da się".
-
-.. tip::
-
-    Trójkąt mozna zbudować wtedy, kiedy suma dwóch dowolnych boków jest większa od trzeciego.
-    Do sprawdzenia są więc trzy warunki.
-
-Jeżeli kilka warunków ma być spełnionych jednocześnie, można je połączyć za pomocą operatora logicznej
-koniunkcji ``and``:
-
-.. code-block::
-
-    if warunek1 and warunek2:
-        pass
-
-Jeżeli szukamy przynajmniej jednego prawdziwego warunku, warunki można połączyć za pomocą operatora logicznej
-alternatywy ``or``:
-
-.. code-block::
-
-    if warunek1 or warunek2:
-        pass
-
-- Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, sprawdzi, czy jest to
-   trójkąt prostokątny i wypisze komunikat "Prostokątny" lub "Nieprostokątny".
-
-.. tip::
-
-    Przydatne działania matematyczne:
-
-    * ``x**y`` – podnoszenie podstawy ``x`` do potęgi ``y``;
-    * ``sqrt()`` – funkcja oblicza pierwiastek kwadratowy, aby jej użyć na początku skryptu umieszczamy
-      import: ``from math import sqrt``.
-
-- Do programu :file:`trojkat.py` dopisz kod, który jeżeli da się zbudować trójkąt, obliczy i wypisze obwód oraz pole.
+    Użyj funkcji ``input()`` oraz ``int()``.
 
 .. admonition:: Pojęcia
-
-    :term:`instrukcja warunkowa`, :term:`wyrażenie logiczne`, :term:`blok kodu`, :term:`formatowanie kodu`
+    
+    :term:`zmienna`, wartość, :term:`typ danych`, wyrażenie, :term:`wejście` i :term:`wyjście`, komentarz
