@@ -37,7 +37,7 @@ w jednym wierszu w formacie: "mała_litera–duża_litera".
 Pętla ``for``
 *************
 
-Liczba wykonań pętli ``for`` zależy od sekwencji znajdującej się po słowie kluczowym ``in``.
+Liczba wykonań pętli ``for`` zależy od liczby elementów sekwencji znajdującej się po słowie kluczowym ``in``.
 Kolejne elementy sekwencji dostępne są w zmiennej iteracyjnej, w naszym przykładzie ma ona nazwę``i``.
 
 **Funkcja ``range()``** generuje sekwencje liczb całkowitych, np.:
@@ -45,6 +45,12 @@ Kolejne elementy sekwencji dostępne są w zmiennej iteracyjnej, w naszym przyk�
 - ``range(n)`` – zwraca kolejne liczby z zakresu ``<0, n-1>``, pętla wykona się ``n`` razy,
 - ``range(a, b)`` – zwraca kolejne liczby z zakresu ``<a, b-1>``, pętla wykona się ``b-a`` razy,
 - ``range(a, b, -1)`` – zwraca malejące liczby z zakresu ``<a, b>``, pętla wykona się ``a-b`` razy.
+
+.. note::
+
+    Jeżeli chcesz sprawdzić działanie funkcji ``range()`` w trybie interaktywnym interpretera, warto tę funkcję
+    wywołać jako argument funkcji ``list()``, która zamienia generowaną sekwencję na listę, np.:
+    ``list(range(65, 91))``.
 
 Inne przykłady sekwencji, których można użyć w pętli ``for``:
 
@@ -79,8 +85,8 @@ Jeżeli w wpisywanym komunikacie chcemy umieścić wartości zmiennych lub wyra�
 formatowanych ciągów znakowych (ang. *f-strings*). Przed cudzysłowami dajemy małą literą ``f``,
 zmienne lub wyrażenia otaczamy nawiasami klamrowymi, np.:
 
-- ``print(f'{l_mala} – {l_duza}', end=' ')`` – argument ``end`` pozwala określić znak wstawiany na końcu wypisywanego
-  komunikatu zamiast domyślnego znaku nowego wiersza.
+- ``print(f'{l_mala} – {l_duza}', end=' ')`` – dodatkowy argument ``end`` pozwala określić znak wstawiany
+  na końcu wypisywanego komunikatu zamiast domyślnego znaku nowego wiersza.
 
 Ćw. 1 – odwrócony porządek
 --------------------------
@@ -95,6 +101,4 @@ zaczynając od końca alfabetu.
 
 .. admonition:: Pojęcia
 
-    :term:`pętla`, :term:``
-
-**POJĘCIA**: *pętla while, obiekt, typ danych, metoda, instrukcja warunkowa zagnieżdżona*.
+    :term:`pętla`, :term:`metoda`

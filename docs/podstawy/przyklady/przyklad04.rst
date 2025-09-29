@@ -1,51 +1,93 @@
-Wydrukuj alfabet
-##################
+.. _przyklad4:
 
-**ZADANIE**: Wydrukuj alfabet w porządku naturalnym, a następnie odwróconym w formacie:
-"mała => duża litera". W jednym wierszu trzeba wydrukować po pięć takich grup.
+Listy
+#####
 
-**POJĘCIA**: *iteracja, pętla, kod ASCII, lista, inkrementacja, operatory arytmetyczne, logiczne, przypisania i zawierania*.
+.. note::
+
+    W tym przykładzie poznasz jedną z najczęściej używanych złożoną strukturę danych – **listę**,
+    która pozwala przechowywać wiele danych pod jedną nazwą i wykonywać na nich wiele operacji.
+
+Zadanie
+********
+
+Napisz program :file:`alfabet.py`, który
+**ZADANIE**: Pobierz od użytkownika *n* liczb i zapisz je w liście.
+Wydrukuj: elementy listy i ich indeksy, elementy w odwrotnej kolejności,
+posortowane elementy. Usuń z listy pierwsze wystąpienie elementu podanego
+przez użytkownika. Usuń z listy element o podanym indeksie.
+Podaj ilość wystąpień oraz indeks pierwszego wystąpienia podanego elementu.
+Wybierz z listy elementy od indeksu *i* do *j*.
+
+**POJĘCIA**: *lista, metoda, notacja wycinkowa, tupla*.
+
+Wszystkie poniższe przykłady warto wykonać w konsoli Pythona.
+Treść komunikatów w funkcjach ``print()`` można skrócić.
+Można również wpisywać kolejne polecenia do pliku i sukcesywnie go uruchomiać.
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: 02_petle.py
+.. literalinclude:: 03_listy.py
     :linenos:
 
-Pętla ``for`` wykorzystuje zmienną iteracyjną ``i``, która przybiera kolejne
-wartości zwracane przez funkcję ``range()``. Parametry tej funkcji określają
-wartość początkową i końcową, przy czym wartość końcowa nie jest zwracana.
-Kod ``range(122,96,-1)`` generuje wartości malejące od 122 do 97(!) z krokiem -1.
-Sprawdź w interpreterze:
+Na początku z modułu ``random`` importujemy funkcję ``randint(a, b)``,
+która służy do generowania liczb z przedziału [a, b]. Wylosowane liczby
+dodajemy do listy.
+
+Lista (zob. :term:`lista`) to sekwencja indeksowanych danych, zazwyczaj tego samego typu.
+Listę tworzymy ujmując wartości oddzielone przecinkami w nawiasy kwadratowe,
+np. ``lista = [1, 'a']``. Dostęp do elementów sekwencji uzyskujemy podając
+nazwę i indeks, np. ``lista[0]``. Elementy indeksowane są od 0 (zera!).
+Z każdej sekwencji możemy wydobywać fragmenty dzięki notacji wycinkowej
+(ang. *slice*, zob. :term:`notacja wycinkowa`), np.: ``lista[1:4]``.
+
+.. note::
+
+    Sekwencjami w Pythonie są również napisy i tuple.
+
+Funkcje działające na sekwencjach:
+
+* ``len()`` – zwraca ilość elementów;
+* ``enumerate()`` – zwraca obiekt zawierający indeksy i elementy sekwencji;
+* ``reversed()`` – zwraca obiekt zawierający odwróconą sekwencję;
+* ``sorted(lista)`` – zwraca kopię listy posortowanej rosnąco;
+* ``sorted(lista, reverse=True)`` – zwraca kopię listy w odwrotnym porządku;
+
+Lista ma wiele użytecznych metod:
+
+* ``.append(x)`` – dodaje x do listy;
+* ``.remove(x)`` – usuwa pierwszy x z listy;
+* ``.insert(i, x)`` – wstawia x przed indeksem i;
+* ``.count(x)`` – zwraca ilość wystąpień x;
+* ``.index(x)`` – zwraca indeks pierwszego wystąpienia x;
+* ``.pop()`` – usuwa i zwraca ostatni element listy;
+* ``.sort()`` – sortuje listę rosnąco;
+* ``.reverse()`` – sortuje listę w odwróconym porządku.
+
+Tupla to niemodyfikowalna lista. Wykorzystywana jest do zapamiętywania
+i przekazywania wartości, których nie powinno się zmieniać.
+Tuple tworzymy podając wartości w nawiasach okrągłych, np. ``tupla = (1, 'a')``
+lub z listy za pomocą funkcji: ``tuple(lista)``. Tupla może powstać
+również poprzez spakowanie wartości oddzielonych przecinkami,
+np. ``tupla = 1, 'a'``. Próba zmiany wartości w tupli generuje błąd.
+
+Funkcja ``eval()`` interpretuje swój argument jako kod Pythona.
+W instrukcji ``a, i = eval(input("Podaj element i indeks oddzielone przecinkiem: "))``
+podane przez użytkownika liczby oddzielone przecinkiem interpretowane są jako tupla,
+która następnie zostaje rozpakowana, czyli jej elementy zostają przypisane
+do zmiennych z lewej strony. Przetestuj w konsoli Pythona:
 
 .. code-block:: bash
 
-    >>> list(range(0, 100))
-    >>> list(range(122,96,-1))
+	>>> tupla = 2, 6
+	>>> a, b = tupla
+	>>> print(a, b)
 
-Operacje na znakach:
+Zadania dodatkowe
+*****************
 
-
-* ``chr(kod_ascii)`` – zwraca znak odpowiadający podanemu kodowi `ASCII <https://pl.wikipedia.org/wiki/ASCII>`_;
-* ``lower()`` – zwraca napis zamieniony na małe litery;
-* ``upper()`` – zwraca napis zamieniony na duże litery;
-* ``+`` – operator łączenia (konkatenacji) naspisów.
-
-Operatory arytmetyczne i logiczne:
-
-* ``x += 1`` – dodanie do zmiennej *x* wartości po prawej stronie – *1*;
-* ``%`` – dzielenie modulo, zwraca resztę z dzielenia;
-* ``==`` – operator porównania, nie mylić z operatorem przypisania (``=``);
-* ``and`` – operator logicznej koniunkcji, obydwa warunki muszą być prawdziwe.
-
-Zob.: :term:`operatory` dostępne w Pythonie.
-
-Zadania
-*******
-
-- Uprość warunek w pierwszej pętli ``for`` drukującej alfabet w porządku
-  naturalnym tak, aby nie używać operatora modulo.
-- Wydrukuj co n-tą grupę liter alfabetu, przy czym wartość *n* podaje użytkownik.
-  Wskazówka: użyj opcjonalnego, trzeciego argumentu funkcji ``range()``.
-- Sprawdź działanie różnych operatorów Pythona w konsoli.
+Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową.
+Sprawdź działanie indeksów pustych i ujemnych, np. ``lista[2:], lista[:4], lista[-2], lista[-2:]``.
+Posortuj trwale dowolną listę malejąco. Utwórz kopię listy posortowaną rosnąco.
