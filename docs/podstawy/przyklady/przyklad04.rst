@@ -5,7 +5,7 @@ Listy
 
 .. note::
 
-    W tym przykładzie poznasz :term:`listę`. Jest to jedna z najczęściej używanych złożonych struktur danych,
+    W tym przykładzie poznasz **listę**. Jest to jedna z najczęściej używanych złożonych struktur danych,
     która pozwala przechowywać wiele danych pod jedną nazwą i wykonywać na nich wiele operacji.
 
 Zadanie
@@ -25,19 +25,19 @@ Następnie wykonuje podane niżej operacje:
 
 **Dane**:
 
-Wszystkie dane to liczby całkowite pobierane z klawiatury.
+Wszystkie dane to liczby całkowite pobierane z klawiatury, niektóre dane zapisywane są w tych samych zmiennych.
+sam.
 
 - ``n`` – liczba liczb pobieranych z klawiatury i zapisywanych w liście,
-- ``el`` – liczba pobierana z klawiatury, którą należy z listy usunąć, liczba całkowita,
-- ``el`` – liczba pobierana z klawiatury, której liczbę wystąpień i indeks pierwszego wystąpienia
-  należy wypisać, liczba całkowita,
-- ``in`` – indeks elementu do usunięcia pobierany z klawiatury, liczba całkowita,
-- ``in, el`` – indeks i element, który należy wstawić do tabeli, liczby całkowite,
-- ``i, j`` – indeksy pobierane z klawiatury, liczby całkowite.
+- ``el`` – liczba, którą należy z listy usunąć,
+- ``el`` – liczba, której liczbę wystąpień i indeks pierwszego wystąpienia należy wypisać,
+- ``ind`` – indeks elementu do usunięcia,
+- ``ind, el`` – indeks i element, który należy wstawić do tabeli,
+- ``i, j`` – indeksy pobierane z klawiatury, oznaczające wycinek listy do wypisania.
 
 .. tip::
 
-    Wszystkie poniższe przykłady warto wykonać w konsoli Pythona.
+    Wszystkie poniższe przykłady operacji na listach warto wykonać w konsoli Pythona.
     Treść komunikatów w funkcjach ``print()`` można skrócić.
     Można również wpisywać kolejne polecenia do pliku i sukcesywnie go uruchomiać.
 
@@ -48,64 +48,61 @@ Wszystkie dane to liczby całkowite pobierane z klawiatury.
 .. literalinclude:: przyklad04.py
     :linenos:
 
-Na początku z modułu ``random`` importujemy funkcję ``randint(a, b)``,
-która służy do generowania liczb z przedziału [a, b]. Wylosowane liczby
-dodajemy do listy.
+**Lista** to sekwencja indeksowanych danych, zazwyczaj tego samego typu, w kodzie łatwo ją rozpoznać
+po nawiasach kwadratowych. Podstawowe operacje:
 
-Lista (zob. :term:`lista`) to sekwencja indeksowanych danych, zazwyczaj tego samego typu.
-Listę tworzymy ujmując wartości oddzielone przecinkami w nawiasy kwadratowe,
-np. ``lista = [1, 'a']``. Dostęp do elementów sekwencji uzyskujemy podając
-nazwę i indeks, np. ``lista[0]``. Elementy indeksowane są od 0 (zera!).
-Z każdej sekwencji możemy wydobywać fragmenty dzięki notacji wycinkowej
-(ang. *slice*, zob. :term:`notacja wycinkowa`), np.: ``lista[1:4]``.
-
-.. note::
-
-    Sekwencjami w Pythonie są również napisy i tuple.
+- ``lista = [3, 'III', 4, 'IV']`` – utworzenie listy poprzez podanie wartości,
+- ``lista = []`` – utworzenie pustej listy,
+- ``lista[0]`` – odczyt elementu o podanym indeksie, indeksy zaczynają się od 0 (zera),
+- ``lista[1:4]`` – odczyt elementów od indeksu 1 do 3 przy użyciu notacji wycinkowej.
 
 Funkcje działające na sekwencjach:
 
-* ``len()`` – zwraca ilość elementów;
-* ``enumerate()`` – zwraca obiekt zawierający indeksy i elementy sekwencji;
-* ``reversed()`` – zwraca obiekt zawierający odwróconą sekwencję;
-* ``sorted(lista)`` – zwraca kopię listy posortowanej rosnąco;
-* ``sorted(lista, reverse=True)`` – zwraca kopię listy w odwrotnym porządku;
+* ``len()`` – zwraca liczbę elementów;
+* ``enumerate()`` – zwraca numer elementu i element sekwencji;
+* ``sorted(lista)`` – zwraca kopię sekwencji posortowanej rosnąco;
+* ``sorted(lista, reverse=True)`` – zwraca kopię sekwencji w odwrotnym porządku;
+* ``reversed()`` – zwraca kopię sekwencji w odwrotnym porządku.
 
-Lista ma wiele użytecznych metod:
+.. note::
+
+    Sekwencjami są w Pythonie również ciągi znaków i tuple.
+
+Metody obiektów typu lista:
 
 * ``.append(x)`` – dodaje x do listy;
 * ``.remove(x)`` – usuwa pierwszy x z listy;
-* ``.insert(i, x)`` – wstawia x przed indeksem i;
-* ``.count(x)`` – zwraca ilość wystąpień x;
+* ``.insert(i, x)`` – wstawia x na indeksie i;
+* ``.count(x)`` – zwraca liczbę wystąpień x;
 * ``.index(x)`` – zwraca indeks pierwszego wystąpienia x;
 * ``.pop()`` – usuwa i zwraca ostatni element listy;
+* ``.pop(i)`` – usuwa i zwraca element wskazany przez i;
 * ``.sort()`` – sortuje listę rosnąco;
 * ``.reverse()`` – sortuje listę w odwróconym porządku.
 
-Tupla to niemodyfikowalna lista. Wykorzystywana jest do zapamiętywania
+**Tupla** to niemodyfikowalna lista. Wykorzystywana jest do zapamiętywania
 i przekazywania wartości, których nie powinno się zmieniać.
 Tuple tworzymy podając wartości w nawiasach okrągłych, np. ``tupla = (1, 'a')``
 lub z listy za pomocą funkcji: ``tuple(lista)``. Tupla może powstać
 również poprzez spakowanie wartości oddzielonych przecinkami,
 np. ``tupla = 1, 'a'``. Próba zmiany wartości w tupli generuje błąd.
 
-Funkcja ``eval()`` interpretuje swój argument jako kod Pythona.
-W instrukcji ``a, i = eval(input("Podaj element i indeks oddzielone przecinkiem: "))``
-podane przez użytkownika liczby oddzielone przecinkiem interpretowane są jako tupla,
-która następnie zostaje rozpakowana, czyli jej elementy zostają przypisane
-do zmiennych z lewej strony. Przetestuj w konsoli Pythona:
+Przetestuj w konsoli Pythona:
 
 .. code-block:: bash
 
-	>>> tupla = 2, 6
-	>>> a, b = tupla
-	>>> print(a, b)
+    >>> tupla = 2, 6
+    >>> a, b = tupla
+    >>> print(a, b)
+    >>> tupla[0] = 1
 
-Zadania dodatkowe
-*****************
+Ćwiczenia
+-----------
 
 Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową.
 Sprawdź działanie indeksów pustych i ujemnych, np. ``lista[2:], lista[:4], lista[-2], lista[-2:]``.
 Posortuj trwale dowolną listę malejąco. Utwórz kopię listy posortowaną rosnąco.
 
-**POJĘCIA**: *lista, metoda, notacja wycinkowa, tupla*.
+.. admonition:: Pojęcia
+
+    :term:`lista`, :term:`metoda`, :term:`notacja wycinkowa`, :term:`tupla`

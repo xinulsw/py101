@@ -83,6 +83,12 @@ Słownik Pythona
         w kontekście funkcji ``map()`` oznacza zastosowanie danej funkcji
         do wszystkich dostarczonych wartości
 
+    metoda
+        funkcje definiowane w klasach i wywoływane na rzecz obiektów będących instancjami tych klas,
+        np. ``"abc".upper()`` – ciągi znaków w Pythonie są instancjami klasy ``str``,
+        która definiuje wiele funkcji, czyli operacji, które można wykonywać na obiektach tekstowycgh;
+        wywołania metod można łączyć, np. ``" ABC ".strip().lower()``
+
     moduł
         plik zawierający wiele zazwyczaj często używanych w wielu programach
         funkcji lub klas; zanim skorzystamy z zawartych w nim fragmentów kodu,
