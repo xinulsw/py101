@@ -5,31 +5,47 @@ Listy
 
 .. note::
 
-    W tym przykładzie poznasz jedną z najczęściej używanych złożoną strukturę danych – **listę**,
+    W tym przykładzie poznasz :term:`listę`. Jest to jedna z najczęściej używanych złożonych struktur danych,
     która pozwala przechowywać wiele danych pod jedną nazwą i wykonywać na nich wiele operacji.
 
 Zadanie
 ********
 
-Napisz program :file:`alfabet.py`, który
-**ZADANIE**: Pobierz od użytkownika *n* liczb i zapisz je w liście.
-Wydrukuj: elementy listy i ich indeksy, elementy w odwrotnej kolejności,
-posortowane elementy. Usuń z listy pierwsze wystąpienie elementu podanego
-przez użytkownika. Usuń z listy element o podanym indeksie.
-Podaj ilość wystąpień oraz indeks pierwszego wystąpienia podanego elementu.
-Wybierz z listy elementy od indeksu *i* do *j*.
+Napisz program :file:`lista.py`, który pobiera z klawiatury ``n`` liczb całkowitych i zapisuje je w liście.
+Następnie wykonuje podane niżej operacje:
 
-**POJĘCIA**: *lista, metoda, notacja wycinkowa, tupla*.
+- wypisuje elementy listy i ich indeksy w jednym wierszu,
+- wypisuje elementy listy w odwrotnej kolejności
+- wypisuje elementy listy posortowane w porządku rosnącym,
+- wypisuje liczbę wystąpień oraz indeks pierwszego wystąpienia podanego elementu,
+- usuwa z listy podany element,
+- usuwa z listy element o podanym indeksie,
+- wstawia podany element na podanym indeksie,
+- wypisuje z listy elementy od indeksu ``i`` do ``j``.
 
-Wszystkie poniższe przykłady warto wykonać w konsoli Pythona.
-Treść komunikatów w funkcjach ``print()`` można skrócić.
-Można również wpisywać kolejne polecenia do pliku i sukcesywnie go uruchomiać.
+**Dane**:
+
+Wszystkie dane to liczby całkowite pobierane z klawiatury.
+
+- ``n`` – liczba liczb pobieranych z klawiatury i zapisywanych w liście,
+- ``el`` – liczba pobierana z klawiatury, którą należy z listy usunąć, liczba całkowita,
+- ``el`` – liczba pobierana z klawiatury, której liczbę wystąpień i indeks pierwszego wystąpienia
+  należy wypisać, liczba całkowita,
+- ``in`` – indeks elementu do usunięcia pobierany z klawiatury, liczba całkowita,
+- ``in, el`` – indeks i element, który należy wstawić do tabeli, liczby całkowite,
+- ``i, j`` – indeksy pobierane z klawiatury, liczby całkowite.
+
+.. tip::
+
+    Wszystkie poniższe przykłady warto wykonać w konsoli Pythona.
+    Treść komunikatów w funkcjach ``print()`` można skrócić.
+    Można również wpisywać kolejne polecenia do pliku i sukcesywnie go uruchomiać.
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>lista.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. literalinclude:: 03_listy.py
+.. literalinclude:: przyklad04.py
     :linenos:
 
 Na początku z modułu ``random`` importujemy funkcję ``randint(a, b)``,
@@ -81,7 +97,7 @@ do zmiennych z lewej strony. Przetestuj w konsoli Pythona:
 
 .. code-block:: bash
 
-	>>> tupla = 2, 6
+	>>> tupla = 2, 6
 	>>> a, b = tupla
 	>>> print(a, b)
 
@@ -91,3 +107,5 @@ Zadania dodatkowe
 Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową.
 Sprawdź działanie indeksów pustych i ujemnych, np. ``lista[2:], lista[:4], lista[-2], lista[-2:]``.
 Posortuj trwale dowolną listę malejąco. Utwórz kopię listy posortowaną rosnąco.
+
+**POJĘCIA**: *lista, metoda, notacja wycinkowa, tupla*.
