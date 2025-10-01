@@ -1,28 +1,32 @@
-.. _oceny:
+.. _przyklad6:
 
-Oceny z przedmiotów
-###################
+Oceny
+#####
 
-**ZADANIE**: Napisz program, który umożliwi wprowadzanie ocen z podanego
-przedmiotu ścisłego (np. fizyki), następnie policzy i wyświetla średnią,
-medianę i odchylenie standardowe wprowadzonych ocen.
+.. note::
+
+    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych modułach
+    oraz jak wykorzystywać złożone struktury danych, tj. listy i zbiory.
+
+Zadanie
+*******
+
+Napisz program :file:`oceny.py`, który umożliwi wprowadzanie ocen z wybranego / wprowadzonego przedmiotu,
+następnie policzy i wyświetla średnią, medianę i odchylenie standardowe wprowadzonych ocen.
 Funkcje pomocnicze i statystyczne umieść w osobnym module.
-
-**POJĘCIA**: *import, moduł, zbiór, przechwytywanie wyjątków,
-formatowanie napisów i danych na wyjściu, argumenty funkcji, zwracanie wartości*.
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>oceny.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. literalinclude:: 05_oceny.py
+.. literalinclude:: przyklad06.py
     :linenos:
 
 Jak to działa
-===================
+*************
 
-Klauza ``from moduł import funkcja`` umożliwia wykorzystanie w programie
-funkcji zdefiniowanych w innych modułach i zapisanych w osobnych plikach.
+Instrukcja ``from moduł import funkcja`` umożliwia wykorzystanie w programie
+funkcji zdefiniowanych i zapisanych w osobnych modułach (plikach).
 Dzięki temu utrzymujemy przejrzystość programu głównego, a jednocześnie
 możemy funkcje z modułów wykorzystywać, importując je w innych programach.
 Nazwa modułu to nazwa pliku z kodem pozbawiona jednak rozszerzenia *.py*.
@@ -114,3 +118,8 @@ Zadania dodatkowe
 
 - W pliku :file:`ocenyfun.py` dopisz funkcję, która wyświetli wszystkie oceny oraz ich odchylenia
   od wartości średniej.
+
+.. admonition:: Pojęcia
+
+**POJĘCIA**: *import, moduł, zbiór, przechwytywanie wyjątków,
+formatowanie napisów i danych na wyjściu, argumenty funkcji, zwracanie wartości*.

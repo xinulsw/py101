@@ -1,17 +1,15 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 """
-    Moduł ocenyfun zawiera funkcje wykorzystywane w pliku 05_oceny_03.py
+    Moduł oceny_funkcje zawiera funkcje wykorzystywane w pliku oceny.py
 """
 
 import math  # zaimportuj moduł matematyczny
 
 
-def drukuj(co, kom="Sekwencja zawiera: "):
+def drukuj(co, kom='Sekwencja zawiera: '):
     print(kom)
     for i in co:
-        print(i, end=" ")
+        print(i, end=' ')
+    print()
 
 
 def srednia(oceny):

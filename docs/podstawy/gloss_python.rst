@@ -26,6 +26,12 @@ Słownik Pythona
         (ang. *generator expressions*) – zwięzły w notacji sposób tworzenia
         iteratorów według składni: ``( wyrażenie for wyraz in sekwencja if warunek )``
 
+    importowanie
+        powszechną praktyką jest umieszczanie często wykorzystywanego lub rozwijanego niezależnie kodu,
+        tj. stałych, funkcji, klas itp. w osobnych modułach; aby z kodu skorzystać, importujemy go, tzn.
+        włączamy do bieżącego skryptu; można importować całe moduły, np. ``import math``
+        lub wybrane części (stałe, funkcje, klasy), np. ``from math import sqrt, pi``.
+
     instrukcja warunkowa
         podstawowa konstrukcja w programowaniu, wykorzystuje wyrażenie logiczne
         przyjmujące wartość ``True`` (prawda) lub ``False`` (fałsz) do wyboru
