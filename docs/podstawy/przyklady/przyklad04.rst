@@ -16,7 +16,7 @@ Następnie wykonuje podane niżej operacje:
 
 - wypisuje elementy listy i ich indeksy w jednym wierszu,
 - wypisuje elementy listy w odwrotnej kolejności
-- wypisuje elementy listy posortowane w porządku rosnącym,
+- wypisuje elementy listy posortowane w porządku niemalejącym,
 - wypisuje liczbę wystąpień oraz indeks pierwszego wystąpienia podanego elementu,
 - usuwa z listy podany element,
 - usuwa z listy element o podanym indeksie,
@@ -60,7 +60,7 @@ Funkcje działające na sekwencjach:
 
 * ``len()`` – zwraca liczbę elementów;
 * ``enumerate()`` – zwraca numer elementu i element sekwencji;
-* ``sorted(lista)`` – zwraca kopię sekwencji posortowanej rosnąco;
+* ``sorted(lista)`` – zwraca kopię sekwencji posortowanej niemalejąco;
 * ``sorted(lista, reverse=True)`` – zwraca kopię sekwencji w odwrotnym porządku;
 * ``reversed()`` – zwraca kopię sekwencji w odwrotnym porządku.
 
@@ -99,9 +99,11 @@ Przetestuj w konsoli Pythona:
 Ćwiczenia
 -----------
 
-Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową.
-Sprawdź działanie indeksów pustych i ujemnych, np. ``lista[2:], lista[:4], lista[-2], lista[-2:]``.
-Posortuj trwale dowolną listę malejąco. Utwórz kopię listy posortowaną rosnąco.
+Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową:
+
+* sprawdź działanie indeksów pustych i ujemnych, np. ``lista[2:], lista[:4], lista[-2], lista[-2:]``,
+* posortuj trwale dowolną listę malejąco,
+* utwórz kopię listy posortowaną rosnąco.
 
 .. admonition:: Pojęcia
 

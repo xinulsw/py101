@@ -1,7 +1,3 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 def fib_iter1(n):  # definicja funkcji
     """
         Funkcja drukuje kolejne wyrazy ciągu Fibonacciego

@@ -1,25 +1,40 @@
-.. _fibonacci:
+.. _przyklad5:
 
 Ciąg Fibonacciego
 #################
 
-**ZADANIE**: Wypisz ciąg Fibonacciego aż do *n*-tego wyrazu podanego przez użytkownika.
-Ciąg Fibonacciego to ciąg liczb naturalnych, którego każdy wyraz poza dwoma
-pierwszymi jest sumą dwóch wyrazów poprzednich. Początkowe wyrazy tego ciągu to: 0 1 1 2 3 5 8 13 21. Przyjmujemy, że 0 wchodzi w skład ciągu.
+.. note::
 
-**POJĘCIA**: *funkcja, zwracanie wartości, tupla, rozpakowanie tupli, przypisanie wielokrotne*.
+    W tym przykładzie poznasz i zastosujesz **funkcje**
+
+Zadanie
+********
+
+Wypisz ciąg Fibonacciego aż do ``n``-tego wyrazu podanego przez użytkownika.
+Ciąg Fibonacciego to ciąg liczb naturalnych, którego każdy wyraz poza dwoma
+pierwszymi jest sumą dwóch wyrazów poprzednich. Początkowe wyrazy tego ciągu to: 0 1 1 2 3 5 8 13 21.
+Przyjmujemy, że 0 wchodzi w skład ciągu.
+
+**Dane**:
+
+- ``n`` – wyraz, na którym kończymy wypisywanie ciągu, liczba całkowita.
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>fibonacci.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. literalinclude:: 04_fibonacci.py
+.. literalinclude:: przyklad05.py
     :linenos:
 
-Instrukcje realizujące jedno zadanie zazwyczaj grupujemy w funkcje,
-które można później wielokrotnie wywoływać.
-Funkcję definiujemy za pomocą słowa kluczowego ``def`` wg schematu
-``def nazwa_funkcji(parametry):``. Przy czym parametry są opcjonalne.
+Funkcje pozwalają grupować instrukcje realizujące jedno zadanie w jednym nazwanym blok kodu,
+dzięki czemu mozna je wielokrotnie wywoływać. Funkcję definiujemy za pomocą słowa kluczowego ``def``:
+
+.. code::
+
+    def nazwa_funkcji(parametry):
+        pass
+
+Parametry to przekazywane do funkcji wartości i/lub dane; są opcjonalne.
 Po dwukropku od nowego wiersza umieszczamy odpowiednio wcięte instrukcje,
 które tworzą ciało funkcji. Funkcja może zwrócać jakąś wartość za pomocą
 polecenia ``return wartość``.
@@ -40,3 +55,5 @@ Zadania dodatkowe
 
 Zmień funkcje tak, aby zwracały poprawne wartości przy założeniu,
 że dwa pierwsze wyrazy ciągu równe są 1 (bez zera).
+
+**POJĘCIA**: *funkcja, zwracanie wartości, tupla, rozpakowanie tupli, przypisanie wielokrotne*.
