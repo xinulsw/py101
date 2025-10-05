@@ -5,48 +5,49 @@
 import math  # zaimportuj moduł matematyczny
 
 
-def drukuj(co, kom='Sekwencja zawiera: '):
+def wypisz(sekwencja, kom='Sekwencja zawiera: '):
     print(kom)
-    for i in co:
-        print(i, end=' ')
+    for e in sekwencja:
+        print(e, end=' ')
     print()
 
 
 def srednia(oceny):
     suma = sum(oceny)
-    return suma / float(len(oceny))
+    return suma / len(oceny)
 
 
 def mediana(oceny):
     """
-    Jeżeli ilość ocen jest parzysta, medianą jest średnia arytmetyczna
-    dwóch środkowych ocen. Jesli ilość  jest nieparzysta mediana równa
-    się elementowi środkowemu ouporządkowanej rosnąco listy ocen.
+    Jeżeli liczba ocen jest parzysta, medianą jest średnia arytmetyczna
+    dwóch środkowych ocen. Jeżeli liczba jest nieparzysta, mediana równa
+    się elementowi środkowemu uporządkowanej rosnąco listy ocen.
     """
-    oceny.sort()
+    oceny.sort()  # sortowanie niemalejące
+    print(f'Oceny: {oceny}')
     if len(oceny) % 2 == 0:  # parzysta ilość ocen
-        half = int(len(oceny) / 2)
+        half = len(oceny) // 2
         # można tak:
-        # return float(oceny[half-1]+oceny[half]) / 2.0
+        # return float(oceny[half-1]+oceny[half]) / 2
         # albo tak:
-        return float(sum(oceny[half - 1:half + 1])) / 2.0
+        return float(sum(oceny[half-1:half+1])) / 2
     else:  # nieparzysta ilość ocen
-        return oceny[len(oceny) / 2]
+        return oceny[len(oceny) // 2]
 
 
 def wariancja(oceny, srednia):
     """
     Wariancja to suma kwadratów różnicy każdej oceny i średniej
     podzielona przez ilość ocen:
-    sigma = (o1-s)+(o2-s)+...+(on-s) / n, gdzie:
+    suma = ((o1-s)^2+(o2-s)^2+...+(on-s)^2) / n, gdzie:
     o1, o2, ..., on - kolejne oceny,
     s - średnia ocen,
     n - liczba ocen.
     """
-    sigma = 0.0
+    suma = 0
     for ocena in oceny:
-        sigma += (ocena - srednia)**2
-    return sigma / len(oceny)
+        suma += (ocena - srednia)**2
+    return suma / len(oceny)
 
 
 def odchylenie(oceny, srednia):  # pierwiastek kwadratowy z wariancji

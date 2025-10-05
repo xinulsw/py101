@@ -141,6 +141,16 @@ Słownik Pythona
         proces przekształcania obiektów w strumień znaków lub bajtów,
         który można zapisać w pliku (bazie) lub przekazać do innego programu.
 
+    f-strings
+        (ang. formatted string literals) sformatowane literały (stałe wartości w kodzie) ciągów znaków,
+        rozpoczynają się małą lub wielką literą ``f`` i pozwalają umieszczać w napisach wartości wyrażeń, np. zmiennych;
+        wartości mogą być dodatkowo formatowane za pomocą specyfikatorów,
+        np.: ``f'Przybliżona wartość pi: {math.pi:.3f}.'``.
+
+        Zob.: `Formatted String Literals <https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings>`_,
+        `f-strings <https://docs.python.org/3/reference/lexical_analysis.html#f-strings>`_,
+        `Format Specification Mini-Language <https://docs.python.org/3/library/string.html#formatspec>`_
+
     słownik
         typ mapowania, zestaw par elementów w postaci "klucz: wartość". Kluczami mogą być
         liczby, ciągi znaków czy tuple. Wartości mogą być tego samego lub

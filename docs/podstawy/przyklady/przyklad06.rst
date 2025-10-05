@@ -5,8 +5,8 @@ Oceny
 
 .. note::
 
-    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych modułach
-    oraz jak wykorzystywać złożone struktury danych, tj. listy i zbiory.
+    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych modułach,
+    poznasz i wykorzystasz zbiór, kolejną obok listy złożoną strukturę danych.
 
 Zadanie
 *******
@@ -15,6 +15,22 @@ Napisz program :file:`oceny.py`, który umożliwi wprowadzanie ocen z wybranego 
 następnie policzy i wyświetla średnią, medianę i odchylenie standardowe wprowadzonych ocen.
 Funkcje pomocnicze i statystyczne umieść w osobnym module.
 
+**Dane**:
+
+- ``przedmiot`` – nazwa dodawanego przedmiotu i/lub przedmiotu, z którego będą wprowadzane oceny,
+  ciąg znaków pobierany z klawiatury,
+- ``ocena`` – ocena pobierana z klawiatury, liczba całkowita.
+
+**Wynik**:
+
+– wypisana na ekranie średnia, mediana i odchylenie podanych ocen, np.:
+
+.. code::
+
+    Średnia:     3.62
+    Mediana:     3.50
+    Odchylenie:  1.58
+
 .. raw:: html
 
     <div class="code_no">Plik <i>oceny.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
@@ -22,45 +38,50 @@ Funkcje pomocnicze i statystyczne umieść w osobnym module.
 .. literalinclude:: przyklad06.py
     :linenos:
 
-Jak to działa
-*************
+**Importy**
 
-Instrukcja ``from moduł import funkcja`` umożliwia wykorzystanie w programie
-funkcji zdefiniowanych i zapisanych w osobnych modułach (plikach).
-Dzięki temu utrzymujemy przejrzystość programu głównego, a jednocześnie
-możemy funkcje z modułów wykorzystywać, importując je w innych programach.
-Nazwa modułu to nazwa pliku z kodem pozbawiona jednak rozszerzenia *.py*.
+Za pomocą instrukcji ``from moduł import funkcja`` importujemy wybrane funkcje zdefiniowanych i zapisane w osobnych
+modułach (plikach). Nazwa modułu to nazwa pliku z kodem pozbawiona jednak rozszerzenia ``.py``.
 Moduł musi być dostępny w ścieżce przeszukiwania, aby można go było poprawnie dołączyć.
 
 .. note::
 
-	W przypadku prostych programów zapisuj moduły w tym samym katalogu co program główny.
+    W przypadku prostych programów zapisuj moduły w tym samym katalogu co program główny.
 
-Operacje na zbiorach:
+**Zbiór**
 
-* ``set()`` – tworzy :term:`zbiór`, czyli nieuporządkowany zestaw niepowtarzalnych (!) elementów;
-* ``.add(x)`` – pozwala dodać element x do zbioru, o ile nie jest już w zbiorze;
-* ``.remove(x)`` – usuwa element x ze zbioru;
-* ``element (not) in zbior`` – operator zawierania ``(not) in`` sprawdza, czy podany element
-  jest lub nie w zbiorze.
+Do przechowywania nazw przedmiotów wykorzystujemy :term:`zbiór`, czyli nieuporządkowany zestaw niepowtarzalnych (!)
+elementów. Operacje na zbiorach:
 
-Oceny z wybranego przedmiotu pobieramy w pętli dopóty, dopóki użytkownik nie wprowadzi 0 (zera).
+- ``przedmioty = {'polski', 'angielski'}`` – tworzy zbiór, można również używać funkcji ``set(sekwencja)``;
+- ``.add(x)`` – dodaje element x do zbioru, jeżeli go w zbiorze nie ma;
+- ``element (not) in kolekcji`` – operator zawierania ``(not) in`` sprawdza, czy podany element
+  jest lub nie w kolekcji, tj. liście, zbiorze, krotce (tupli) lub innej sekwencji; wynikiem jest prawda
+  lub fałsz.
+
+.. note::
+
+    Porządek elementów w zbiorach, inaczej niż w listach i krotkach, jest nieokreślony.
+
+Przedmioty pobieramy w nieskończonej pętli warunkowej. Jeżeli użytkownik poda przynajmniej 2-znakową
+nazwę przedmiotu (``if len(przedmiot) > 1:``) i przedmiotu nie ma w zbiorze (``if przedmiot not in przedmioty:``),
+zostanie on dodany. W przeciwnym razie wypisujemy przedmioty i pobieramy nazwę przedmiotu.
+Jeżeli użytkownik poda nazwę zapisaną w zbiorze, przerywamy pętlę instrukcją ``break`` i przechodzimy
+do wprowadzania ocen. W przeciwnym razie
+
+W drugiej pętli warunkowej pobieramy oceny, dopóki użytkownik nie wprowadzi 0 (zera).
 Blok ``try...except`` pozwala przechwycić wyjątki, czyli w tym przypadku błąd przekształcenia
 wartości na liczbę całkowitą. Jeżeli funkcja ``int()`` zwróci wyjątek, wykonywane są instrukcje
 w bloku ``except ValueError:``, w przeciwnym razie po sprawdzeniu poprawności oceny dodajemy ją
-jako liczbę zmiennoprzecinkową (typ *float*) do listy: ``oceny.append(float(ocena))``.
+do listy: ``oceny.append(ocena)``.
 
-Metoda ``.capitalize()`` pozwala wydrukować podany napis dużą literą.
+Metoda ``.capitalize()`` zmienia pierwszy znak napisu na wielką literę.
 
-W funkcji ``print("Mediana: {0:5.2f}\nOdchylenie: {1:5.2f}".format(m, o))`` zastosowano formatowanie
-wyświetlanych wartości. Nawiasy ``{}`` oznaczają pola zastępowane przez wartości podane jako
-argumenty metody ``format()``. W ciągu ``{0:5.2f}`` pierwsza cyfra wskazuje, który argument
-(numerowane od zera) metody ``format()``, wydrukować. Po dwukropku podajemy szerokość pola
-przeznaczonego na wydruk. Po kropce – ilość miejsc po przecinku. Symbol *f* oznacza
-liczbę zmiennoprzecinkową stałej precyzji.
+Do wypisania komunikatów używamy sformatowanych ciągów znaków (:term:`f-strings`) i specyfikatorów formatu.
+Zapis ``{s:8.2f}`` oznacza, że wartość zmiennej ``s`` ma zostać wypisana w polu o szerokości 8 znaków
+jako liczba zmiennoprzecinkowa z dokładnością do dwóch miejsc po przecinku.
 
 Więcej informacji nt. formatowania danych wyjściowych: `PyFormat <https://pyformat.info/>`_.
-
 
 .. raw:: html
 
@@ -70,36 +91,33 @@ Więcej informacji nt. formatowania danych wyjściowych: `PyFormat <https://pyfo
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>oceny_funkcje.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. literalinclude:: ocenyfun.py
+.. literalinclude:: oceny_funkcje.py
     :linenos:
 
-Klauzula ``import math`` udostępnia w pliku wszystkie metody z modułu matematycznego,
-dlatego musimy odwoływać się do nich za pomocą notacji *moduł.funkcja*,
-np.: ``math.sqrt()`` – zwraca pierwiastek kwadratowy.
+Instrukcja ``import math`` udostępnia wszystkie metody z modułu matematycznego w przestrzeni nazw
+``math``, dlatego musimy odwoływać się do nich za pomocą notacji ``math.funkcja``,
+np.: ``math.sqrt()`` – funkcja obliczający pierwiastek kwadratowy.
 
-Funkcja ``drukuj(co, kom="...")`` przyjmuje dwa argumenty, *co* – listę lub zbiór,
+Funkcja ``wypisz(sekwencja, kom='...')`` wypisuje podany komunikat, a następnie za pomocą pętli
+``for e in sekwencja`` odczytuje i wypisuje elementy podanej sekwencji (zbioru, listy ip.) w jednym wierszu.
 który drukujemy w pętli for, oraz *kom* – komunikat, który wyświetlamy przed wydrukiem.
-Argument *kom* jest opcjonalny, przypisano mu bowiem wartość domyślną,
-która zostanie użyta, jeżeli użytkownik nie poda innej w wywołaniu funkcji.
+Argument *kom* jest opcjonalny, ponieważ przypisujemy mu wartość domyślną, która zostanie użyta,
+jeżeli użytkownik nie poda innej w wywołaniu funkcji.
 
 Funkcja ``srednia()`` do zsumowania wartości ocen wykorzystuje funkcję ``sum()``.
 
-Funkcja ``mediana()`` sortuje otrzymaną listę "w miejscu" (``oceny.sort()``),
-tzn. trwale zmienia porządek elementów. W zależności od długości listy zwraca
-wartość środkową (długość nieparzysta) lub średnią arytmetyczną dwóch środkowych wartości (długość).
-Zapis ``oceny[half-1:half+1]`` wycina i zwraca dwa środkowe elementyz listy,
-przy czym wyrażenie ``half = int(len(oceny) / 2)`` wylicza nam indeks drugiego
-ze środkowych elementów.
+Funkcja ``mediana()`` sortuje niemalejąco otrzymaną listę "w miejscu" (``oceny.sort()``),
+tzn. trwale zmienia porządek elementów listy. Jeżeli liczba ocen jest parzysta ``if len(oceny) % 2 == 0:``,
+zwraca średnią arytmetyczną dwóch środkowych wartości. Indeks drugiego ze środkowych elementów
+obliczamy w wyrażeniu ``half = len(oceny) // 2``. Operator ``//`` oznacza dzielenie całkowite.
+Notacja wycinkowa ``oceny[half-1:half+1]`` zwraca dwa środkowe elementy z listy.
+Jeżeli liczba ocen jest nieparzysta, zwracamy wartość środkową: ``oceny[len(oceny) // 2]``.
 
-.. note::
-
-    Przypomnijmy: alternatywna funkcja ``sorted(lista)`` zwraca uporządkowaną rosnąco kopię listy.
-
-W funkcji ``wariancja()`` pętla *for* odczytuje kolejne oceny i w kodzie ``sigma += (ocena-srednia)**2``
-korzysta z operatorów skróconego dodawania (+=) i potęgowania (**), aby wyliczyć sumę kwadratów
-różnic kolejnych ocen i średniej.
+W funkcji ``wariancja()`` pętla ``for`` odczytuje kolejne oceny i korzysta z operatorów skróconego dodawania (+=)
+i potęgowania (**), aby wyliczyć sumę kwadratów różnic kolejnych ocen i średniej: ``suma += (ocena - srednia)**2``.
+Funkcja zwraca średnią arytmetyczną obliczonej sumy: ``suma / len(oceny)``.
 
 Zadania dodatkowe
 *****************
