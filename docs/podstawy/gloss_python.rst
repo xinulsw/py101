@@ -105,7 +105,7 @@ Słownik Pythona
         (ang. *slice notation*) pojedyncze elementy wszystkich sekwencji takich jak
         napisy, listy, tuple są indeksowane zaczynając od 0, odczytujemy je za pomocą indeksu,
         np.: ``napis[0]``; możliwe jest również odczytanie kilku elementów sekwencji
-        naraz, w najprostszej postacji trzeba określić indeks pierwszego i ostatniego
+        naraz, w najprostszej postaci trzeba określić indeks pierwszego i ostatniego
         (niewliczanego) elementu, np. ``napis[1:5]``.
 
     operatory
@@ -115,7 +115,7 @@ Słownik Pythona
         **Zawierania**: in, not in;
         **Porównania**: ==, >, <, <>, <=, >= != (jest różne).
 
-        Operator * rozpakowuję listę paramterów przekazaną funkcji.
+        Operator * rozpakowuję listę parametrów przekazaną funkcji.
         Operator ** rozpakuje słownik.
 
     pętla

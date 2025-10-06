@@ -1,12 +1,21 @@
-.. _slownik-slowek:
+.. _przyklad07:
 
 Słownik słówek
 ##############
 
-**ZADANIE**: Przygotuj słownik zawierający obce wyrazy oraz ich możliwe znaczenia. Pobierz od użytkownika dane w formacie: *wyraz obcy: znaczenie1, znaczenie2, ...* itd. Pobieranie danych kończy wpisanie słowa "koniec".
-Podane dane zapisz w pliku. Użytkownik powinien mieć możliwość dodawania nowych i zmieniania zapisanych danych.
+.. note::
 
-**POJĘCIA**: *słownik, odczyt i zapis plików, formatowanie napisów, format csv.*
+    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych **modułach**,
+    poznasz i wykorzystasz **zbiór**, kolejną obok listy złożoną strukturę danych.
+
+Zadanie
+********
+
+Napisz program :file:`slownik.py`, który pozwoli zapisywać w pliku tekstowym obce wyrazy oraz ich możliwe znaczenia.
+Pobierz z klawiatury dane w formacie: ``wyraz obcy: znaczenie1, znaczenie2, ...`` itd.
+Pobieranie danych kończy wpisanie słowa "koniec".
+Podane dane zapisz w pliku :file:`slownik.txt` i/lub :file:`slownik.csv`.
+Użytkownik powinien mieć możliwość dodawania nowych i zmieniania zapisanych danych.
 
 .. raw:: html
 
@@ -105,9 +114,13 @@ zwrócony przez metodę ``csv.writer(plik)``. Po przygotowaniu listy zawierając
 wyraz obcy i jego znaczenia zapisujemy ją za pomocą metody ``writerow(lista)``.
 
 
-Zadania dodatkowe
-*****************
+Ćwiczenia
+-----------
 
 - Kod drukujący słownik zamień w funkcję. Wykorzystaj ją do wydrukowania słownika odczytanego z dysku i słownika uzupełnionego przez użytkownika.
 - Spróbuj zmienić program tak, aby umożliwiał usuwanie wpisów.
 - Dodaj do programu możliwość uczenia się zapisanych w słowniku słówek. Niech program wyświetla kolejne słowa obce i pobiera od użytkownika możliwe znaczenia. Następnie powinien wyświetlać, które z nich są poprawne.
+
+.. admonition:: Pojęcia
+
+    :term:`słownik`, odczyt i zapis plików, formatowanie napisów, format CSV

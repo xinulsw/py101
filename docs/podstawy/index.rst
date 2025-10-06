@@ -13,6 +13,9 @@ Sugerujemy używanie powłoki Pythona do testowania poznawanych funkcji i fragme
     przyklady/przyklad01
     przyklady/przyklad02
     przyklady/przyklad03
+    przyklady/przyklad04
+    przyklady/przyklad05
+    przyklady/przyklad06
     mlotek/index
     dlotek/index
     elotek/index

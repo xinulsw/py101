@@ -5,8 +5,8 @@ Oceny
 
 .. note::
 
-    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych modułach,
-    poznasz i wykorzystasz zbiór, kolejną obok listy złożoną strukturę danych.
+    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych **modułach**,
+    poznasz i wykorzystasz **zbiór**, kolejną obok listy złożoną strukturę danych.
 
 Zadanie
 *******
@@ -63,11 +63,11 @@ elementów. Operacje na zbiorach:
 
     Porządek elementów w zbiorach, inaczej niż w listach i krotkach, jest nieokreślony.
 
-Przedmioty pobieramy w nieskończonej pętli warunkowej. Jeżeli użytkownik poda przynajmniej 2-znakową
+Przedmioty pobieramy w nieskończonej pętli warunkowej ``while True``. Jeżeli użytkownik poda przynajmniej 2-znakową
 nazwę przedmiotu (``if len(przedmiot) > 1:``) i przedmiotu nie ma w zbiorze (``if przedmiot not in przedmioty:``),
-zostanie on dodany. W przeciwnym razie wypisujemy przedmioty i pobieramy nazwę przedmiotu.
-Jeżeli użytkownik poda nazwę zapisaną w zbiorze, przerywamy pętlę instrukcją ``break`` i przechodzimy
-do wprowadzania ocen. W przeciwnym razie
+zostanie on dodany. W przeciwnym razie wypisujemy przedmioty zawarte w zbiorze i pobieramy nazwę przedmiotu, z którego
+użytkownik chce wprowadzić oceny. Jeżeli podanej nazwy nie ma w zbiorze, wypisujemy odpowiedni komunikat,
+jeżeli jest, przerywamy pętlę instrukcją ``break`` i przechodzimy do wprowadzania ocen.
 
 W drugiej pętli warunkowej pobieramy oceny, dopóki użytkownik nie wprowadzi 0 (zera).
 Blok ``try...except`` pozwala przechwycić wyjątki, czyli w tym przypadku błąd przekształcenia
@@ -102,8 +102,7 @@ np.: ``math.sqrt()`` – funkcja obliczający pierwiastek kwadratowy.
 
 Funkcja ``wypisz(sekwencja, kom='...')`` wypisuje podany komunikat, a następnie za pomocą pętli
 ``for e in sekwencja`` odczytuje i wypisuje elementy podanej sekwencji (zbioru, listy ip.) w jednym wierszu.
-który drukujemy w pętli for, oraz *kom* – komunikat, który wyświetlamy przed wydrukiem.
-Argument *kom* jest opcjonalny, ponieważ przypisujemy mu wartość domyślną, która zostanie użyta,
+Argument ``kom`` jest opcjonalny, ponieważ przypisujemy mu wartość domyślną, która zostanie użyta,
 jeżeli użytkownik nie poda innej w wywołaniu funkcji.
 
 Funkcja ``srednia()`` do zsumowania wartości ocen wykorzystuje funkcję ``sum()``.
@@ -115,16 +114,17 @@ obliczamy w wyrażeniu ``half = len(oceny) // 2``. Operator ``//`` oznacza dziel
 Notacja wycinkowa ``oceny[half-1:half+1]`` zwraca dwa środkowe elementy z listy.
 Jeżeli liczba ocen jest nieparzysta, zwracamy wartość środkową: ``oceny[len(oceny) // 2]``.
 
-W funkcji ``wariancja()`` pętla ``for`` odczytuje kolejne oceny i korzysta z operatorów skróconego dodawania (+=)
-i potęgowania (**), aby wyliczyć sumę kwadratów różnic kolejnych ocen i średniej: ``suma += (ocena - srednia)**2``.
+W funkcji ``wariancja()`` pętla ``for`` odczytuje kolejne oceny i korzysta z operatorów skróconego dodawania (``+=``)
+i potęgowania (``**``), aby wyliczyć sumę kwadratów różnic kolejnych ocen i średniej: ``suma += (ocena - srednia)**2``.
 Funkcja zwraca średnią arytmetyczną obliczonej sumy: ``suma / len(oceny)``.
 
-Zadania dodatkowe
-*****************
+Ćwiczenia
+----------
 
-- W konsoli Pythona utwórz listę ``wyrazy`` zawierającą elementy: *abrakadabra* i *kordoba*.
-  Utwórz zbiór *w1* poleceniem ``set(wyrazy[0])``. Oraz zbiór *w2* poleceniem ``set(wyrazy[1])``.
-  Wykonaj kolejno polecenia ilustrujące użycie klasycznych operatorów na zbiorach, czyli:
+W konsoli Pythona utwórz listę ``wyrazy`` zawierającą elementy: *abrakadabra* i *kordoba*.
+
+- utwórz zbiór ``w1`` za pomocą polecenia ``set(wyrazy[0])`` oraz zbiór ``w2`` za pomocą polecenia ``set(wyrazy[1])``,
+- wykonaj kolejno polecenia ilustrujące użycie klasycznych operatorów na zbiorach, czyli:
   różnica (-) , suma (|), przecięcie (część wspólna, &) i elementy unikalne (^):
 
 .. code-block:: bash
@@ -134,10 +134,9 @@ Zadania dodatkowe
   >>> print(w1 & w2)
   >>> print(w1 ^ w2)
 
-- W pliku :file:`ocenyfun.py` dopisz funkcję, która wyświetli wszystkie oceny oraz ich odchylenia
-  od wartości średniej.
+- w pliku :file:`oceny_funkcje.py` dopisz funkcję, która wyświetli wszystkie oceny oraz ich odchylenia
+  od wartości średniej; wywołanie funkcji umieść w pliku :file:`oceny.py`.
 
 .. admonition:: Pojęcia
 
-**POJĘCIA**: *import, moduł, zbiór, przechwytywanie wyjątków,
-formatowanie napisów i danych na wyjściu, argumenty funkcji, zwracanie wartości*.
+    :term:`importowanie`, :term:`moduł`, :term:`zbiór`, :term:`f-strings`, :term:`notacja wycinkowa`
