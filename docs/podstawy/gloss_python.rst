@@ -18,7 +18,7 @@ Słownik Pythona
         Błędy wcięć zgłaszane są jako wyjątki ``IndentationError``.
 
     funkcja
-        blok często wykonywanego kodu wydzielony słowem kluczowym ``def``,
+        blok często wykonywanego kodu definiowany słowem kluczowym ``def``,
         opatrzony unikalną w danym zasięgu nazwą; może przyjmować dane
         i zwracać wartości za pomocą słowa kluczowego ``return``.
 
@@ -162,9 +162,11 @@ Słownik Pythona
     tupla
         podbnie jak lista, zawiera indeksowaną sekwencję takich samych lub
         różnych elementów, ale nie można ich zmieniać. Często służy do
-        przechowywania lub przekazywania ustawień, stałych wartości itp.
+        przechowywania lub przekazywania argumentów, stałych wartości itp.
         Np. ``imiona = ('Ala', 'Ola', 'Ela')``. 1-elementową tuplę należy
-        zapisywać z dodatkowym przecinkiem: ``tupla1 = (1,)``.
+        zapisywać z dodatkowym przecinkiem: ``tupla1 = (1,)``. Tuplę
+        można rozpakować, tj. przypisać wartości kolejnych elementów do
+        zmiennych, np. ``a, b = 0, 1```.
 
     typ danych
         W Pythonie wszystkie dane, tj. przypisane do nazw wartości, są obiektami określonego typu.

@@ -12,8 +12,8 @@ Zadanie
 
 Wypisz ciąg Fibonacciego aż do ``n``-tego wyrazu podanego przez użytkownika.
 Ciąg Fibonacciego to ciąg liczb naturalnych, którego każdy wyraz poza dwoma
-pierwszymi jest sumą dwóch wyrazów poprzednich. Początkowe wyrazy tego ciągu to: 0 1 1 2 3 5 8 13 21.
-Przyjmujemy, że 0 wchodzi w skład ciągu.
+pierwszymi jest sumą dwóch wyrazów poprzednich.
+Początkowe wyrazy tego ciągu to: ``0 1 1 2 3 5 8 13 21``.
 
 **Dane**:
 
@@ -26,7 +26,7 @@ Przyjmujemy, że 0 wchodzi w skład ciągu.
 .. literalinclude:: przyklad05.py
     :linenos:
 
-Funkcje pozwalają grupować instrukcje realizujące jedno zadanie w jednym nazwanym blok kodu,
+Funkcje pozwalają grupować instrukcje realizujące jedno zadanie w nazwanym blok kodu,
 dzięki czemu mozna je wielokrotnie wywoływać. Funkcję definiujemy za pomocą słowa kluczowego ``def``:
 
 .. code::
@@ -34,21 +34,20 @@ dzięki czemu mozna je wielokrotnie wywoływać. Funkcję definiujemy za pomocą
     def nazwa_funkcji(parametry):
         pass
 
-Parametry to przekazywane do funkcji wartości i/lub dane; są opcjonalne.
+Parametry to przekazywane do funkcji wartości i/lub dane. Parametry są opcjonalne.
 Po dwukropku od nowego wiersza umieszczamy odpowiednio wcięte instrukcje,
-które tworzą ciało funkcji. Funkcja może zwrócać jakąś wartość za pomocą
-polecenia ``return wartość``.
+które tworzą ciało funkcji. Funkcja może zwracać jakąś wartość za pomocą
+polecenia ``return``.
 
-Zapis ``a, b = pwyrazy`` jest przykładem rozpakowania tupli, tzn. zmienne *a* i *b*
-przyjmują wartości kolejnych elementów tupli ``pwyrazy``. Zapis równoważny, w którym nie
-definiujemy tupli tylko wprost podajemy wartości, to ``a, b = 0, 1``; ten sposób
-przypisania wielokrotnego stosujemy w kodzie ``a, b = b, b + a``. Jak widać, ilość
-zmiennych z lewej strony musi odpowiadać liczbie wartości rozpakowywanych z tupli
-lub liczbie wartości podawanych wprost z prawej strony.
 
-Podane przykłady pokazują, że algorytmy iteracyjne można implementować za pomocą różnych
-instrukcji sterujących, w tym wypadku pętli ``while`` i ``for``, a także z wykorzystaniem
-podejścia rekurencyjnego. W tym ostatnim wypadku zwróć uwagę na argument wywołania funkcji.
+
+Zapis ``a, b = 1, 2`` jest przykładem przypisania wielokrotnego, tzn. zmienne ``a`` i ``b``
+przyjmują wartości kolejnych elementów rozpakowanych z tupli po prawej stronie.
+W taki sam spsób przypisujemy wartości w kodzie ``a, b = b, b + a``.
+Jak widać, liczba zmiennych z lewej strony musi odpowiadać liczbie wartości rozpakowywanych z tupli.
+
+Algorytmy iteracyjne można implementować za pomocą różnych instrukcji sterujących,
+w tym wypadku pętli ``while`` i ``for``, a także z wykorzystaniem rekurencji.
 
 Zadania dodatkowe
 *****************
@@ -56,4 +55,6 @@ Zadania dodatkowe
 Zmień funkcje tak, aby zwracały poprawne wartości przy założeniu,
 że dwa pierwsze wyrazy ciągu równe są 1 (bez zera).
 
-**POJĘCIA**: *funkcja, zwracanie wartości, tupla, rozpakowanie tupli, przypisanie wielokrotne*.
+.. admonition:: Pojęcia
+
+    :term:`funkcja`, :term:`tupla`
