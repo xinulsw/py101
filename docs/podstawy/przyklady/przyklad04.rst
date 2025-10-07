@@ -1,12 +1,12 @@
 .. _przyklad4:
 
-Listy
-#####
+Listy i krotki
+###############
 
 .. note::
 
-    W tym przykładzie poznasz **listę**. Jest to jedna z najczęściej używanych złożonych struktur danych,
-    która pozwala przechowywać wiele danych pod jedną nazwą i wykonywać na nich wiele operacji.
+    W tym przykładzie poznasz **listę** oraz **krotki**. Są to jedne z najczęściej używanych złożonych struktur danych,
+    które pozwalają przechowywać wiele danych pod jedną nazwą.
 
 Zadanie
 ********
@@ -66,7 +66,7 @@ Funkcje działające na sekwencjach:
 
 .. note::
 
-    Sekwencjami są w Pythonie również ciągi znaków i tuple.
+    Sekwencjami są w Pythonie również ciągi znaków i krotki (tuple).
 
 Metody obiektów typu lista:
 
@@ -80,21 +80,21 @@ Metody obiektów typu lista:
 * ``.sort()`` – sortuje listę rosnąco;
 * ``.reverse()`` – sortuje listę w odwróconym porządku.
 
-**Tupla** to niemodyfikowalna lista. Wykorzystywana jest do zapamiętywania
+**Krotka** (tupla) to niemodyfikowalna lista. Wykorzystywana jest do zapamiętywania
 i przekazywania wartości, których nie powinno się zmieniać.
-Tuple tworzymy podając wartości w nawiasach okrągłych, np. ``tupla = (1, 'a')``
-lub z listy za pomocą funkcji: ``tuple(lista)``. Tupla może powstać
+Krotki tworzymy podając wartości w nawiasach okrągłych, np. ``krotka = (1, 'a')``
+lub z listy za pomocą funkcji: ``tuple(sekwencja)``. Krotka może powstać
 również poprzez spakowanie wartości oddzielonych przecinkami,
-np. ``tupla = 1, 'a'``. Próba zmiany wartości w tupli generuje błąd.
+np. ``krotka = 1, 'a'``. Próba zmiany wartości w krotce generuje błąd.
 
 Przetestuj w konsoli Pythona:
 
 .. code-block:: bash
 
-    >>> tupla = 2, 6
-    >>> a, b = tupla
+    >>> krotka = 2, 6
+    >>> a, b = krotka
     >>> print(a, b)
-    >>> tupla[0] = 1
+    >>> krotka[0] = 1
 
 Ćwiczenia
 -----------
@@ -107,4 +107,4 @@ Utwórz w konsoli Pythona dowolną listę i przećwicz notację wycinkową:
 
 .. admonition:: Pojęcia
 
-    :term:`lista`, :term:`metoda`, :term:`notacja wycinkowa`, :term:`tupla`
+    :term:`lista`, :term:`metoda`, :term:`notacja wycinkowa`, :term:`krotka`

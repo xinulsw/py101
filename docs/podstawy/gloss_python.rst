@@ -79,6 +79,15 @@ Słownik Pythona
         Tłumaczeniem i wykonywaniem programu zajmuje się specjalny program
         nazwany interpreterem języka.
 
+    krotka
+        (ang. *tuple*) podobnie jak lista, zawiera indeksowaną sekwencję takich samych lub
+        różnych elementów, ale nie można ich zmieniać. Często służy do
+        przechowywania lub przekazywania argumentów, stałych wartości itp.
+        Np. ``imiona = ('Ala', 'Ola', 'Ela')``. 1-elementową tuplę należy
+        zapisywać z dodatkowym przecinkiem: ``tupla1 = (1,)``. Tuplę
+        można rozpakować, tj. przypisać wartości kolejnych elementów do
+        zmiennych, np. ``a, b = 0, 1```.
+
     lista
         jedna z podstawowych struktur danych, indeksowana sekwencja takich samych
         lub różnych elementów, które można zmieniać. Przypomina tabele z innych
@@ -158,15 +167,6 @@ Słownik Pythona
         Dane ze słownika łatwo wydobyć: ``slownik['klucz']``,
         lub zmienić: ``slownik['klucz'] = wartosc``.
         Deklaracja pustego słownika: ``slownik = dict()``.
-
-    tupla
-        podbnie jak lista, zawiera indeksowaną sekwencję takich samych lub
-        różnych elementów, ale nie można ich zmieniać. Często służy do
-        przechowywania lub przekazywania argumentów, stałych wartości itp.
-        Np. ``imiona = ('Ala', 'Ola', 'Ela')``. 1-elementową tuplę należy
-        zapisywać z dodatkowym przecinkiem: ``tupla1 = (1,)``. Tuplę
-        można rozpakować, tj. przypisać wartości kolejnych elementów do
-        zmiennych, np. ``a, b = 0, 1```.
 
     typ danych
         W Pythonie wszystkie dane, tj. przypisane do nazw wartości, są obiektami określonego typu.

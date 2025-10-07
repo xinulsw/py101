@@ -1,21 +1,22 @@
 .. _przyklad07:
 
-Słownik słówek
-##############
+Słownik i obsługa plików
+########################
 
 .. note::
 
-    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych **modułach**,
-    poznasz i wykorzystasz **zbiór**, kolejną obok listy złożoną strukturę danych.
+    W tym przykładzie zobaczysz, na czym polega zapis i odczyt plików tekstowych w różnych formatach,
+    poznasz kolejną złożoną strukturę danych – **słownik** oraz nauczysz się wykonywać wiele operacji na napisach.
 
 Zadanie
 ********
 
 Napisz program :file:`slownik.py`, który pozwoli zapisywać w pliku tekstowym obce wyrazy oraz ich możliwe znaczenia.
-Pobierz z klawiatury dane w formacie: ``wyraz obcy: znaczenie1, znaczenie2, ...`` itd.
+Program powinien pobierać dane z klawiatury w formacie: ``wyraz obcy: znaczenie1, znaczenie2, ...`` itd.
 Pobieranie danych kończy wpisanie słowa "koniec".
-Podane dane zapisz w pliku :file:`slownik.txt` i/lub :file:`slownik.csv`.
-Użytkownik powinien mieć możliwość dodawania nowych i zmieniania zapisanych danych.
+Podane dane powinny być zapisywane w pliku :file:`slownik.txt` i/lub :file:`slownik.csv`.
+Program powinien odczytywać wcześniej zapisane dane, a użytkownik powinien mieć możliwość
+dodawania nowych i zmieniania zapisanych danych.
 
 .. raw:: html
 
@@ -23,19 +24,31 @@ Użytkownik powinien mieć możliwość dodawania nowych i zmieniania zapisanych
 
 .. highlight:: python
 
-.. literalinclude:: 06_slownik_txt.py
+.. literalinclude:: przyklad07_txt.py
     :linenos:
 
+
+Słownik
+-------
+
 Słownik (zob. :term:`słownik`) to struktura nieuporządkowanych danych w formacie *klucz:wartość*.
-Kluczami są najczęściej napisy, które wskazują na wartości dowolnego typu,
-np. inne napisy, liczby, listy, tuple itd. W programie wykorzystujemy słownik,
-którego kluczami są wyrazy obce, natomiast wartościami są listy możliwych znaczeń.
+Kluczami mogą być m.in. napisy i liczby, które wskazują na wartości dowolnego typu,
+np. inne napisy, liczby, listy, krotki itd. W programie wykorzystujemy słownik,
+którego kluczami są wyrazy obce, natomiast wartościami są listy możliwych znaczeń, np.:
 
-Operacje na słowniku:
+.. code::
 
-* ``slownik = { 'go':['iść','pojechać'] }`` – utworzenie 1-elementowego słownika;
-* ``slownik['make'] = ['robić','marka']`` – dodanie nowego elementu;
+    slownik = {'go': ['iść', 'pojechać', 'chodzić'], 'look': ['patrzeć', 'poszukać'], 'see' : ['widzieć', 'zrozumieć']}
+
+**Operacje na słowniku**:
+
+* ``slownik = {}`` – utworzenie pustego słownika,
+* ``slownik = { 'go':['iść','pojechać'] }`` – utworzenie 1-elementowego słownika,
+* ``slownik['make'] = ['robić','marka']`` – dodanie nowego elementu,
 * ``slownik['go']`` – odczyt elementu.
+
+Pliki tekstowe
+---------------
 
 Aby zilustrować niektóre operacje na napisach i listach, elementy słownika zapisywać
 będziemy do pliku w formacie *wyraz_obcy:znaczenie1,znaczeni2,...*.

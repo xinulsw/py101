@@ -1,12 +1,12 @@
 .. _przyklad6:
 
-Oceny
-#####
+Moduły i zbiory
+###############
 
 .. note::
 
-    W tym przykładzie zobaczysz, jak korzystać z funkcji zapisanych w osobnych **modułach**,
-    poznasz i wykorzystasz **zbiór**, kolejną obok listy złożoną strukturę danych.
+    W tym przykładzie zobaczysz, jak korzystać z **modułów**, a także
+    poznasz i wykorzystasz **zbiór**, kolejną obok list i krotek złożoną strukturę danych.
 
 Zadanie
 *******
@@ -38,11 +38,17 @@ Funkcje pomocnicze i statystyczne umieść w osobnym module.
 .. literalinclude:: przyklad06.py
     :linenos:
 
-**Importy**
+**Moduły**
 
-Za pomocą instrukcji ``from moduł import funkcja`` importujemy wybrane funkcje zdefiniowanych i zapisane w osobnych
-modułach (plikach). Nazwa modułu to nazwa pliku z kodem pozbawiona jednak rozszerzenia ``.py``.
-Moduł musi być dostępny w ścieżce przeszukiwania, aby można go było poprawnie dołączyć.
+Moduły to pliki zawierające często wykorzystywane stałe, funkcje i klasy. Wiele modułów, tzw. wbudowanych,
+jest częścią standardowej instalacji Pythona, programista może również tworzyć własne moduły.
+Dostęp do zawartości modułu uzyskujemy dzięki **importom**. Nazwa modułu to nazwa pliku z kodem bez rozszerzenia ``.py``.
+Moduł musi znajdować się w ścieżce przeszukiwania, aby import był udany. Przykłady:
+
+- ``import math`` – import całego modułu, dostęp do zawartości uzyskujemy dzięki notacji z kropką,
+  np. ``math.pi`` lub ``math.sqrt()``,
+- ``from math import pi, sqrt`` – import tylko wybranych elementów, których nazw używamy bezpośrednio, np.:
+  ``pole = pi * r**2``, ``c = sqrt(a**2 + b**2)``.
 
 .. note::
 
@@ -96,9 +102,8 @@ Więcej informacji nt. formatowania danych wyjściowych: `PyFormat <https://pyfo
 .. literalinclude:: oceny_funkcje.py
     :linenos:
 
-Instrukcja ``import math`` udostępnia wszystkie metody z modułu matematycznego w przestrzeni nazw
-``math``, dlatego musimy odwoływać się do nich za pomocą notacji ``math.funkcja``,
-np.: ``math.sqrt()`` – funkcja obliczający pierwiastek kwadratowy.
+Instrukcja ``import math`` udostępnia wszystkie metody z modułu matematycznego, wykorzystujemy
+funkcję obliczającą pierwiastek kwadratowy: ``math.sqrt()``.
 
 Funkcja ``wypisz(sekwencja, kom='...')`` wypisuje podany komunikat, a następnie za pomocą pętli
 ``for e in sekwencja`` odczytuje i wypisuje elementy podanej sekwencji (zbioru, listy ip.) w jednym wierszu.
@@ -139,4 +144,4 @@ W konsoli Pythona utwórz listę ``wyrazy`` zawierającą elementy: *abrakadabra
 
 .. admonition:: Pojęcia
 
-    :term:`importowanie`, :term:`moduł`, :term:`zbiór`, :term:`f-strings`, :term:`notacja wycinkowa`
+    :term:`moduł`, :term:`importowanie`, :term:`zbiór`, :term:`f-strings`, :term:`notacja wycinkowa`

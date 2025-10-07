@@ -1,11 +1,11 @@
 .. _przyklad5:
 
-Ciąg Fibonacciego
+Funkcje
 #################
 
 .. note::
 
-    W tym przykładzie poznasz i zastosujesz **funkcje**
+    W tym przykładzie poznasz i zastosujesz **funkcje**.
 
 Zadanie
 ********
@@ -27,7 +27,7 @@ Początkowe wyrazy tego ciągu to: ``0 1 1 2 3 5 8 13 21``.
     :linenos:
 
 Funkcje pozwalają grupować instrukcje realizujące jedno zadanie w nazwanym blok kodu,
-dzięki czemu mozna je wielokrotnie wywoływać. Funkcję definiujemy za pomocą słowa kluczowego ``def``:
+dzięki czemu można je wielokrotnie wywoływać. Funkcję definiujemy za pomocą słowa kluczowego ``def``:
 
 .. code::
 
@@ -39,22 +39,20 @@ Po dwukropku od nowego wiersza umieszczamy odpowiednio wcięte instrukcje,
 które tworzą ciało funkcji. Funkcja może zwracać jakąś wartość za pomocą
 polecenia ``return``.
 
-
-
 Zapis ``a, b = 1, 2`` jest przykładem przypisania wielokrotnego, tzn. zmienne ``a`` i ``b``
-przyjmują wartości kolejnych elementów rozpakowanych z tupli po prawej stronie.
-W taki sam spsób przypisujemy wartości w kodzie ``a, b = b, b + a``.
-Jak widać, liczba zmiennych z lewej strony musi odpowiadać liczbie wartości rozpakowywanych z tupli.
+przyjmują wartości kolejnych elementów rozpakowanych z krotki (tupli) po prawej stronie.
+W taki sam sposób przypisujemy wartości w kodzie ``a, b = b, b + a``.
+Jak widać, liczba zmiennych z lewej strony musi odpowiadać liczbie wartości rozpakowywanych z krotki.
 
 Algorytmy iteracyjne można implementować za pomocą różnych instrukcji sterujących,
 w tym wypadku pętli ``while`` i ``for``, a także z wykorzystaniem rekurencji.
 
-Zadania dodatkowe
-*****************
+Ćwiczenie
+----------
 
-Zmień funkcje tak, aby zwracały poprawne wartości przy założeniu,
-że dwa pierwsze wyrazy ciągu równe są 1 (bez zera).
+Przyjmij, że dwa pierwsze wyrazy ciągu równe są 1 i zmień funkcje tak,
+aby wypisywały lub zwracały poprawne wartości.
 
 .. admonition:: Pojęcia
 
-    :term:`funkcja`, :term:`tupla`
+    :term:`funkcja`, :term:`krotka`
