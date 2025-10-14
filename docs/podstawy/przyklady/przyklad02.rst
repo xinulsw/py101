@@ -53,9 +53,9 @@ Zmień program :file:`witaj.py` tak, aby na końcu wypisany został **tylko jede
 
 .. code-block::
 
-    Jestem starszy od ciebie!
-    Jestem młodszy od ciebie!
-    Mamy tyle samo lat!
+    Jestem starszy od ciebie.
+    Jestem młodszy od ciebie.
+    Mamy tyle samo lat.
 
 Można użyć kilku osobnych instrukcji warunkowych:
 

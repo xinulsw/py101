@@ -96,7 +96,7 @@ Słownik Pythona
 
     mapowanie funkcji
         w kontekście funkcji ``map()`` oznacza zastosowanie danej funkcji
-        do wszystkich dostarczonych wartości
+        do wszystkich podanych w drugim argumencie wartości
 
     metoda
         funkcje definiowane w klasach i wywoływane na rzecz obiektów będących instancjami tych klas,

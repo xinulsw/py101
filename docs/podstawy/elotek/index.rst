@@ -67,15 +67,13 @@ wywołujemy je podając nazwę i ewentualne argumenty.
 Zwracane przez nie wartości zostają przypisane podanym zmiennym.
 
 Warto zauważyć, że funkcja może zwracać więcej niż jedną wartość naraz,
-np. w postaci tupli ``return (ile, maks, ilelos)``.
-**Tupla** to rodzaj listy, w której nie możemy zmieniać wartości (zob. :term:`tupla`).
-Jest często stosowana do przechowywania i przekazywania danych, których nie należy modyfikować.
+np. w postaci krotki ``return (ile, maks, ilelos)`` (zob. :term:`krotka`).
 
-Wiele wartości zwracanych w tupli można jednocześnie przypisać
-kilku zmiennym dzięki operacji tzw. **rozpakowania tupli**:
+Wiele wartości zwracanych w krotce można jednocześnie przypisać
+kilku zmiennym dzięki operacji tzw. **rozpakowania krotki**:
 ``ileliczb, maksliczba, ilerazy = ustawienia()``. Należy jednak
-pamiętać, aby ilość zmiennych z lewej strony wyrażenia odpowiadała ilości
-elementów w tupli.
+pamiętać, aby liczba zmiennych z lewej strony wyrażenia odpowiadała liczbie
+elementów w krotki.
 
 Konstrukcja ``while True`` oznacza nieskończoną pętlę. Stosujemy ją w funkcji
 ``ustawienia()``, aby wymusić na użytkowniku podanie poprawnych danych.

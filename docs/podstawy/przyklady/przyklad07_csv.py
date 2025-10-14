@@ -1,78 +1,78 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os  # moduł udostępniający funkcję isfile()
 import csv  # moduł do obsługi formatu csv
 
 slownik = {}  # pusty słownik
-sFile = "slownik.csv"  # nazwa pliku zawierającego wyrazy i ich tłumaczenia
+nazwa_pliku = "slownik.csv"  # nazwa pliku zawierającego wyrazy i ich tłumaczenia
 
 
-def otworz(plik):
-    if os.path.isfile(sFile):  # czy istnieje plik słownika?
-        with open(sFile, newline='') as plikcsv:  # otwórz plik do odczytu
-            tresc = csv.reader(plikcsv)
-            for linia in tresc:  # przeglądamy kolejne linie
-                slownik[linia[0]] = linia[1:]
-    return len(slownik)  # zwracamy ilość elementów w słowniku
+def otworz():
+    if os.path.isfile(nazwa_pliku):  # czy istnieje plik słownika?
+        with open(nazwa_pliku, newline='') as plik_csv:  # otwórz plik do odczytu
+            tresc = csv.reader(plik_csv)
+            for wiersz in tresc:  # przeglądamy kolejne linie
+                slownik[wiersz[0]] = wiersz[1:]
+    return len(slownik)  # zwracamy liczbę elementów w słowniku
 
 
-def zapisz(slownik):
+def zapisz():
     # otwieramy plik do zapisu, istniejący plik zostanie nadpisany(!)
-    with open(sFile, "w", newline='') as plikcsv:
-        tresc = csv.writer(plikcsv)
-        for wobcy in slownik:
-            lista = slownik[wobcy]
-            lista.insert(0, wobcy)
+    with open(nazwa_pliku, "w", newline='') as plik_csv:
+        tresc = csv.writer(plik_csv)
+        for w_obcy in slownik:
+            lista = slownik[w_obcy]
+            lista.insert(0, w_obcy)
             tresc.writerow(lista)
 
 
-def oczysc(str):
-    str = str.strip()  # usuń początkowe lub końcowe białe znaki
-    str = str.lower()  # zmień na małe litery
-    return str
+def oczysc(tekst):
+    """Funkcja usuwa początkowe i końcowe białe znaki oraz znaki końca linii
+       i zwraca tekst zamieniony na małe litery"""
+    return tekst.strip().lower()
 
 
 def main(args):
-    print("""Podaj dane w formacie:
+    print('''Wprowadzaj dane w formacie:
     wyraz obcy: znaczenie1, znaczenie2
-    Aby zakończyć wprowadzanie danych, podaj 0.
-    """)
+    Aby zakończyć wprowadzanie danych, naciśnij ENTER.
+    ''')
 
-    # wobce = set() # pusty zbiór wyrazów obcych
     # zmienna oznaczająca, że użytkownik uzupełnił lub zmienił słownik
-    nowy = False
-    ileWyrazow = otworz(sFile)
-    print("Wpisów w bazie:", ileWyrazow)
+    czy_zastapic = False
+    czy_nowy = False
+    ile_wyrazow = otworz()
+    print('Słów w bazie:', ile_wyrazow)
 
     # główna pętla programu
     while True:
-        dane = input("Podaj dane: ")
-        t = dane.split(":")
-        wobcy = t[0].strip().lower()  # robimy to samo, co funkcja oczysc()
-        if wobcy == 'koniec':
+        dane = input('Podaj wyraz obcy i jego znaczenia: ')
+        t = dane.split(':')
+        w_obcy = t[0].strip().lower()
+        if not w_obcy:
             break
-        elif dane.count(":") == 1:  # sprawdzamy poprawność danych
-            if wobcy in slownik:
-                print("Wyraz", wobcy, " i jego znaczenia są już w słowniku.")
-                op = input("Zastąpić wpis (t/n)? ")
+        elif dane.count(':') == 1:  # sprawdzamy poprawność danych
+            if w_obcy in slownik:
+                print('Wyraz', w_obcy, ' i jego znaczenia są już w słowniku.')
+                czy_zastapic = input('Zastąpić wpis (t/n)? ')
             # czy wyrazu nie ma w słowniku? a może chcemy go zastąpić?
-            if wobcy not in slownik or op == "t":
-                znaczenia = t[1].split(",")  # znaczenia zapisujemy w liście
+            if w_obcy not in slownik or czy_zastapic == 't':
+                znaczenia = t[1].split(',')  # znaczenia zapisujemy w liście
                 znaczenia = list(map(oczysc, znaczenia))  # oczyszczamy listę
-                slownik[wobcy] = znaczenia
-                nowy = True
+                slownik[w_obcy] = znaczenia
+                print(f'Dodano: {w_obcy}:{znaczenia}')
+                czy_nowy = True
         else:
-            print("Błędny format!")
+            print('Błędny format!')
 
-    if nowy:
-        zapisz(slownik)
+    if czy_nowy:
+        zapisz()
 
-    print("=" * 50)
-    print("{0: <15}{1: <40}".format("Wyraz obcy", "Znaczenia"))
-    print("=" * 50)
-    for wobcy in slownik:
-        print("{0: <15}{1: <40}".format(wobcy, ",".join(slownik[wobcy])))
+    print(slownik)
+
+    print('=' * 50)
+    print('{0: <15}{1: <40}'.format('Wyraz obcy', 'Znaczenia'))
+    print('=' * 50)
+    for w_obcy in slownik:
+        print('{0: <15}{1: <40}'.format(w_obcy, ','.join(slownik[w_obcy])))
     return 0
 
 

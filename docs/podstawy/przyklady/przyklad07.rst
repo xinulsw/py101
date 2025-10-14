@@ -5,15 +5,15 @@ Słownik i obsługa plików
 
 .. note::
 
-    W tym przykładzie zobaczysz, na czym polega zapis i odczyt plików tekstowych w różnych formatach,
-    poznasz kolejną złożoną strukturę danych – **słownik** oraz nauczysz się wykonywać wiele operacji na napisach.
+    W tym przykładzie zobaczysz, na czym polega **zapis i odczyt plików** tekstowych w różnych formatach,
+    poznasz kolejną złożoną strukturę danych – **słownik** oraz nauczysz się wykonywać kolejne operacje na napisach.
 
 Zadanie
 ********
 
 Napisz program :file:`slownik.py`, który pozwoli zapisywać w pliku tekstowym obce wyrazy oraz ich możliwe znaczenia.
 Program powinien pobierać dane z klawiatury w formacie: ``wyraz obcy: znaczenie1, znaczenie2, ...`` itd.
-Pobieranie danych kończy wpisanie słowa "koniec".
+Pobieranie danych kończy naciśnięcie klawisze :kbd:`ENTER`.
 Podane dane powinny być zapisywane w pliku :file:`slownik.txt` i/lub :file:`slownik.csv`.
 Program powinien odczytywać wcześniej zapisane dane, a użytkownik powinien mieć możliwość
 dodawania nowych i zmieniania zapisanych danych.
@@ -26,7 +26,6 @@ dodawania nowych i zmieniania zapisanych danych.
 
 .. literalinclude:: przyklad07_txt.py
     :linenos:
-
 
 Słownik
 -------
@@ -44,8 +43,8 @@ którego kluczami są wyrazy obce, natomiast wartościami są listy możliwych z
 
 * ``slownik = {}`` – utworzenie pustego słownika,
 * ``slownik = { 'go':['iść','pojechać'] }`` – utworzenie 1-elementowego słownika,
-* ``slownik['make'] = ['robić','marka']`` – dodanie nowego elementu,
-* ``slownik['go']`` – odczyt elementu.
+* ``slownik['make'] = ['robić','tworzyć']`` – dodanie nowego elementu,
+* ``slownik['go']`` – odczyt elementu wskazanego przez klucz.
 
 Pliki tekstowe
 ---------------
@@ -55,85 +54,76 @@ będziemy do pliku w formacie *wyraz_obcy:znaczenie1,znaczeni2,...*.
 Funkcja ``otworz()`` przekształca format pliku na słownik,
 a funkcja ``zapisz()`` słownik na format pliku.
 
-Operacje na plikach:
+**Operacje na plikach tekstowych**:
 
-* ``os.path.isfile(plik)`` – sprawdzenie, czy istnieje podany plik;
-* ``open(plik, "w")`` – otwarcie pliku w podanym trybie: *"r"* – odczyt(domyślny),
-  *"w"* – zapis, *"a"* – dopisywanie;
-* ``with open(plik) as zmienna:`` – otwarcie pliku w instrukcji ``with ... as ...`` zapewnia
-  obsługę błędów, dba o zamknięcie pliku i udostępnia jego zawartość w *zmiennej*;
-* ``for linia in zmienna:`` – pętla, która odczytuje kolejne linie pliku;
-* ``plik.write(tresc)`` – zapisuje do pliku podaną treść;
-* ``plik.close()`` – zamyka plik.
+* ``os.path.isfile(plik)`` – zwraca prawdę, jeżeli podany plik istnieje,
+* ``open(plik, "w")`` – otwarcie pliku w podanym trybie: ``"r"`` – odczyt(domyślny),
+  ``"w"`` – zapis, ``"a"`` – dopisywanie,
+* ``with open(nazwa_pliku) as plik:`` – otwarcie pliku w instrukcji ``with ... as ...`` zapewnia
+  obsługę błędów, dba o zamknięcie pliku i udostępnia go w zmiennej ``plik``,
+* ``for wiersz in plik:`` – plik tekstowy można rozumieć jako sekwencję wierszy, pętla ``for`` pozwala więc na odczyt
+  kolejnych wierszy,
+* ``plik.write(tresc)`` – zapisuje do pliku podaną treść,
+* ``plik.close()`` – zamyka plik, ale lepiej używać konstrukcji z ``with``.
 
-Operacje na napisach:
+**Operacje na napisach**:
 
-* ``.split(":")`` – zwraca listę części napisu wydzielone według podanego znaku;
-* ``",".join(lista)`` – zwraca elementy listy połączone podanym znakiem (w tym wypadku przecinkiem);
-*	``.lower()`` – zamienia znaki na małe litery;
-*	``.strip()`` – usuwa początkowe i końcowe białe znaki (spacje, tabulatory);
-* ``.replace("co","czym")`` – zastępuje w ciągu wszystkie wystąpienia *co – czym*;
-* ``.count(znak)`` – zwraca ilość wystąpień znaku w napisie.
+* ``.split(':')`` – dzieli tekst na części oddzielane podanym znakiem, zwraca je w postaci listy,
+* ``','.join(lista)`` – łączy elementy listy podanym znakiem (w tym wypadku przecinkiem), zwraca tekst,
+*	``.lower()`` – zamienia znaki na małe litery,
+*	``.strip()`` – usuwa początkowe i końcowe białe znaki (spacje, tabulatory) oraz znaki końca wiersza,
+* ``.replace('co','czym')`` – zastępuje w ciągu wszystkie wystąpienia *co – czym*,
+* ``.count(znak)`` – zwraca liczbę wystąpień znaku w napisie.
 
 W pętli głównej programu dane pobrane w formacie *wyraz_obcy:znaczenie1,znaczeni2,...*
-rozbijamy na wyraz obcy i jego znaczenia, które zapisujemy w liście *t*. Wszystkie elementy
+rozbijamy na wyraz obcy i jego znaczenia, które zapisujemy w liście ``t``. Wszystkie elementy
 oczyszczamy, tj. zamieniamy na małe litery i usuwamy białe znaki.
-Funkcja ``map(oczysc, znaczenia)`` pozwala zastosować podaną jako pierwszy argument funkcję *oczysc*
-do wszystkich elementów listy *znaczenia* podanej jako argument drugi.
+Funkcja ``map(oczysc, znaczenia)`` pozwala zastosować podaną jako pierwszy argument funkcję ``oczysc()``
+do wszystkich elementów listy ``znaczenia`` podanej jako argument drugi.
 Instrukcja ``list()`` przekształca zwrócony przez funkcję ``map()`` obiekt z powrotem na listę.
 
-**Formatowanie napisów**
+Format csv
+----------
 
-Metoda napisów ``format()`` pozwala na drukowanie przekazanych jej jako argumentów danych
-zgodnie z ciągami formatującymi umieszczanymi w nawiasach klamrowych w napisie,
-np. ``{0: <15}{1: <40}``. Pierwsza cyfra wskazuje, do którego z kolejnych argumentów metody ``format()``
-odnosi się ciąg formatujący. Po dwukropku podajemy znak wypełnienia (" " – spacja),
-symbol "<" oznacza wyrównanie do lewej, a ostatnia cyfra ("15") to szerokość pola.
-Zob. dokumentację `Format String Syntax <https://docs.python.org/3/library/string.html>`_.
-
-Zapis w pliku csv
-=================
-
-Dane można też wygodnie zapisywać do pliku w formacie `csv <https://pl.wikipedia.org/wiki/CSV_(format_pliku)>`_.
+Dane tekstowe często zapisuje się w formacie `csv <https://pl.wikipedia.org/wiki/CSV_(format_pliku)>`_.
 Jest to rozwiązanie wygodniejsze, ponieważ zwalnia nas od konieczności ręcznego przekształcania
 odczytywanych z pliku linii na struktury danych.
 
-Na początku pliku dodajemy import modułu: ``import csv``. Następnie zmieniamy funkcje
+Na początku pliku dodajemy import modułu: ``import csv``. Następnie zmieniamy nazwę pliku oraz funkcje
 ``otworz()`` i ``zapisz()`` na podane niżej:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: 06_slownik_csv.py
+.. literalinclude:: przyklad07_csv.py
     :linenos:
-    :lineno-start: 11
-    :lines: 11-27
+    :lineno-start: 5
+    :lines: 5-24
 
-`Format csv <https://pl.wikipedia.org/wiki/CSV_(format_pliku)>`_
-polega na zapisywaniu wartości oddzielonych separatorem,
-czyli domyślnie przecinkiem. Jeżeli wartość zawiera znak separatora,
-jest cytowana domyślnie za pomocą cudzysłowu. W naszym wypadku przykładowa
-linia pliku przyjmie postać: *wyraz obcy,znaczenie1,znaczenie2,...*
+Format CSV polega na zapisywaniu wartości oddzielonych separatorem, czyli domyślnie przecinkiem.
+Jeżeli wartość zawiera znak separatora, jest cytowana domyślnie za pomocą cudzysłowu.
+W naszym wypadku przykładowa linia pliku przyjmie postać: ``wyraz obcy,znaczenie1,znaczenie2,...``
 
-W powyższym kodzie używamy metody ``csv.reader(plik)``, która interpretuje
-podany plik jako zapisany w formacie csv i każdą linię zwraca
-w postaci listy elementów. Instrukcja ``slownik[linia[0]] = linia[1:]``
-zapisuje dane w słowniku, kluczem jest wyraz obcy (1 ellement listy),
-wartościami – lista znaczeń.
+**Operacje na plikach CSV**
 
-W funkcji zapisującej dane w formacie csv, na początku tworzymy obiekt ``tresc``
-zwrócony przez metodę ``csv.writer(plik)``. Po przygotowaniu listy zawierającej
-wyraz obcy i jego znaczenia zapisujemy ją za pomocą metody ``writerow(lista)``.
+- ``csv.reader(plik)`` – metoda interpretuje podany plik jako format CSV i każdą linię zwraca w postaci listy elementów,
+  wyodrębnionych za pomocą separatora,
+- ``csv.writer(plik)`` – metoda tworzy obiekt reprezentujący treść pliku w formacie CSV,
+- ``.writerow(lista)`` – metoda umożliwia zapis listy elementów w formacie CSV w obiekcie zwróconym przez metodę
+  ``.writer()``.
 
+Instrukcja ``slownik[linia[0]] = linia[1:]`` zapisuje dane w słowniku, kluczem jest wyraz obcy (1 element listy),
+wartościami lista znaczeń odczytana za pomocą notacji indeksowej.
 
 Ćwiczenia
------------
+*********
 
-- Kod drukujący słownik zamień w funkcję. Wykorzystaj ją do wydrukowania słownika odczytanego z dysku i słownika uzupełnionego przez użytkownika.
-- Spróbuj zmienić program tak, aby umożliwiał usuwanie wpisów.
-- Dodaj do programu możliwość uczenia się zapisanych w słowniku słówek. Niech program wyświetla kolejne słowa obce i pobiera od użytkownika możliwe znaczenia. Następnie powinien wyświetlać, które z nich są poprawne.
+1) Kod wypisujący słownik zamień na funkcję ``wypisz_slownik()`` i wykorzystaj ją do wypisywania słownika.
+2) Rozszerz program tak, aby umożliwiał usuwanie elementów słownika.
+3) Dodaj do programu możliwość uczenia się zapisanych w słowniku słówek, np. niech program wypisuje kolejne
+   słowa obce i pobiera od użytkownika możliwe znaczenie i sprawdza, czy jest poprawne.
 
 .. admonition:: Pojęcia
 
-    :term:`słownik`, odczyt i zapis plików, formatowanie napisów, format CSV
+    :term:`słownik`, :term:`notacja wycinkowa`

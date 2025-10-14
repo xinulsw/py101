@@ -1,86 +1,82 @@
 import os  # moduł udostępniający funkcję isfile()
 
 slownik = {}  # pusty słownik
-sPlik = "slownik.txt"  # nazwa pliku zawierającego wyrazy i ich tłumaczenia
+nazwa_pliku = 'slownik.txt'  # nazwa pliku zawierającego wyrazy i ich tłumaczenia
 
 
-def otworz(plik):
-    if os.path.isfile(sPlik):  # czy istnieje plik słownika?
-        with open(sPlik, "r") as pliktxt:  # otwórz plik do odczytu
-            for line in pliktxt:  # przeglądamy kolejne linie
-                # rozbijamy linię na wyraz obcy i tłumaczenia
-                t = line.split(":")
-                wobcy = t[0]
-                # usuwamy znaki nowych linii
-                znaczenia = t[1].replace("\n", "")
-                znaczenia = znaczenia.split(",")  # tworzymy listę znaczeń
-                # dodajemy do słownika wyrazy obce i ich znaczenia
-                slownik[wobcy] = znaczenia
-    return len(slownik)  # zwracamy ilość elementów w słowniku
+def otworz():
+    if os.path.isfile(nazwa_pliku):  # czy istnieje plik słownika?
+        with open(nazwa_pliku, 'r') as plik_txt:  # otwórz plik do odczytu
+            for wiersz in plik_txt:  # przeglądamy kolejne wiersze
+                # oczyszczamy wiersz ze znaków końca linii
+                # i rozbijamy na wyraz obcy i tłumaczenia
+                t = wiersz.strip().split(':')
+                # dodajemy do słownika wyraz obcy i listę znaczeń
+                slownik[t[0]] = t[1].split(',')
+    return len(slownik)  # zwracamy liczbę elementów słownika
 
 
-def zapisz(slownik):
+def zapisz():
     # otwieramy plik do zapisu, istniejący plik zostanie nadpisany(!)
-    pliktxt = open(sPlik, "w")
-    for wobcy in slownik:
-        # "sklejamy" znaczenia przecinkami w jeden napis
-        znaczenia = ",".join(slownik[wobcy])
-        # wyraz_obcy:znaczenie1,znaczenie2,...
-        linia = ":".join([wobcy, znaczenia])
-        pliktxt.write(linia)  # zapisujemy w pliku kolejne linie
-        # można też tak:
-        # print(linia, file=pliktxt)
-    pliktxt.close()  # zamykamy plik
+    with open(nazwa_pliku, 'w') as plik_txt:
+        for w_obcy in slownik:
+            # 'sklejamy' znaczenia przecinkami w jeden napis
+            lista_znaczen = ','.join(slownik[w_obcy])
+            # wyraz_obcy:znaczenie1,znaczenie2,...
+            wiersz = ':'.join([w_obcy, lista_znaczen])
+            plik_txt.write(wiersz + '\n')  # zapisujemy w pliku kolejne wiersze
+            # można też tak: print(wiersz, file=plik_txt)
 
 
-def oczysc(str):
-    str = str.strip()  # usuń początkowe lub końcowe białe znaki
-    str = str.lower()  # zmień na małe litery
-    return str
+def oczysc(tekst):
+    """Funkcja usuwa początkowe i końcowe białe znaki oraz znaki końca linii
+       i zwraca tekst zamieniony na małe litery"""
+    return tekst.strip().lower()
 
 
 def main(args):
-    print("""Podaj dane w formacie:
+    print('''Wprowadzaj dane w formacie:
     wyraz obcy: znaczenie1, znaczenie2
-    Aby zakończyć wprowadzanie danych, podaj 0.
-    """)
+    Aby zakończyć wprowadzanie danych, naciśnij ENTER.
+    ''')
 
-    # wobce = set() # pusty zbiór wyrazów obcych
     # zmienna oznaczająca, że użytkownik uzupełnił lub zmienił słownik
-    nowy = False
-    ileWyrazow = otworz(sPlik)
-    print("Wpisów w bazie:", ileWyrazow)
+    czy_zastapic = False
+    czy_nowy = False
+    ile_wyrazow = otworz()
+    print('Słów w bazie:', ile_wyrazow)
 
     # główna pętla programu
     while True:
-        dane = input("Podaj dane: ")
-        t = dane.split(":")
-        wobcy = t[0].strip().lower()  # robimy to samo, co funkcja oczysc()
-        if wobcy == 'koniec':
+        dane = input('Podaj wyraz obcy i jego znaczenia: ')
+        t = dane.split(':')
+        w_obcy = t[0].strip().lower()
+        if not w_obcy:
             break
-        elif dane.count(":") == 1:  # sprawdzamy poprawność danych
-            if wobcy in slownik:
-                print("Wyraz", wobcy, " i jego znaczenia są już w słowniku.")
-                op = input("Zastąpić wpis (t/n)? ")
+        elif dane.count(':') == 1:  # sprawdzamy poprawność danych
+            if w_obcy in slownik:
+                print('Wyraz', w_obcy, ' i jego znaczenia są już w słowniku.')
+                czy_zastapic = input('Zastąpić wpis (t/n)? ')
             # czy wyrazu nie ma w słowniku? a może chcemy go zastąpić?
-            if wobcy not in slownik or op == "t":
-                znaczenia = t[1].split(",")  # znaczenia zapisujemy w liście
+            if w_obcy not in slownik or czy_zastapic == 't':
+                znaczenia = t[1].split(',')  # znaczenia zapisujemy w liście
                 znaczenia = list(map(oczysc, znaczenia))  # oczyszczamy listę
-                slownik[wobcy] = znaczenia
-                nowy = True
+                slownik[w_obcy] = znaczenia
+                print(f'Dodano: {w_obcy}:{znaczenia}')
+                czy_nowy = True
         else:
-            print("Błędny format!")
+            print('Błędny format!')
 
-    if nowy:
-        zapisz(slownik)
+    if czy_nowy:
+        zapisz()
 
     print(slownik)
 
-    print("=" * 50)
-    print("{0: <15}{1: <40}".format("Wyraz obcy", "Znaczenia"))
-    print("=" * 50)
-    for wobcy in slownik:
-        print("{0: <15}{1: <40}".format(wobcy, ",".join(slownik[wobcy])))
+    print('=' * 50)
+    print('{0: <15}{1: <40}'.format('Wyraz obcy', 'Znaczenia'))
+    print('=' * 50)
+    for w_obcy in slownik:
+        print('{0: <15}{1: <40}'.format(w_obcy, ','.join(slownik[w_obcy])))
     return 0
 
 

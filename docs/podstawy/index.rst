@@ -4,8 +4,11 @@ Podstawy Pythona
 #################
 
 Poznawanie Pythona zrealizujemy poprzez rozwiązywanie prostych zadań,
-które pozwolą zaprezentować elastyczność i łatwość tego języka.
-Sugerujemy używanie powłoki Pythona do testowania poznawanych funkcji i fragmentów kodu.
+które pozwolą zaprezentować możliwości tego języka.
+
+.. tip::
+
+    Poznawane funkcje i fragmenty kodu warto wykonywać w interaktywnej powłoce Pythona.
 
 .. toctree::
     :titlesonly:

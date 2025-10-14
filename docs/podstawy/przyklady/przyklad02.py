@@ -16,6 +16,6 @@ print('Mam', wiek_py, 'lat, ty masz', str(wiek_u) + '.')
 
 # kto jest starszy?
 if wiek_py > wiek_u:
-    print('Jestem starszy od ciebie!')
+    print('Jestem starszy od ciebie.')
 else:
-    print('Jestem młodszy od ciebie lub mamy tyle samo lat!')
+    print('Jestem młodszy od ciebie lub mamy tyle samo lat.')

@@ -3,95 +3,90 @@
 Mały Lotek
 ###########
 
-W *Toto Lotku* trzeba zgadywać liczby. Napiszmy prosty program, w którym
-będziemy mieli podobne zadanie. Użyjemy języka Python.
+.. note::
+
+    Przykład pokazuje użycie instrukcji wejścia i wyjścia, instrukcji iteracyjnej oraz warunkowej,
+    a także generatora liczb pseudolosowych.
 
 .. contents::
     :depth: 1
     :local:
 
+Zadanie
+********
 
-Szablon
-*******
+Napisz program :file:`maly_lotek.py`, który losuje liczbę i daje użytkownikowi trzy szansy na jej odgadnięcie.
 
-Zaczynamy od utworzenia pliku o nazwie :file:`toto.py` w dowolnym katalogu
-za pomocą dowolnego edytora. Zapis ``~$`` poniżej oznacza katalog domowy użytkownika.
-Obowiązkowa zawartość pliku:
+**Dane**:
+
+* ``liczba`` – losowa liczba całkowita z zakresu <1; 10>, którą należy odgadnąć,
+* ``typ`` – liczba całkowita pobierana z klawiatury,
+
+**Wynik** to wypisane komunikaty:
+
+* "Zgadłeś!" – jeżeli użytkownik odgadł wylosowaną liczbę,
+* "Nie zgadłeś. Spróbuj jeszcze raz." – jeżeli użytkownik nie zgadł, ale ma jeszcze szanse,
+* "Miałem na myśli liczbę: liczba" – jeżeli użytkownik nie odgadł wylosowanej liczby.
+
+Losowanie liczby
+****************
+
+Korzystanie z generatora liczb pseudolosowych umożliwia moduł ``random``. Zawiera on m.in. funkcję ``randint(a, b)``,
+która zwraca liczbę z zakresu ``<a; b>``:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>maly_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto03.py
+.. literalinclude:: maly_lotek.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-2
+    :lines: 1-5
 
-Pierwsza linia to ścieżka do interpretera Pythona (zob. :term:`interpreter`),
-druga linia deklaruje sposób kodowania znaków, dzięki czemu możemy używać
-polskich znaków.
+Pobieranie typów
+****************
 
-Wartości i zmienne
-******************
-
-Zaczniemy od wylosowania jednej liczby. Potrzebujemy funkcji
-``randint(a, b)`` z modułu ``random``. Zwróci nam ona liczbę całkowitą
-z zakresu <a; b>. Do naszego pliku dopisujemy:
+Trafienie za pierwszym razem wylosowanej liczby jest bardzo trudne, damy
+graczowi 3 szanse. Uzupełniamy kod:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>maly_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto03.py
+.. literalinclude:: maly_lotek.py
     :linenos:
-    :lineno-start: 4
-    :lines: 4-7
+    :lineno-start: 6
+    :lines: 6-10
 
-Wylosowana liczba zostanie zapamiętana w **zmiennej** ``liczba`` (zob. :term:`zmienna` ).
-Funkcja ``print()`` wydrukuje ją razem z komunikatem na ekranie.
-Program możemy już uruchomić w terminalu (zob. :term:`terminal`),
-wydając w katalogu z plikiem polecenie:
-
-.. code-block:: bash
-
-    ~$ python3 toto.py
-
-Efekt działania naszego skryptu:
-
-.. figure:: img/toto02.png
-
-
-.. tip::
-
-    Skrypty Pythona możemy też uruchamiać z poziomu edytora, o ile oferuje on taką możliwość.
-
-
-Wejście – wyjście
-******************
-
-Liczbę mamy, niech gracz, czyli użytkownik ją zgadnie. Pytanie tylko,
-na ile prób mu pozwolimy. Zacznijmy od jednej! Dopisujemy zatem:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto03.py
-    :linenos:
-    :emphasize-lines: 9
-    :lineno-start: 1
-    :lines: 1-
-
-Liczbę podaną przez użytkownika pobieramy za pomocą funkcji ``input()``
-i zapamiętujemy w zmiennej ``odp``.
+Pobieranie i sprawdzanie kolejnych liczb wymaga powtórzeń, czyli **pętli** (zob. :term:`pętla`).
+Ponieważ wiemy, że użytkownik ma trzy szanse, zastosujemy pętlę ``for i in range(3):``.
+W każdym powtórzeniu wypisujemy numer próby i pobieramy z klawiatury liczbę całkowitą, którą zapisujemy w zmiennej:
+``typ = int(input('Jaką liczbę od 1 do 10 mam na myśli? '))``.
 
 .. attention::
 
-    Zakładamy na razie, że gracz wprowadza poprawne dane, czyli liczby
-    całkowite!
+    Zakładamy na razie, że gracz wprowadza poprawne dane, czyli liczby całkowite!
+
+Sprawdzanie typów
+******************
+
+Do sprawdzenia, czy użytkownik odgadł wylosowaną liczbę, musimy skorzystać ze złożonej instrukcji warunkowej:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>maly_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: maly_lotek.py
+    :linenos:
+    :lineno-start: 11
+    :lines: 11-19
+
+Jeżeli zmienne ``liczba `` i ``typ`` zawierają tę samą wartość, wypisujemy komunikat o sukcesie.
+W przeciwnym  razie jeżeli pobrano trzeci typ i nie był on trafny, wypisujemy wylosowaną liczbę,
+w przeciwnym razie wypisujemy komunikat, żeby spróbować jeszcze raz.
 
 Ćwiczenie 1
 =============
@@ -103,72 +98,6 @@ i zapamiętujemy w zmiennej ``odp``.
 * Dopisz odpowiednie polecenie, które wyświetli liczbę podaną przez gracza.
   Przetestuj jego działanie.
 
-.. figure:: img/toto03.png
-
-Instrukcja warunkowa
-********************
-
-Mamy wylosowaną liczbę i typ gracza, musimy sprawdzić, czy trafił.
-Uzupełniamy nasz program:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto04.py
-    :linenos:
-    :emphasize-lines: 12-15
-    :lineno-start: 1
-    :lines: 1-
-
-Używamy **instrukcji warunkowej** ``if``, która sprawdza prawdziwość warunku
-``liczba == int(odp)`` (zob. :term:`instrukcja warunkowa`).
-Jeżeli wylosowana i podana liczba są sobie równe (``==``),
-wyświetlamy informację o wygranej, w przeciwnym razie (``else:``) zachętę
-do ponownej próby.
-
-.. note::
-
-    Instrukcja ``input()`` wszystkie pobrane dane zwraca jako napisy (typ *string*).
-    Do przekształcenia napisu na liczbę całkowitą (typ *integer*) wykorzystujemy funkcję
-    ``int()``, która w przypadku niepowodzenia zgłasza wyjątek ``ValueError``.
-    Obsługę wyjątków omówimy później.
-
-Przetestuj kilkukrotnie działanie programu.
-
-.. figure:: img/toto04.png
-
-
-Pętla for
-*********
-
-Trafienie za pierwszym razem wylosowanej liczby jest bardzo trudne, damy
-graczowi 3 szanse. Zmieniamy i uzupełniamy kod:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto05.py
-    :linenos:
-    :emphasize-lines: 9
-    :lineno-start: 1
-    :lines: 1-
-
-
-Pobieranie i sprawdzanie kolejnych liczb wymaga powtórzeń, czyli **pętli** (zob. :term:`pętla`).
-Blok powtarzających się operacji umieszczamy więc w instrukcji ``for``.
-Ilość powtórzeń określa wyrażenie ``i in range(3)``. **Zmienna iteracyjna** ``i``
-to "licznik" powtórzeń. Przyjmuje on kolejne wartości wygenerowane przez
-konstruktor ``range(n)``. Funkcja ta tworzy sekwencję liczb całkowitych od *0* do *n-1*.
-
-A więc polecenia naszego skryptu, które umieściliśmy w pętli, wykonają się 3 razy,
-chyba że... użytkownik trafi za 1 lub 2 razem. Wtedy warunek w instrukcji ``if``
-stanie się prawdziwy, wyświetli się informacja o nagrodzie,
-a polecenie ``break`` przerwie działanie pętli.
-
 .. attention::
 
     Uwaga na WCIĘCIA!
@@ -179,12 +108,12 @@ a polecenie ``break`` przerwie działanie pętli.
 
     W naszym kodzie linie 10, 13, 16 wcięte są na 4 spacje, zaś 14-15, 17-18 na 8.
 
+Ćwiczenie
+*********
 
-Ćwiczenia
-==========
+W trybie interaktywnym interpretera Pythona sprawdź:
 
-Sprawdźmy działanie konstruktora ``range()`` w trybie interaktywnym interpretera Pythona.
-W terminalu wpisz polecenia:
+1) działanie funkcji ``randint()``:
 
 .. code-block:: bash
 
@@ -197,30 +126,6 @@ W terminalu wpisz polecenia:
 
 Funkcja ``range()`` może przyjmować opcjonalne parametry określające początek, koniec
 oraz krok generowanej listy wartości.
-
-**Uzupełnij kod** naszego programu, tak aby wyświetlane były komunikaty: "Próba 1", "Próba 2"
-itd. przed podaniem liczby.
-
-
-Instrukcja if...elif
-********************
-
-Po 3 błędnej próbie program ponownie wyświetla komunikat: "Nie zgadłeś..."
-Za pomocą członu ``elif`` możemy wychwycić ten przypadek i właściwie go obsłużyć.
-Kod przyjmie następującą postać:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto07.py
-    :linenos:
-
-Ostateczny wynik działania naszego programu prezentuje się tak:
-
-.. figure:: img/toto07.png
-
 
 Materiały
 **********
