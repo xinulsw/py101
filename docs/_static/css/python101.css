@@ -4,3 +4,4 @@ span.caption-text { font-size: 0.65em; font-weight: bold; }
   background-color: #ffd8cc;
 }
 figure img { border: 1px solid black; }
+.rst-content code, code { font-size: 90%; }

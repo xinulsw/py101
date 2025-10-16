@@ -40,7 +40,7 @@ Pętla ``for``
 Liczba wykonań pętli ``for`` zależy od liczby elementów sekwencji znajdującej się po słowie kluczowym ``in``.
 Kolejne elementy sekwencji dostępne są w zmiennej iteracyjnej, w naszym przykładzie ma ona nazwę``i``.
 
-**Funkcja ``range()``** generuje sekwencje liczb całkowitych, np.:
+**Funkcja** ``range()`` generuje sekwencje liczb całkowitych, np.:
 
 - ``range(n)`` – zwraca kolejne liczby z zakresu ``<0, n-1>``, pętla wykona się ``n`` razy,
 - ``range(a, b)`` – zwraca kolejne liczby z zakresu ``<a, b-1>``, pętla wykona się ``b-a`` razy,

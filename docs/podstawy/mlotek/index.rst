@@ -9,10 +9,6 @@ Mały Lotek
     a także generatora liczb pseudolosowych. Program wymaga umiejętności wyodrębniania bloków
     kodu za pomocą wcięć.
 
-.. contents::
-    :depth: 1
-    :local:
-
 Zadanie
 ********
 
@@ -83,7 +79,7 @@ Do sprawdzenia, czy użytkownik odgadł wylosowaną liczbę, musimy skorzystać 
 .. literalinclude:: maly_lotek.py
     :linenos:
     :lineno-start: 10
-    :lines: 10-18
+    :lines: 10-17
 
 Jeżeli zmienne ``liczba `` i ``typ`` zawierają tę samą wartość, wypisujemy komunikat o sukcesie.
 W przeciwnym razie jeżeli pobrano trzeci typ (``i == 2``) i nie był on trafny, wypisujemy wylosowaną liczbę.
@@ -117,9 +113,6 @@ W przeciwnym razie wypisujemy komunikat, żeby spróbować jeszcze raz.
    Funkcja ``range()`` może przyjmować opcjonalne parametry określające początek, koniec
    oraz krok generowanej listy wartości.
 
-Materiały
-**********
+.. admonition:: Pojęcia
 
-**Źródła:**
-
-* :download:`Mały Lotek <mlotek.zip>`
+    :term:`pętla`, :term:`instrukcja warunkowa`

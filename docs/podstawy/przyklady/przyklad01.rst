@@ -67,10 +67,10 @@ Składnia
 * **Napisy** w kodzie źródłowym, czyli stałe znakowe, ujmujemy w cudzysłowy podwójne lub pojedyncze.
 * Znak ``#`` oznacza 1-liniowy komentarz, tj. objaśnienie kodu, które jest pomijane przez interpreter.
 
-Ćwiczenie 1
-************
+Ćwiczenia
+*********
 
-Zmień program tak, aby wartość zmiennej ``akt_rok`` (aktualny rok) była podawana przez użytkownika na początku programu.
+1) Zmień program tak, aby wartość zmiennej ``akt_rok`` (aktualny rok) była podawana przez użytkownika na początku programu.
 
 .. tip::
 
