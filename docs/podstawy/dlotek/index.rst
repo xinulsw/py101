@@ -3,11 +3,42 @@
 Duży Lotek
 ##########
 
-Zakładamy, że znasz już podstawy podstaw :-) Pythona, czyli scenariusz :ref:`Mały Lotek <maly-lotek>`.
+Przykład :ref:`Mały Lotek <maly-lotek>` pokazuje, jak wylosować jedną liczbę z zakresu ``<1; 10>``
+i dać użytkownikowi trzy szanse jej odgadnięcia. Zasady większości gier wymagają typowania
+wielu liczb z większego zakresu. Napiszemy program, w którym poziom trudności odgadywania liczb będzie
+można dostosować.
 
-Jedna liczba to za mało, wylosujmy ich więcej! Zasady dużego lotka to typowanie
-6 liczb z 49. Ponieważ trafienie jest tu bardzo trudne, napiszemy program
-w taki sposób, aby można było łatwo dostosować poziom jego trudności.
+.. note::
+
+    Przykład pokazuje, jak kontrolować poprawność wprowadzanych danych oraz używać list i zbiorów
+    jako złożonych struktur danych.
+
+Napisz program :file:`duzy_lotek.py`, który losuje ``n`` liczb naturalnych
+z podanego zakresu ``maks``, a następnie pobiera z klawiatury ``n`` typów, sprawdza i wypisuje,
+ile z nich zostało trafionych. Program powinien sprawdzać poprawność podawanych
+danych wejściowych.
+
+**Dane**:
+
+* ``n`` – liczba całkowita pobierana z klawiatury,
+* ``maks`` – liczba całkowita pobierana z klawiatury,
+* ``typ`` – liczba całkowita pobierana z klawiatury z zakresu ``<0; maks>``.
+
+**Wynik** – przykładowe komunikaty:
+
+.. code::
+
+    Podaj ilość typowanych liczb: 4
+    Podaj maksymalną losowaną liczbę: 10
+    Wytypuj 4 z 10 liczb:
+    Podaj liczbę 1: 2
+    Podaj liczbę 2: 5
+    Podaj liczbę 3: 7
+    Podaj liczbę 4: 1
+
+    Trafione liczby: {1}
+    Liczba trafień 1
+    Wylosowane liczby: [1, 6, 8, 3]
 
 **Na początek**
 

@@ -85,15 +85,6 @@ Jeżeli zmienne ``liczba `` i ``typ`` zawierają tę samą wartość, wypisujemy
 W przeciwnym razie jeżeli pobrano trzeci typ (``i == 2``) i nie był on trafny, wypisujemy wylosowaną liczbę.
 W przeciwnym razie wypisujemy komunikat, żeby spróbować jeszcze raz.
 
-.. attention::
-
-    Uwaga na WCIĘCIA!
-
-    Podporządkowane bloki kodu występujące po znaku dwukropka wyodrębniamy za pomocą wcięć (zob. :term:`formatowanie kodu`).
-    Standardem są 4 spacje i ich wielokrotności. Przyjęty rozmiar wcięć obowiązuje w całym pliku.
-    Błędy wcięć sygnalizowane są komunikatem ``IndentationError``. W naszym przykładzie występują wcięcia
-    4-spacje i 8 spacji.
-
 Ćwiczenie
 *********
 

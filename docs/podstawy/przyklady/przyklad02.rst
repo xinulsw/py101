@@ -41,10 +41,16 @@ jeżeli wyrażenie jest fałszywe (ma wartość ``False``).
 Składnia
 ********
 
-* Części instrukcji warunkowej kończymy dwukropkiem, które zapowiadają bloki kodu.
+Bloki kodu i wcięcia
+*********************
+
+* Części instrukcji warunkowej kończymy dwukropkiem.
+* Dwukropek zapowiada podporządkowany blok kodu.
 * Blok kodu może zawierać jedną lub wiele instrukcji.
-* Bloki kodu wyodrębniane są za pomocą wcięć.
-* Wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
+* Bloki kodu wyodrębniane są za pomocą wcięć (zob. :term:`formatowanie kodu`).
+* Standardowe wcięcie pierwszego poziomu to 4 spacje, a każdy następny poziom to wielokrotność (8, 16, itd. spacji).
+* Przyjęty rozmiar wcięć obowiązuje w całym pliku.
+* Błędy wcięć sygnalizowane są komunikatem ``IndentationError``
 
 Ćwiczenia
 *********
