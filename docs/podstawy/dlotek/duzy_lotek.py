@@ -1,40 +1,45 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import random
 
+# dane wejściowe
+error = False
 try:
-    n = int(input('Podaj ilość typowanych liczb: '))
+    n = int(input('Podaj liczbę losowanych liczb: '))
     maks = int(input('Podaj maksymalną losowaną liczbę: '))
     if n > maks:
-        print('Błędne dane!')
-        exit()
+        error = True
 except ValueError:
+    error = True
+
+if error:
     print('Błędne dane!')
     exit()
 
+# losowanie liczb
 liczby = []
-i = 0
-while i < n:
+while len(liczby) < n:
     liczba = random.randint(1, maks)
     if liczby.count(liczba) == 0:
         liczby.append(liczba)
-        i = i + 1
 
+# pobieranie i sprawdzanie typów
 print(f'Wytypuj {n} z {maks} liczb: ')
 typy = set()
-j = 0
-while j < n:
+error = False
+while len(typy) < n:
     try:
-        typ = int(input(f'Podaj liczbę {j+1}: '))
+        typ = int(input('Podaj typ: '))
+        if typ < 0 or typ > maks or typ in typy:
+            error = True
     except ValueError:
+        error = True
+
+    if error:
         print('Błędne dane!')
         continue
 
-    if 0 < typ <= maks and typ not in typy:
-        typy.add(typ)
-        j = j + 1
+    typy.add(typ)
 
+# dane wyjściowe
 print()
 trafione = set(liczby) & typy
 if trafione:

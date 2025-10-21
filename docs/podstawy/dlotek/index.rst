@@ -5,13 +5,17 @@ Duży Lotek
 
 Przykład :ref:`Mały Lotek <maly-lotek>` pokazuje, jak wylosować jedną liczbę z zakresu ``<1; 10>``
 i dać użytkownikowi trzy szanse jej odgadnięcia. Zasady większości gier wymagają typowania
-wielu liczb z większego zakresu. Napiszemy program, w którym poziom trudności odgadywania liczb będzie
+wielu liczb z większego zakresu. Napiszemy więc program, w którym poziom trudności odgadywania liczb będzie
 można dostosować.
 
 .. note::
 
-    Przykład pokazuje, jak kontrolować poprawność wprowadzanych danych oraz używać list i zbiorów
-    jako złożonych struktur danych.
+    Przykład pokazuje jak używać pętli warunkowej do pobierania danych z klawiatury,
+    jak sprawdzać poprawność wprowadzanych danych
+    oraz jak używać list i zbiorów jako złożonych struktur danych.
+
+Zadanie
+********
 
 Napisz program :file:`duzy_lotek.py`, który losuje ``n`` liczb naturalnych
 z podanego zakresu ``maks``, a następnie pobiera z klawiatury ``n`` typów, sprawdza i wypisuje,
@@ -28,7 +32,7 @@ danych wejściowych.
 
 .. code::
 
-    Podaj ilość typowanych liczb: 4
+    Podaj liczbę losowanych liczb: 4
     Podaj maksymalną losowaną liczbę: 10
     Wytypuj 4 z 10 liczb:
     Podaj liczbę 1: 2
@@ -40,183 +44,134 @@ danych wejściowych.
     Liczba trafień 1
     Wylosowane liczby: [1, 6, 8, 3]
 
-**Na początek**
-
-1. Utwórz nowy plik :file:`toto2.py` i uzupełnij go wymaganymi liniami
-   wskazującymi interpreter pythona i użyte kodowanie.
-
-2. Wykorzystując funkcje ``input()`` oraz ``int()`` pobierz od użytkownika ilość liczb,
-   które chce odgadnąć i zapisz wartość w zmiennej ``ileliczb``.
-
-3. Podobnie jak wyżej pobierz od użytkownika i zapisz maksymalną losowaną liczbę w zmiennej ``maksliczba``.
-
-4. Na koniec wyświetl w konsoli komunikat "Wytypuj *ileliczb* z *maksliczba* liczb: ".
-
-.. tip::
-
-    Do wyświetlenia komunikatu można użyć konstrukcji: ``print("Wytypuj", ileliczb, "z", maksliczba, " liczb: ")``.
-    Jednak wygodniej korzystać z operatora ``%``. Wtedy instrukcja przyjmie postać:
-    ``print("Wytypuj %s z %s liczb: " % (ileliczb, maksliczba))``. Symbole zastępcze ``%s``
-    zostaną zastąpione kolejnymi wartościami z listy podanej po operatorze ``%``.
-    Najczęściej używamy symboli: ``%s`` – wartość zostaje zamieniona na napis przez funkcję
-    ``str()``; ``%d`` – wartość ma być dziesiętną liczbą całkowitą; ``%f`` – oczekujemy liczby
-    zmiennoprzecinkowej.
-
-
-Listy
-******
-
-Ćwiczenie
-==========
-
-Jedną wylosowaną liczbę zapamiętywaliśmy w jednej zmiennej, ale przechowywanie
-wielu wartości w osobnych zmiennych nie jest dobrym pomysłem. Najwygodniej
-byłoby mieć jedną zmienną, w której można zapisać wiele wartości. W Pythonie
-takim złożonym typem danych jest :term:`lista`.
-
-Przetestuj w interpreterze następujące polecenia:
-
-.. code-block:: bash
-
-    ~$ python3
-    >>> liczby = []
-    >>> liczby
-    >>> liczby.append(1)
-    >>> liczby.append(2)
-    >>> liczby.append(4)
-    >>> liczby.append(4)
-    >>> liczby
-    >>> liczby.count(1)
-    >>> liczby.count(4)
-    >>> liczby.count(0)
-
-.. tip::
-
-    Klawisze kursora (góra, dół) służą w terminalu do przywoływania poprzednich
-    poleceń. Każde przywołane polecenie możesz przed zatwierdzeniem
-    zmienić używając klawiszy lewo, prawo, del i backspace.
-
-
-Jak widać po zadeklarowaniu pustej listy (``liczby = []``), metoda ``.append()``
-pozwala dodawać do niej wartości, a metoda ``.count()`` podaje, ile razy
-dana wartość wystąpiła w liście. To się nam przyda ;-)
-
-Wróćmy do programu i pliku :file:`toto2.py`, który powinien w tym momencie wyglądać tak:
+Poprawność danych
+******************
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto21.py
+.. literalinclude:: duzy_lotek.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-
+    :lines: 1-16
 
-Kodujemy dalej. Użyj pętli:
+Podczas pobierania danych z klawiatury lub pliku możemy otrzymać dane niewłaściwego typu, np.
+ciąg znaków kiedy oczekujemy liczby. Do obsługi tego typu błędów możemy użyć przechwytywania
+wyjątków (zob. :term:`wyjątki`). Służy do tego instrukcja ``try: ... except wyjątek: ...``,
+czyli: spróbuj wykonać kod w bloku ``try``, a w razie błędów przechwyć wyjątek – ``except wyjątek``
+i wykonaj podporządkowane instrukcje.
 
-* dodaj instrukcję ``for``, aby wylosować ``ileliczb`` z zakresu ograniczonego przez ``maksliczba``;
-* kolejne losowane wartości drukuj w terminalu;
-* sprawdź działanie kodu.
+W naszym programie jeżeli użytkownik poda łańcuch znaków, którego nie da się zamienić na liczbę
+całkowitą, instrukcja ``int()`` wypisze komunikat ``invalid literal for int() with base 10``
+i zgłosi wyjątek ``ValueError``. Wyjątek przechwytujemy i obsługujemy,
+tj. ustawiamy zmienną pomocniczą ``error`` na wartość ``True`` (prawda).
 
-Trzeba zapamiętać losowane wartości:
+Jeżeli typy danych są poprawne możemy sprawdzać, czy otrzymane wartości mieszczą się w odpowiednim
+zakresie albo zawierają oczekiwane wartości. Korzystamy z instrukcji warunkowej, która w przypadku błędu
+również zmienia wartość zmiennej ``error``.
 
-* przed pętlą zadeklaruj pustą listę;
-* wewnątrz pętli umieść polecenie dodające wylosowane liczby do listy;
-* na końcu programu (uwaga na wcięcia) wydrukuj zawartość listy;
-* kilkukrotnie przetestuj program.
+Na końcu sprawdzamy, czy zmienna ``error`` ma wartość ``True``, co oznacza błąd typu danych lub zakresu wartości.
+Wypisujemy wtedy odpowiedni komunikat i kończymy program instrukcją ``exit()``.
 
+Losowanie liczb
+***************
 
-Pętla while
-***********
-
-Czy lista zawsze zawiera akceptowalne wartości?
-
-.. figure:: img/toto22_0.png
-
-
-Pętla ``for`` nie nadaje się do losowania unikalnych liczb, ponieważ wykonuje się określoną ilość razy,
-a nie możemy zagwarantować, że losowane liczby będą za każdym razem inne.
-Do wylosowania podanej ilości liczb wykorzystamy więc pętlę ``while wyrażenie_logiczne:``,
-która powtarza kod dopóki podane wyrażenie jest prawdziwe.
-Uzupełniamy kod w pliku :file:`toto2.py`:
+W programie "Mały lotek" losowaliśmy jedną liczbę, którą zapamiętywaliśmy w jednej zmiennej.
+Tym razem mamy wylosować wiele liczb, które nie powinny się powtarzać. Uzupełniamy więc program:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto22.py
+.. literalinclude:: duzy_lotek.py
     :linenos:
-    :emphasize-lines: 10-19
-    :lineno-start: 1
-    :lines: 1-
+    :lineno-start: 17
+    :lines: 17-23
 
-Losowane liczby zapamiętujemy w **liście** ``liczby``. Zmienna ``i`` to
-licznik unikalnych wylosowanych liczb, korzystamy z niej w wyrażeniu
-warunkowym ``i < ileliczb``, które kontroluje powtórzenia pętli. W instrukcji
-warunkowej wykorzystujemy funkcję zliczającą wystąpienia wylosowanej wartości
-w liście (``liczby.count(liczba)``), aby dodawać (``liczby.append(liczba)``)
-do listy tylko liczby wcześniej niedodane.
+Do zapamiętania losowanych liczb używamy listy o nazwie ``liczby``. Losowanie odbywa się
+w pętli warunkowej dopóki liczba elementów listy jest mniejsza od liczby liczb do wylosowania:
+``while len(liczby) < n:``. Wewnątrz pętli wylosowana liczba dodawana jest do listy tylko
+wtedy, jeżeli w liście nie występuje. Liczbę wystąpień elementu w liście zwraca metoda ``.count()``.
+
+.. note::
+
+    * Pętla ``for`` nie nadaje się do losowania unikalnych liczb, ponieważ wykonuje się określoną ilość razy,
+      a nie możemy zagwarantować, że losowane liczby będą za każdym razem inne.
+    * Ponieważ lista jest sekwencją, warunek ``liczby.count(liczba) == 0`` można zastąpić
+      wyrażeniem ``liczba not in liczby``, w którym korzystamy z zaprzeczonego operatora zawierania
+      ``not in``.
+
+Pobieranie typów
+****************
+
+Do pobierania typów z klawiatury użyjemy takiej samej pętli, jak podczas losowania,
+tzn. wykonuje się ona dopóty użytkownik nie poda tylu poprawnych typów, ile liczb zostało wylosowanych.
+Uzupełniamy program:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: duzy_lotek.py
+    :linenos:
+    :lineno-start: 24
+    :lines: 24-41
+
+W pętli ``while`` kontrolujemy typ pobieranych danych i sprawdzamy:
+
+* ``typ < 0 or typ > maks`` – alternatywa warunków badających czy podany typ jest mniejszy od zera
+  lub większy od wartości maksymalnej,
+* ``typ in typy`` – operator zawierania ``in`` zwróci prawdę, jeżeli badany typ
+  znajduje się w zbiorze ``typy``.
+
+Jeżeli zmienna ``error`` ma wartość ``True``, oznacza to błąd typu danych, zakresu lub powtórzenie typu.
+Wypisujemy wtedy odpowiedni komunikat i wznawiamy działanie pętli za pomocą instrukcji ``continue``.
+W przeciwnym razie dodajemy podaną liczbę (typ) do zbioru.
 
 Zbiory
 ******
 
-Przy pobieraniu typów użytkownika użyjemy podobnie jak przed chwilą pętli
-``while``, ale typy zapisywać będziemy w zbiorze, który z założenia nie
-może zawierać duplikatów (zob. :term:`zbiór`).
+Zbiory (zob. :term:`zbiór`) to złożone struktury danych, które tym różnią się od list,
+że zawarte w nich elementy nie mogą się powtarzać i są nieuporządkowane, tzn. nie są indeksowane.
 
-Ćwiczenie
-=========
+**Operacje na zbiorach**
 
-W interpreterze Pythona przetestuj następujące polecenia:
+* ``typy = []`` lub ``typy = set()`` – utworzenie pustego zbioru,
+* ``typy.add(element)`` – dodanie elementu do zbioru,
+* ``trafione = set(liczby)`` – utworzenie zbioru z listy,
+* ``|``, ``-``, ``&`` – operatory sumy, różnicy i iloczynu (części wspólnej) zabiorów,
+* ``len(trafione)`` – zwraca liczbę elementów zbioru.
 
-.. code-block:: bash
+Liczba trafień
+**************
 
-    ~$ python3
-    >>> typy = set()
-    >>> typy.add(1)
-    >>> typy.add(2)
-    >>> typy
-    >>> typy.add(2)
-    >>> typy
-    >>> typy.add(0)
-    >>> typy.add(9)
-    >>> typy
-
-Pierwsza instrukcja deklaruje pusty zbiór (``typy = set()``). Metoda ``.add()``
-dodaje do zbioru elementy, ale nie da się dodać dwóch takich samych elementów.
-Drugą cechą zbiorów jest to, że ich elementy nie są w żaden sposób uporządkowane.
-
-Wykorzystajmy zbiór, aby pobrać od użytkownika typy liczb. W pliku
-:file:`toto2.py` dopisujemy:
+Do programu dopisujemy kod ustalający liczbę trafień i wypisujący dane wyjściowe:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto23.py
+.. literalinclude:: duzy_lotek.py
     :linenos:
-    :lineno-start: 20
-    :lines: 20-27
+    :lineno-start: 42
+    :lines: 42-51
 
-Zauważ, że operator ``in`` pozwala sprawdzić, czy podana liczba
-jest (``if typ in typy``) lub nie (``if typ not in typy:``) w zbiorze.
-Przetestuj program.
+Ustalenie liczby trafień w większości języków programowania wymagałoby przeszukiwania listy wylosowanych
+liczb dla każdego podanego typu. W Pythonie możemy użyć arytmetyki zbiorów, tj. wyznaczamy
+część wspólną: ``trafione = set(liczby) & typy``.
 
+Jeżeli jakakolwiek liczba została odgadnięta, zbiór ``trafione`` jest niepusty i wyrażenie
+``if trafione`` jest prawdziwe. Wypisujemy wtedy zbiór oraz liczbę jego elementów.
 
-Operacje na zbiorach
-********************
+Ćwiczenia
+**********
 
-Określenie ilości trafień w większości języków programowania wymagałoby
-przeszukiwania listy wylosowanych liczb dla każdego podanego typu. W Pythonie
-możemy użyć arytmetyki zbiorów: wyznaczymy część wspólną.
-
-Ćwiczenie
-==========
-
-W interpreterze przetestuj poniższe instrukcje:
+1) W interpreterze przetestuj poniższe instrukcje:
 
 .. code-block:: bash
 
@@ -229,124 +184,20 @@ W interpreterze przetestuj poniższe instrukcje:
     >>> trafione
     >>> len(trafione)
 
-Polecenie ``set(liczby)`` przekształca listę na zbiór. Kolejne operatory
-zwracają sumę (``|``), różnicę (``-``) i iloczyn (``&``), czyli część
-wspólną zbiorów. Ta ostania operacja bardzo dobrze nadaje się do sprawdzenia,
-ile liczb trafił użytkownik. Funkcja ``len()`` zwraca ilość elementów
-każdej sekwencji, czyli np. napisu, listy czy zbioru.
+2) Zmień program tak, aby użytkownik mógł 3 razy podawać typy, tj. odgadywać wylosowane liczby.
 
-Do pliku :file:`toto2.py` dopisujemy:
+   .. tip::
 
-.. raw:: html
+       Wykorzystaj pętlę ``for``.
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto24.py
-    :linenos:
-    :lineno-start: 31
-    :lines: 31-36
-
-Instrukcja ``if trafione:`` sprawdza, czy część wspólna zawiera jakiekolwiek elementy.
-Jeśli tak, drukujemy liczbę trafień i trafione liczby.
-
-Przetestuj program dla 5 typów z 10 liczb. Działa? Jeśli masz wątpliwości,
-wpisz wylosowane i wytypowane liczby w interpreterze, np.:
-
-.. code-block:: bash
-
-    >>> liczby = [1,4,2,6,7]
-    >>> typy = set([1,2,3,4,5])
-    >>> trafione = set(liczby) & typy
-    >>> if trafione:
-    ...   print(len(trafione))
-    ...
-    >>> print(trafione)
-
-Wnioski? Logika kodu jest poprawna, czego dowodzi test w terminalu, ale
-program nie działa. Dlaczego?
-
-.. tip::
-
-    Przypomnij sobie, jakiego typu wartości zwraca funkcja ``input()``
-    i użyj we właściwym miejscu funkcji ``int()``.
-
-Wynik działania programu powinien wyglądać następująco:
-
-.. figure:: img/toto25.png
-
-
-Do 3 razy sztuka
-================
-
-Zastosuj pętlę ``for`` tak, aby użytkownik mógł 3 razy typować liczby z tej
-samej serii liczb wylosowanych. Wynik działania programu powinien przypominać
-poniższy zrzut:
-
-.. figure:: img/toto26.png
-
-
-Błędy i wyjątki
-***************
-
-Kod naszego programu do tej pory przedstawia się mniej więcej tak:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto26.py
-    :linenos:
-
-Uruchom powyższy program i podaj ilość losowanych liczb większą od maksymalnej losowanej liczby.
-Program wpada w nieskończoną pętlę! Po chwili zastanowienia dojdziemy
-do wniosku, że nie da się wylosować np. 6 unikalnych liczb z zakresu 1-5.
-
-Ćwiczenie
-==========
-
-* Użyj w kodzie instrukcji warunkowej, która w przypadku gdy użytkownik chciałby wylosować więcej liczb
-  niż podany zakres maksymalny, wyświetli komunikat "Błędne dane!" i przerwie wykonywanie programu
-  za pomocą funkcji ``exit()``.
-
-
-Testujemy dalej. Uruchom program i zamiast liczby podaj tekst.
-Co się dzieje? Uruchom jeszcze raz, ale tym razem jako typy podaj
-wartości spoza zakresu <0;maksliczba>. Da się to zrobić?
-
-Jak pewnie zauważyłeś, w pierwszym wypadku zgłoszony zostaje wyjątek ``ValuError``
-(zob.: :term:`wyjątki`) i komunikat ``invalid literal for int() with base 10``,
-który informuje, że funkcja ``int()`` nie jest w stanie przekształcić podanego
-ciągu znaków na liczbę całkowitą. W drugim wypadku podanie nielogicznych
-typów jest możliwe.
-
-Uzupełnijmy program tak, aby był nieco odporniejszy na niepoprawne dane:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto28.py
-    :linenos:
-    :lineno-start: 1
-    :emphasize-lines: 6, 12-14, 29, 31-33, 35
-
-Do przechwytywania wyjątków używamy konstrukcji ``try: ... except wyjątek: ...``, czyli:
-spróbuj wykonać kod w bloku ``try``, a w razie błędów przechwyć ``wyjątek`` i wykonaj
-podporządkowane instrukcje. W powyższych przypadkach przechwytujemy wyjątek ``ValueError``,
-wyświetlamy odpowiedni komunikat i kończymy działanie programu (``exit()``) lub
-wymuszamy ponowne wykonanie pętli (``continue``) zamiast ją przerywać (``break``).
+3) Przekształć powtarzający się kod sprawdzający poprawność typu danych na funkcję zwracającą
+   wartość ``True`` lub ``False``. Użyj w funkcji w programie odpowiednio go modyfikując.
 
 Poza tym sprawdzamy, czy użytkownik podaje sensowne typy. Warunek ``if 0 < typ <= maksliczba:``
 to skrócony zapis wyrażenia logicznego z użyciem operatora koniunkcji:
 ``typ > 0 and typ <= maksliczba``. Sprawdzamy w ten sposób, czy wartość zmiennej
 ``typ`` jest większa od zera i mniejsza lub równa wartości zmiennej ``maksliczba``.
 
-Materiały
-**********
+.. admonition:: Pojęcia
 
-**Źródła:**
-
-* :download:`Duży Lotek <dlotek.zip>`
+    :term:`pętla`, :term:`lista`, :term:`zbiór`

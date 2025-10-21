@@ -101,8 +101,12 @@ W scenariuszach często wykorzystujemy terminal, inaczej wiersz poleceń.
 
 .. note::
 
-  Katalogi i pliki można tworzyć nie tylko w terminalu, ale również za pomocą menedżera plików,
-  edytora lub środowiska programistycznego.
+    Klawisze strzałek GÓRA, DÓŁ służą w terminalu do przywoływania poprzednich
+    poleceń. Każde przywołane polecenie możesz przed zatwierdzeniem
+    zmienić używając klawiszy strzałek LEWO, PRAWO oraz DEL i BACKSPACE.
+
+    Katalogi i pliki można tworzyć nie tylko w terminalu, ale również za pomocą menedżera plików,
+    edytora lub środowiska programistycznego.
 
 Linux
 --------

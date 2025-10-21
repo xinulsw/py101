@@ -187,8 +187,11 @@ Słownik Pythona
         i wyniki działania programu.
 
     wyjątki
-        to komunikaty zgłaszane przez interpreter Pythona, pozwalające ustalić
-        przyczyny błędnego działania kodu.
+        to sygnały zgłaszane przez interpreter Pythona, pozwalające ustalić
+        przyczyny błędnego działania kodu, rozróżniamy wyjątki wbudowane
+        (`Built-in Exceptions <https://docs.python.org/pl/3.14/library/exceptions.html>`_)
+        i tworzone przez użytkownika
+        (`Wyjątki zdefiniowane przez użytkownika <https://docs.python.org/pl/3.14/tutorial/errors.html#tut-userexceptions>`_).
 
     wyrażenia lambda
         zwane czasem *funkcjami lambda*, mechanizm pozwalający zwięźle
