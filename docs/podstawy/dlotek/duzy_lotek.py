@@ -21,7 +21,7 @@ while len(liczby) < n:
     if liczby.count(liczba) == 0:
         liczby.append(liczba)
 
-# pobieranie i sprawdzanie typów
+# pobieranie typów
 print(f'Wytypuj {n} z {maks} liczb: ')
 typy = set()
 error = False
@@ -39,7 +39,7 @@ while len(typy) < n:
 
     typy.add(typ)
 
-# dane wyjściowe
+# sprawdzanie typów i dane wyjściowe
 print()
 trafione = set(liczby) & typy
 if trafione:
