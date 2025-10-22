@@ -10,7 +10,7 @@ można dostosować.
 
 .. note::
 
-    Przykład pokazuje jak używać pętli warunkowej do pobierania danych z klawiatury,
+    Przykład "Duży Lotek" pokazuje, jak używać pętli warunkowej do pobierania danych z klawiatury,
     jak sprawdzać poprawność wprowadzanych danych
     oraz jak używać list i zbiorów jako złożonych struktur danych.
 

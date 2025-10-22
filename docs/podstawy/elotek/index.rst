@@ -1,33 +1,41 @@
-.. _toto-lotek:
+.. _extra-lotek:
 
 Extra Lotek
 ###########
 
-Kod Toto Lotka wypracowany w dwóch poprzednich częściach wprowadził podstawy programowania
-w Pythonie: podstawowe typy danych (napisy, liczby, listy, zbiory), instrukcje sterujące (warunkową
-i pętlę) oraz operacje wejścia-wyjścia w konsoli. Uzyskany skrypt wygląda następująco:
+Kod "Dużego Lotka" wypracowany w poprzednim przykładzie zilustrował m.in., jak używać pętli warunkowej do pobierania
+danych z klawiatury, jak sprawdzać poprawność wprowadzanych danych oraz jak używać list i zbiorów
+jako złożonych struktur danych. Uzyskany skrypt wygląda następująco:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto29.py
+.. literalinclude:: duzy_lotek.py
+    :linenos:
 
+.. note::
+
+    Przykład "Extra Lotek" pokazuje jak tworzyć funkcje, moduły i jak ich używać,
+    jak zapisywać i odczytywać dane z plików tekstowych w różnych formatach.
 
 Funkcje i moduły
 *****************
 
 Tam, gdzie w programie występują powtarzające się operacje lub zestaw poleceń
 realizujący wyodrębnione zadanie, wskazane jest używanie funkcji.
-Są to nazwane bloki kodu, które można grupować w ramach modułów (zob. :term:`funkcja`, :term:`moduł`).
-Funkcje zawarte w modułach można importować do różnych programów.
-Do tej pory korzystaliśmy np. z funkcji ``randit()`` zawartej w module ``random``.
+Są to nazwane bloki kodu, które można umieszczać w modułach (zob. :term:`funkcja`, :term:`moduł`).
+Funkcje zapisane w modułach można importować do różnych programów i je wykorzystywać,
+np. z funkcji ``randit()`` z modułu ``random`` korzystaliśmy w programach "Mały Lotek"
+i "Duży Lotek". Wyodrębnienie funkcji ułatwia sprawdzanie i poprawianie kodu.
 
-Wyodrębnienie funkcji ułatwia sprawdzanie i poprawianie kodu, ponieważ
-wymusza podział programu na logicznie uporządkowane kroki. Jeżeli
-program korzysta z niewielu funkcji, można umieszczać je na początku pliku
-programu głównego.
+
+.. mote::
+
+    Jeżeli program korzysta z niewielu i/lub unikalnych funkcji, można umieszczać je w jednym pliku na początku.
+
+
 
 Tworzymy więc nowy plik :file:`totomodul.py` i umieszczamy w nim następujący kod:
 
