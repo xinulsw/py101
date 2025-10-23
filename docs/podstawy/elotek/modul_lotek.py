@@ -21,7 +21,7 @@ def pobierz_ustawienia(nick):
         try:
             n = int(input('Podaj liczbę losowanych liczb: '))
             maks = int(input('Podaj maksymalną losowaną liczbę: '))
-            ile_losowan = int(input('Podaj liczbę typowań: '))
+            ile_typowan = int(input('Podaj liczbę typowań: '))
             if n > maks:
                 error = True
         except ValueError:
@@ -33,7 +33,7 @@ def pobierz_ustawienia(nick):
         else:
             break  # dane poprawne
 
-    dane = [nick, str(n), str(maks), str(ile_losowan)]
+    dane = [nick, str(n), str(maks), str(ile_typowan)]
     return dane
 
 

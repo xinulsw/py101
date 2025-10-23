@@ -3,8 +3,9 @@
 Extra Lotek
 ###########
 
-Kod "Dużego Lotka" wypracowany w poprzednim przykładzie zilustrował m.in., jak używać pętli warunkowej do pobierania
-danych z klawiatury, jak sprawdzać poprawność wprowadzanych danych oraz jak używać list i zbiorów
+Kod "Dużego Lotka" wypracowany w poprzednim przykładzie zilustrował m.in.,
+jak używać pętli warunkowej do pobierania danych z klawiatury,
+jak sprawdzać poprawność wprowadzanych danych oraz jak używać list i zbiorów
 jako złożonych struktur danych. Uzyskany skrypt wygląda następująco:
 
 .. raw:: html
@@ -17,41 +18,102 @@ jako złożonych struktur danych. Uzyskany skrypt wygląda następująco:
 
 .. note::
 
-    Przykład "Extra Lotek" pokazuje jak tworzyć funkcje, moduły i jak ich używać,
+    Przykład "Extra Lotek" pokazuje jak używać funkcji i modułów oraz
     jak zapisywać i odczytywać dane z plików tekstowych w różnych formatach.
+
+Zadanie
+*******
+
+Napisz program :file:`extra_lotek.py`, który losuje ``n`` liczb naturalnych
+z podanego zakresu ``maks``, a następnie pobiera z klawiatury ``n`` typów, sprawdza i wypisuje,
+ile z nich zostało trafionych. Pobieranie typów, sprawdzanie i wypisywanie wyników
+powtarza się tyle razy, ile poda użytkownik. Dodatkowo program powinien:
+
+* sprawdzać poprawność podawanych danych wejściowych,
+* zapisywać w pliku i odczytywać dane wejściowe: nick użytkownika, liczbę losowanych liczb,
+  wartość maksymalną oraz liczbę typowań,
+* pozwalać na zmianę danych wejściowych.
+
+**Dane**:
+
+* ``nick`` – nick użytkownika, ciąg znaków pobierany z klawiatury,
+* ``n`` – liczba całkowita pobierana z klawiatury,
+* ``maks`` – liczba całkowita pobierana z klawiatury,
+* ``ile_typowan`` – liczba całkowita pobierana z klawiatury,
+* ``typ`` – liczba całkowita pobierana z klawiatury z zakresu ``<0; maks>``.
+
+**Wynik**
+
+Komunikaty podczas pierwszego uruchomienia:
+
+.. code::
+
+    Podaj nick: adam
+    Podaj liczbę losowanych liczb: 3
+    Podaj maksymalną losowaną liczbę: 10
+    Podaj liczbę typowań: 1
+    Wytypuj 3 z 10 liczb:
+    Podaj typ: 1
+    Podaj typ: 3
+    Podaj typ: 5
+
+    Wylosowane liczby: [10, 3, 4]
+    Trafione liczby: {3}
+    Liczba trafień 1
+
+Komunikaty po kolejnym uruchomieniu przez tego samego użytkownika:
+
+.. code::
+
+    Podaj nick: adam
+    Ustawienia:
+    Liczb: 3
+    Maks: 10
+    Typowań: 1
+    Zmieniasz (t/n)? n
+    Wytypuj 3 z 10 liczb:
+    ...
 
 Funkcje i moduły
 *****************
 
 Tam, gdzie w programie występują powtarzające się operacje lub zestaw poleceń
 realizujący wyodrębnione zadanie, wskazane jest używanie funkcji.
-Są to nazwane bloki kodu, które można umieszczać w modułach (zob. :term:`funkcja`, :term:`moduł`).
-Funkcje zapisane w modułach można importować do różnych programów i je wykorzystywać,
-np. z funkcji ``randit()`` z modułu ``random`` korzystaliśmy w programach "Mały Lotek"
-i "Duży Lotek". Wyodrębnienie funkcji ułatwia sprawdzanie i poprawianie kodu.
+Wyodrębnienie funkcji poprawia czytelność działania programu, ułatwia sprawdzanie i poprawianie kodu.
 
+Często używane funkcje można umieszczać w osobnych modułach (zob. , :term:`moduł`), z których
+importujemy je do różnych programów za pomocą instrukcji ``import`` lub ``from ... import``.
 
 .. mote::
 
-    Jeżeli program korzysta z niewielu i/lub unikalnych funkcji, można umieszczać je w jednym pliku na początku.
+    Jeżeli program korzysta z niewielu i/lub unikalnych funkcji,
+    można umieszczać je w jednym pliku na początku.
 
+**Funkcja główna**
 
+Jeżeli cały kod programu umieszczamy w funkcjach, to jedną z nich trzeba wywołać na początku, aby program zaczął
+działać. Taka funkcja zwyczajowo nazywana jest ``main()`` i zazwyczaj zawiera logikę działania programu.
 
-Tworzymy więc nowy plik :file:`totomodul.py` i umieszczamy w nim następujący kod:
+W nowym pliku :file:`extra_lotek.py` umieszczamy początkowy kod:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: totomodul30.py
-    :linenos:
-    :emphasize-lines: 7, 10, 18, 24, 33, 36, 51
 
+.. code::
 
-Funkcja w Pythonie składa się ze słowa kluczowego ``def``, nazwy, obowiązkowych nawiasów
-okrągłych i opcjonalnych parametrów. Na końcu umieszczamy dwukropek.
-Funkcje zazwyczaj zwracają jakieś dane za pomocą instrukcji ``return``.
+    def main(args):
+        nick = input('Podaj nick: ')
+
+    if __name__ == '__main__':
+        import sys
+        sys.exit(main(sys.argv))
+
+Funkcja w Pythonie to wyodrębniony i nazwany blok kodu.
+Definicja funkcji zawiera: słowo kluczowe ``def``, nazwę funkcji,
+obowiązkowe nawiasy okrągłe z opcjonalnymi parametrami oraz dwukropek.
 
 Zmienne lokalne w funkcjach są niezależne od zmiennych w programie
 głównym, ponieważ definiowane są w różnych zasięgach, a więc w różnych przestrzeniach nazw.
@@ -323,3 +385,5 @@ Materiały
 **Źródła:**
 
 * :download:`Extra Lotek <elotek.zip>`
+
+:term:`funkcja`

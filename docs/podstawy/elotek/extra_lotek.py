@@ -6,6 +6,7 @@ from modul_lotek import losuj_liczby, pobierz_typy
 def main(args):
     nick = input('Podaj nick: ')
     dane = wczytaj_ustawienia(nick)
+
     if dane:
         print(f'Ustawienia:\nLiczb: {dane[1]}\nMaks: {dane[2]}\nTypowań: {dane[3]}')
 
@@ -13,11 +14,11 @@ def main(args):
         dane = pobierz_ustawienia(nick)
         zapisz_ustawienia(nick, dane)
 
-    mick, n, maks, ile_losowan = dane[0:1] + [int(x) for x in dane[1:4]]
+    mick, n, maks, ile_typowan = dane[0:1] + [int(x) for x in dane[1:4]]
 
     liczby = losuj_liczby(n, maks)
 
-    for i in range(ile_losowan):
+    for i in range(ile_typowan):
         typy = pobierz_typy(n, maks)
         if wypisz_wyniki(liczby, typy) == n:
             break
