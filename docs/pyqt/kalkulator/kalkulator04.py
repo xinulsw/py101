@@ -5,11 +5,11 @@ from PyQt6.QtWidgets import QLineEdit, QPushButton, QHBoxLayout
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import Qt
 
-
 class Kalkulator(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
         self.interfejs()
 
     def interfejs(self):
@@ -57,6 +57,8 @@ class Kalkulator(QWidget):
         # przypisanie utworzonego układu do okna
         self.setLayout(uklad_t)
 
+        koniecBtn.clicked.connect(self.koniec)
+
         self.setGeometry(20, 20, 300, 100)
         self.setWindowIcon(QIcon('kalkulator.png'))
         self.setWindowTitle("Prosty kalkulator")
@@ -66,21 +68,17 @@ class Kalkulator(QWidget):
         self.close()
 
     def closeEvent(self, event):
-        odp = QMessageBox.question(
-            self, 'Komunikat',
-            "Czy na pewno koniec?",
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-            QMessageBox.StandardButton.No)
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle('Komunikat')
+        msg_box.setText('Czy na pewno koniec?')
+        msg_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+        odp = msg_box.exec()
 
-        if odp == QMessageBox.StandardButton.Yes:
+        if odp == QMessageBox.StandardButton.Yes.value:
             event.accept()
         else:
             event.ignore()
-
-    def keyPressEvent(self, e):
-        if e.key() == Qt.Key.Key_Escape:
-            self.close()
-
 
 if __name__ == '__main__':
     import sys

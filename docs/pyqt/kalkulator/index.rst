@@ -10,7 +10,7 @@ i obsługi działań użytkownika za pomocą Pythona 3 i PyQt6.
 Przykład wprowadza również podstawy `programowania obiektowego <https://pl.wikipedia.org/wiki/Programowanie_obiektowe>`_
 (ang. Object Oriented Programing).
 
-.. figure:: img//kalkulator05.png
+.. figure:: img/kalkulator05.png
 
 Bibliotekę Pyqt6 instalujemy w :ref:`środowisku wirtualnym Pythona <venv>` za pomocą polecenia:
 
@@ -18,15 +18,10 @@ Bibliotekę Pyqt6 instalujemy w :ref:`środowisku wirtualnym Pythona <venv>` za 
 
     (.venv) pip install pyqt6
 
-.. contents::
-    :depth: 1
-    :local:
-
 Pokaż okno
 ***********
 
-Zaczynamy od utworzenia pliku o nazwie :file:`kalkulator.py` w dowolnym katalogu
-za pomocą dowolnego edytora. Wstawiamy do niego poniższy kod:
+Zaczynamy od utworzenia pliku o nazwie :file:`kalkulator.py` i wstawiamy do niego poniższy kod:
 
 .. raw:: html
 
@@ -39,12 +34,11 @@ za pomocą dowolnego edytora. Wstawiamy do niego poniższy kod:
 Podstawą naszego programu będzie moduł ``PyQt6.QtWidgets``, z którego importujemy
 klasy ``QApplication`` – obsługa aplikacji, i ``QWidget`` – podstawową klasę wszystkich elementów interfejsu graficznego.
 
-Wygląd okna naszej aplikacji definiować będziemy za pomocą klasy *Kalkulator*
-dziedziczącej (zob. :term:`dziedziczenie`) właściwości i metody z klasy *QWidget* (``class Kalkulator(QWidget)``).
-Instrukcja ``super(self).__init__(parent)`` zwraca klasę rodzica i wywołuje jego :term:`konstruktor`.
-Z kolei w konstruktorze naszej klasy wywołujemy metodę ``interfejs()``,
-w której tworzyć będziemy :term:`GUI` naszej aplikacji. Ustawiamy więc właściwości
-okna aplikacji i jego zachowanie:
+Wygląd okna naszej aplikacji definiować będziemy za pomocą klasy ``Kalkulator``
+dziedziczącej (zob. :term:`dziedziczenie`) właściwości i metody z klasy ``QWidget``.
+Konstruktor naszej klasy na początku wywołuje :term:`konstruktor` klasy bazowej: ``super(self).__init__(parent)``.
+Następnie wywołujemy metodę ``interfejs()``, w której tworzyć będziemy :term:`GUI` naszej aplikacji.
+Ustawiamy właściwości okna aplikacji i jego zachowanie:
 
 * ``self.resize(300, 100)`` – szerokość i wysokość okna;
 * ``setWindowTitle("Prosty kalkulator")``) – tytuł okna;
@@ -56,7 +50,7 @@ okna aplikacji i jego zachowanie:
     utworzonego jako instancja jakiejś klasy. Słowo to zawsze występuje jako pierwszy parametr metod definiowanych
     jako funkcje klasy. Zob. `What is self? <https://docs.python.org/3/faq/programming.html#what-is-self>`_
 
-Instrukcja ``app = QApplication(sys.argv)`` – tworzy obiekt reprezentujący aplikację.
+Instrukcja ``app = QApplication(sys.argv)`` – tworzy obiekt aplikacji.
 Argument ``sys.argv`` wskazuje, że aplikacja może otrzymywać parametry z linii poleceń.
 W instrukcji ``okno = Kalkulator()`` tworzymy okno aplikacji, czyli obiekt będący instancją klasy ``Kalkulator``.
 
@@ -64,17 +58,17 @@ Na koniec uruchamiamy **główną pętlę programu** (``app.exec()``), która ro
 zdarzeń (zob. :term:`główna pętla programu`). Zdarzenia (np. kliknięcia) generowane są przez
 system lub użytkownika i przekazywane są do aplikacji, która może je obsługiwać.
 
-Poprawne zakończenie aplikacji zapewniające zwrócenie informacji o jej stanie do systemu
-zapewnia wywołanie ``sys.exit()``.
+Poprawne zakończenie aplikacji zapewniające zwrócenie informacji o jej stanie do systemu,
+co zapewnia wywołanie ``sys.exit()``.
 
-Przetestujmy kod. Program uruchamiamy poleceniem wydanym w terminalu w katalogu ze skryptem:
+Przetestujmy kod. Program uruchamiamy poleceniem wydanym w terminalu z aktywnym środowiskiem wirtualnym
+w katalogu ze skryptem:
 
 .. code-block:: bash
 
     ~$ python3 kalkulator.py
 
-.. figure:: img//kalkulator01.png
-
+.. figure:: img/kalkulator01.png
 
 Etykiety
 **********
@@ -107,15 +101,15 @@ Dodajemy wymagane importy i rozbudowujemy metodę ``interfejs()``:
 Dodawanie widżetów zaczynamy od utworzenia obiektów na podstawie odpowiedniej klasy,
 w tym wypadku `QtLabel <http://doc.qt.io/qt-6/qlabel.html>`_. Do jej konstruktora
 przekazujemy tekst, który ma się wyświetlać na etykiecie, np.: ``etykieta_1 = QLabel("Liczba 1:", self)``.
-Opcjonalny drugi argument, omówione wyżej słowo ``self``, wskazuje obiekt rodzica, tzn. widżet nadrzędny,
-danej kontrolki; w tym przypadku okno, w którym ją umieszczamy.
+Opcjonalny drugi argument, omówione wyżej słowo ``self``, wskazuje obiekt rodzica, w tym przypadku okno,
+w którym ją umieszczamy.
 
 .. note::
 
     Tworzenie widżetów z argumentem ``self`` umożliwia dostęp do ich właściwości
     w zasięgu całej klasy, czyli w innych metodach.
 
-Do rozmieszczanie widżetów w oknie służą tzw. układy (ang. *layout*). Tworzymy więc
+Do rozmieszczania widżetów w oknie służą tzw. układy (ang. *layout*). Tworzymy więc
 układ tabelaryczny: ``uklad_t = QGridLayout()`` – i dodajemy do niego obiekty (etykiety) za
 pomocą metody ``addWidget()``. Jako argumenty podajemy nazwę obiektu oraz numer wiersza i kolumny
 definiujących komórkę, w której znaleźć się ma obiekt. Numeracja wierszy i kolumn zaczyna się od zera.
@@ -133,7 +127,7 @@ Dodajemy również ikonę pokazywaną w pasku tytułowym lub w miniaturze na pas
 
 Przetestuj wprowadzone zmiany.
 
-.. figure:: img//kalkulator02.png
+.. figure:: img/kalkulator02.png
 
 Pola edycyjne i przyciski
 **************************
@@ -177,7 +171,7 @@ Jak widać, dodawanie widżetów polega zazwyczaj na:
   dodajemy do niego przyciski za pomocą metody ``addWidget()`` i dodajemy go do układu tabelarycznego:
   ``uklad_t.addLayout(uklad_h, 2, 0, 1, 3)``.
   Argumenty liczbowe w metodzie ``addLayout()`` oznaczają odpowiednio wiersz i kolumnę,
-  tj. komórkę, do której wstawiamy obiekt, oraz ilość wierszy i kolumn, które chcemy wykorzystać.
+  tj. komórkę, do której wstawiamy obiekt, oraz liczbę wierszy i kolumn, które chcemy wykorzystać.
 
 Znak ``&`` przed jakąś literą w opisie przycisków tworzy skrót klawiaturowy dostępny po naciśnięciu :kbd:`ALT + litera`.
 
@@ -185,8 +179,8 @@ Po uruchomieniu programu powinniśmy zobaczyć okno podobne do poniższego:
 
 .. figure:: img//kalkulator03.png
 
-Obsługa zdarzeń – zamykanie aplikacji
-*************************************
+Zamykanie aplikacji
+*******************
 
 Mamy okno z polami edycyjnymi i przyciskami, ale kontrolki te na nic nie reagują.
 Nauczymy się więc obsługiwać poszczególne zdarzenia. Zacznijmy od zamykania aplikacji.
@@ -202,8 +196,8 @@ zawierającą różne stałe:
 .. highlight:: python
 .. literalinclude:: kalkulator04.py
     :linenos:
-    :lineno-start: 8
-    :lines: 8-9
+    :lineno-start: 5
+    :lines: 5-6
 
 Dalej po instrukcji ``self.setLayout(ukladT)`` w metodzie ``interfejs()`` dopisujemy:
 
@@ -214,11 +208,11 @@ Dalej po instrukcji ``self.setLayout(ukladT)`` w metodzie ``interfejs()`` dopisu
 .. highlight:: python
 .. literalinclude:: kalkulator04.py
     :linenos:
-    :lineno-start: 64
-    :lines: 64
+    :lineno-start: 60
+    :lines: 60
 
-– instrukcja ta wiąże kliknięcie przycisku "Koniec" z wywołaniem metody ``koniec()``,
-którą musimy dopisać na końcu klasy ``Kalkulator()``:
+Powyższa instrukcja zdarzenie kliknięcia przycisku (``clicked``) wiąże (``conect()``)
+z metodą ``koniec()``, którą musimy dopisać na końcu klasy ``Kalkulator()``:
 
 .. raw:: html
 
@@ -227,11 +221,11 @@ którą musimy dopisać na końcu klasy ``Kalkulator()``:
 .. highlight:: python
 .. literalinclude:: kalkulator04.py
     :linenos:
-    :lineno-start: 71
-    :lines: 71-72
+    :lineno-start: 67
+    :lines: 67-68
 
-Funkcja ``koniec()``, obsługująca wydarzenie (ang. *event*) kliknięcia przycisku,
-wywołuje po prostu metodę ``close()`` okna głównego.
+Funkcja ``koniec()``, obsługująca wydarzenie (ang. *event*) kliknięcia przycisku, tj.
+wywołuje metodę ``close()`` okna głównego, co powoduje jego zamknięcie.
 
 .. note::
 
@@ -240,9 +234,9 @@ wywołuje po prostu metodę ``close()`` okna głównego.
     np. kliknięcia. Slot może z kolei być wbudowaną w Qt funkcją lub Pythonowym wywołaniem (ang. *callable*),
     np. klasą lub metodą.
 
-Zamknięcie okna również jest rodzajem wydarzenia (`QCloseEvent <http://doc.qt.io/qt-5/qcloseevent.html>`_),
+Zamknięcie okna również jest rodzajem wydarzenia (`QCloseEvent <http://doc.qt.io/qt-6/qcloseevent.html>`_),
 które można przechwycić. Np. po to, aby zapobiec utracie niezapisanych danych.
-Do klasy ``Kalkulator()`` dopiszmy następujący kod:
+Do klasy ``Kalkulator()`` dopiszmy kolejna metodę:
 
 .. raw:: html
 
@@ -251,10 +245,10 @@ Do klasy ``Kalkulator()`` dopiszmy następujący kod:
 .. highlight:: python
 .. literalinclude:: kalkulator04.py
     :linenos:
-    :lineno-start: 74
-    :lines: 74-84
+    :lineno-start: 70
+    :lines: 81
 
-W nadpisanej metodzie `closeEvent() <http://doc.qt.io/qt-5/qwidget.html#closeEvent>`_
+W nadpisanej metodzie `closeEvent() <http://doc.qt.io/qt-6/qwidget.html#closeEvent>`_
 wyświetlamy użytkownikowi prośbę o potwierdzenie zamknięcia
 za pomocą metody ``question()`` (ang. pytanie) klasy ``QMessageBox``.
 Do konstruktora metody przekazujemy:
@@ -354,7 +348,7 @@ w której przechwytujemy wyjątek ``ZeroDivisionError`` i wyświetlamy odpowiedn
 
 Pozostaje przetestować aplikację.
 
-.. figure:: img//kalkulator06.png
+.. figure:: img/kalkulator06.png
 
 .. tip::
 
@@ -372,8 +366,3 @@ Materiały
 4. `Przykłady PyQt5 <https://github.com/baoboa/pyqt5/tree/master/examples>`_
 5. `Signals and slots <http://doc.qt.io/qt-5/signalsandslots.html>`_
 6. `Kody klawiszy <http://doc.qt.io/qt-5/qt.html#Key-enum>`_
-
-**Źródła:**
-
-* :download:`Kalkulator Qt5 Python 3<kalkulator-qt5-py3.zip>`
-* :download:`Kalkulator Qt5 Python 2<kalkulator-qt5-py2.zip>`
