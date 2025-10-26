@@ -4,12 +4,13 @@ import json
 
 
 def wczytaj_ustawienia(nick):
-    nazwa_pliku = nick + '.ini'
+    nazwa_pliku = nick + '.txt'
     if os.path.isfile(nazwa_pliku):
         with open(nazwa_pliku) as plik:
             wiersz = plik.readline()
-            dane = wiersz.split(';')
-            return dane
+            if wiersz.find(nick) != -1:
+                dane = wiersz.split(';')
+                return dane
     return False
 
 
@@ -38,7 +39,7 @@ def pobierz_ustawienia(nick):
 
 
 def zapisz_ustawienia(nick, dane):
-    nazwa_pliku = nick + '.ini'
+    nazwa_pliku = nick + '.txt'
     with open(nazwa_pliku, 'w') as plik:
         plik.write(';'.join(dane))
     return dane
@@ -83,6 +84,7 @@ def wypisz_wyniki(liczby, typy):
         print(f'Liczba trafień {len(trafione)}')
     else:
         print('Brak trafień. Spróbuj jeszcze raz!')
+    print()
     return len(trafione)
 
 

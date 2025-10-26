@@ -3,22 +3,14 @@
 Extra Lotek
 ###########
 
-Kod "Dużego Lotka" wypracowany w poprzednim przykładzie zilustrował m.in.,
-jak używać pętli warunkowej do pobierania danych z klawiatury,
-jak sprawdzać poprawność wprowadzanych danych oraz jak używać list i zbiorów
-jako złożonych struktur danych. Uzyskany skrypt wygląda następująco:
-
-.. raw:: html
-
-    <div class="code_no">Plik <i>duzy_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. highlight:: python
-.. literalinclude:: duzy_lotek.py
-    :linenos:
+Program "Duży Lotek" omówiony w poprzednim przykładzie można podzielić na części kodu realizujące
+pojedyncze zadania, np. pobranie danych wejściowych, wylosowanie liczb, pobranie typów użytkownika,
+sprawdzenie i wypisanie danych wyjściowych. Realizację takich zadań możemy umieścić w funkcjach,
+których będzie można używać w innych programach.
 
 .. note::
 
-    Przykład "Extra Lotek" pokazuje jak używać funkcji i modułów oraz
+    Przykład "Extra Lotek" pokazuje, jak używać funkcji i modułów oraz
     jak zapisywać i odczytywać dane z plików tekstowych w różnych formatach.
 
 Zadanie
@@ -34,6 +26,8 @@ powtarza się tyle razy, ile poda użytkownik. Dodatkowo program powinien:
   wartość maksymalną oraz liczbę typowań,
 * pozwalać na zmianę danych wejściowych.
 
+Realizację kolejnych zadań zakoduj w funkcjach umieszczonych w module.
+
 **Dane**:
 
 * ``nick`` – nick użytkownika, ciąg znaków pobierany z klawiatury,
@@ -46,7 +40,7 @@ powtarza się tyle razy, ile poda użytkownik. Dodatkowo program powinien:
 
 Komunikaty podczas pierwszego uruchomienia:
 
-.. code::
+.. note::
 
     Podaj nick: adam
     Podaj liczbę losowanych liczb: 3
@@ -61,9 +55,9 @@ Komunikaty podczas pierwszego uruchomienia:
     Trafione liczby: {3}
     Liczba trafień 1
 
-Komunikaty po kolejnym uruchomieniu przez tego samego użytkownika:
+Początkowe komunikaty po kolejnym uruchomieniu przez tego samego użytkownika:
 
-.. code::
+.. note::
 
     Podaj nick: adam
     Ustawienia:
@@ -74,25 +68,16 @@ Komunikaty po kolejnym uruchomieniu przez tego samego użytkownika:
     Wytypuj 3 z 10 liczb:
     ...
 
-Funkcje i moduły
-*****************
+Funkcja główna
+***************
 
 Tam, gdzie w programie występują powtarzające się operacje lub zestaw poleceń
 realizujący wyodrębnione zadanie, wskazane jest używanie funkcji.
 Wyodrębnienie funkcji poprawia czytelność działania programu, ułatwia sprawdzanie i poprawianie kodu.
 
-Często używane funkcje można umieszczać w osobnych modułach (zob. , :term:`moduł`), z których
-importujemy je do różnych programów za pomocą instrukcji ``import`` lub ``from ... import``.
-
-.. mote::
-
-    Jeżeli program korzysta z niewielu i/lub unikalnych funkcji,
-    można umieszczać je w jednym pliku na początku.
-
-**Funkcja główna**
-
-Jeżeli cały kod programu umieszczamy w funkcjach, to jedną z nich trzeba wywołać na początku, aby program zaczął
-działać. Taka funkcja zwyczajowo nazywana jest ``main()`` i zazwyczaj zawiera logikę działania programu.
+Jeżeli zadania realizowane przez program umieszczamy w funkcjach, to jedną z nich trzeba wywołać na początku,
+aby program zaczął działać. Taka funkcja zwyczajowo nazywana jest ``main()``
+i zazwyczaj zawiera logikę działania programu, tj. wywołuje inne funkcje wykonujące osobne zadania.
 
 W nowym pliku :file:`extra_lotek.py` umieszczamy początkowy kod:
 
@@ -107,29 +92,67 @@ W nowym pliku :file:`extra_lotek.py` umieszczamy początkowy kod:
     def main(args):
         nick = input('Podaj nick: ')
 
+        pass
+
+        return 0
+
     if __name__ == '__main__':
         import sys
         sys.exit(main(sys.argv))
 
 Funkcja w Pythonie to wyodrębniony i nazwany blok kodu.
-Definicja funkcji zawiera: słowo kluczowe ``def``, nazwę funkcji,
-obowiązkowe nawiasy okrągłe z opcjonalnymi parametrami oraz dwukropek.
+Definicja funkcji ``def main(args):`` zawiera słowo kluczowe ``def``,
+nazwę funkcji z okrągłymi nawiasami, np. ``main()``, opcjonalne parametry, np. ``args`` oraz dwukropek.
 
-Zmienne lokalne w funkcjach są niezależne od zmiennych w programie
-głównym, ponieważ definiowane są w różnych zasięgach, a więc w różnych przestrzeniach nazw.
-Możliwe jest modyfikowanie zmiennych globalnych dostępnych w całym programie,
-o ile wskażemy je w funkcji instrukcją typu: ``global nazwa_zmiennej``.
+Instrukcja warunkowa ``if __name__ == '__main__':`` sprawdza, czy nasz plik został uruchomiony
+bezpośrednio przez interpreter, który zmienną specjalną ``__name__`` ustawia wtedy na ``__main__``.
+Jeżeli plik zostałby zaimportowany, zmienna ``__name__`` ustawiona zostałaby na nazwę pliku.
 
-Program główny po zmianach przedstawia się następująco:
+Jeżeli plik wykonywany jest bezpośrednio, uruchamiana jest funkcja główna ``main(args)`` jako argument metody
+``sys.exit()``, która kończy wykonywanie programu. Wartość zwracana przez funkcję główną informuje
+o tym, jak zakończył się program, np. zero (``0``) oznacza, że program zakończył się poprawnie.
+
+.. note::
+
+    W prostych programach pisanych na własny użytek można zrezygnować z bloku ``if __name__ == '__main__':``,
+    a także usunąć argument ``args`` z definicji funkcji głównej. Trzeba jednak pamiętać o wywołaniu
+    funkcji głównej, tj. umieszczeniu instrukcji ``main()`` bez wcięcia po definicji funkcji głównej.
+
+Moduły
+******
+
+Często używane funkcje umieszczamy w osobnych modułach (zob. :term:`moduł`), z których
+importujemy je do różnych programów za pomocą instrukcji ``import`` lub ``from ... import``.
+
+.. note::
+
+    Jeżeli program korzysta z niewielu i/lub unikalnych funkcji,
+    możemy umieścić je na początku programu w jednym pliku.
+
+W katalogu ze skryptem naszego programu tworzymy nowy plik ``modul_lotek.py``,
+dodajemy importy modułów wbudowanych oraz funkcji wczytującej zapisanie ustawienia:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: toto30.py
+.. literalinclude:: modul_lotek.py
     :linenos:
-    :emphasize-lines: 4, 7, 9, 12, 30-32
+    :lineno-start: 1
+    :lines: 1-14
+
+Funkcja ``wczytaj_ustawienia()`` otrzymuje parametr ``nick``, który wykorzystujemy do zdefiniowania nazwy pliku
+z ustawieniami użytkownika. Za pomocą metody ``isfile()`` sprawdzamy, czy plik znajduje się
+w ścieżce przeszukiwania, czyli w praktyce w katalogu naszego programu głównego. Jeżeli tak, otwieramy go
+w domyślnym trybie "do odczytu" – ``with open(nazwa_pliku) as plik:`` – i udostępniamy w zmiennej ``plik``.
+
+Odczytujemy wiersz z pliku
+
+Zmienne lokalne w funkcjach są niezależne od zmiennych w programie głównym,
+ponieważ definiowane są w różnych zasięgach, tj. przestrzeniach nazw.
+Możliwe jest modyfikowanie zmiennych globalnych dostępnych w całym programie,
+o ile wskażemy je w funkcji instrukcją typu: ``global nazwa_zmiennej``.
 
 Na początku z modułu ``totomodul``, którego nazwa jest taka sama jak nazwa pliku,
 importujemy potrzebne funkcje. Następnie w funkcji głównej ``main()``
@@ -148,12 +171,7 @@ elementów w krotki.
 Konstrukcja ``while True`` oznacza nieskończoną pętlę. Stosujemy ją w funkcji
 ``ustawienia()``, aby wymusić na użytkowniku podanie poprawnych danych.
 
-Cały program zawarty został w funkcji głównej ``main()``. O tym, czy zostanie
-ona wykonana decyduje warunek ``if __name__ == '__main__':``, który będzie
-prawdziwy, kiedy nasz skrypt zostanie uruchomiony jako główny.
-Wtedy nazwa specjalna ``__name__`` ustawiana jest na ``__main__``.
-Jeżeli korzystamy ze skryptu jako modułu, importując go,
-``__main__`` ustawiane jest na nazwę pliku, dzięki czemu kod się nie wykonuje.
+
 
 .. note::
 
@@ -379,11 +397,6 @@ Funkcja zapisująca dane mogłaby wyglądać np. tak:
 Napisz funkcję ``czytaj_str()`` odczytującą tak zapisane dane. Funkcja
 powinna zwrócić listę słowników.
 
-Materiały
-**********
+.. admonition:: Pojęcia
 
-**Źródła:**
-
-* :download:`Extra Lotek <elotek.zip>`
-
-:term:`funkcja`
+    :term:`funkcja`, :term:`moduł`

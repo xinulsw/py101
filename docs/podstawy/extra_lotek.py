@@ -1,6 +1,7 @@
-from docs.podstawy.elotek.modul_lotek import wypisz_wyniki
-from modul_lotek import wczytaj_ustawienia, pobierz_ustawienia, zapisz_ustawienia
+from modul_lotek import wczytaj_ustawienia
+from modul_lotek import pobierz_ustawienia, zapisz_ustawienia
 from modul_lotek import losuj_liczby, pobierz_typy
+from modul_lotek import wypisz_wyniki
 
 
 def main(args):
@@ -22,6 +23,8 @@ def main(args):
         typy = pobierz_typy(n, maks)
         if wypisz_wyniki(liczby, typy) == n:
             break
+
+    return 0
 
 if __name__ == '__main__':
     import sys

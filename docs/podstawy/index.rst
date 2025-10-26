@@ -13,16 +13,16 @@ które pozwolą zaprezentować możliwości tego języka.
 .. toctree::
     :titlesonly:
 
-    przyklady/przyklad01
-    przyklady/przyklad02
-    przyklady/przyklad03
-    przyklady/przyklad04
-    przyklady/przyklad05
-    przyklady/przyklad06
-    przyklady/przyklad07
-    mlotek/index
-    dlotek/index
-    elotek/index
+    przyklad01
+    przyklad02
+    przyklad03
+    przyklad04
+    przyklad05
+    przyklad06
+    przyklad07
+    maly_lotek
+    duzy_lotek
+    extra_lotek
     pythonizmy
     gloss_python
 
