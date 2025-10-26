@@ -25,6 +25,7 @@ class Kalkulator(QWidget):
         # przypisanie utworzonego układu do okna
         self.setLayout(uklad_t)
 
+        # ustawienia rozmiaru, ikony i tytułu okna
         self.setGeometry(20, 20, 300, 100)
         self.setWindowIcon(QIcon('kalkulator.png'))
         self.setWindowTitle("Prosty kalkulator")

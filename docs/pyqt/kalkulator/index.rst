@@ -147,7 +147,9 @@ Jak zwykle zaczynamy od zaimportowania potrzebnych klas:
     :lineno-start: 4
     :lines: 4
 
-Następnie przed instrukcją ``self.setLayout(uklad_t)`` wstawiamy następujący kod:
+Dodatkowa klasa ``QHBoxLayout`` umożliwi nam rozmieszczenie przycisków w układzie poziomym.
+
+Następnie przed instrukcją ``self.setLayout(uklad_t)`` w metodzie ``interfejs()`` wstawiamy następujący kod:
 
 .. raw:: html
 
@@ -156,16 +158,16 @@ Następnie przed instrukcją ``self.setLayout(uklad_t)`` wstawiamy następujący
 .. highlight:: python
 .. literalinclude:: kalkulator03.py
     :linenos:
-    :lineno-start: 27
-    :lines: 27-57
+    :lineno-start: 28
+    :lines: 28 -57
 
 Jak widać, dodawanie widżetów polega zazwyczaj na:
 
 * **utworzeniu obiektu** na podstawie klasy opisującej potrzebny element interfejsu,
   np. ``liczba_1 = QLineEdit(self)`` lub ``prz_dodaj = QPushButton("&Dodaj", self)``;
 * **ustawieniu właściwości** obiektu, np. ``self.wynik.readonly = True`` umożliwia tylko odczyt tekstu pola,
-  ``self.wynik.setToolTip('Wpisz <b>liczby</b> i wybierz działanie...')`` – ustawia podpowiedź,
-  a ``prz_koniec.resize(prz_koniec.sizeHint())`` – ustawia sugerowany rozmiar obiektu;
+  ``self.wynik.setToolTip('Wpisz <b>liczby</b> i wybierz działanie...')`` – definiuje podpowiedź,
+  która pojawia się po najechaniu kursorem na widżet;
 * **przypisaniu obiektu do układu** – ponieważ mamy 4 przyciski działań, tworzymy układ horyzontalny
   (zob. `QHBoxLayout <http://doc.qt.io/qt-6/qhboxlayout.html>`_): ``uklad_h = QHBoxLayout()``,
   dodajemy do niego przyciski za pomocą metody ``addWidget()`` i dodajemy go do układu tabelarycznego:
@@ -173,20 +175,23 @@ Jak widać, dodawanie widżetów polega zazwyczaj na:
   Argumenty liczbowe w metodzie ``addLayout()`` oznaczają odpowiednio wiersz i kolumnę,
   tj. komórkę, do której wstawiamy obiekt, oraz liczbę wierszy i kolumn, które chcemy wykorzystać.
 
-Znak ``&`` przed jakąś literą w opisie przycisków tworzy skrót klawiaturowy dostępny po naciśnięciu :kbd:`ALT + litera`.
+.. note::
+
+    Znak ``&`` przed jakąś literą w opisie przycisków tworzy skrót klawiaturowy dostępny po naciśnięciu
+    :kbd:`ALT + litera`.
 
 Po uruchomieniu programu powinniśmy zobaczyć okno podobne do poniższego:
 
-.. figure:: img//kalkulator03.png
+.. figure:: img/kalkulator03.png
 
-Zamykanie aplikacji
-*******************
+Obsługa zdarzeń
+***************
 
 Mamy okno z polami edycyjnymi i przyciskami, ale kontrolki te na nic nie reagują.
-Nauczymy się więc obsługiwać poszczególne zdarzenia. Zacznijmy od zamykania aplikacji.
+Nauczymy się więc obsługiwać poszczególne zdarzenia.
 
-Na początku zaimportujmy klasę `QMessageBox <http://doc.qt.io/qt-6/qmessagebox.html>`_
-pozwalającą tworzyć komunikaty oraz przestrzeń nazw `Qt <http://doc.qt.io/qt-5/qt.html>`_
+Na początku skryptu importujemy klasę `QMessageBox <http://doc.qt.io/qt-6/qmessagebox.html>`_
+pozwalającą tworzyć okna z komunikatami oraz przestrzeń nazw `Qt <http://doc.qt.io/qt-6/qt.html>`_
 zawierającą różne stałe:
 
 .. raw:: html
@@ -194,45 +199,84 @@ zawierającą różne stałe:
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: kalkulator04.py
+.. literalinclude:: kalkulator03.py
     :linenos:
     :lineno-start: 5
     :lines: 5-6
 
-Dalej po instrukcji ``self.setLayout(ukladT)`` w metodzie ``interfejs()`` dopisujemy:
+Dalej w metodzie ``interfejs()`` po instrukcji ``self.setLayout(uklad_t)`` dopisujemy:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: kalkulator04.py
+.. literalinclude:: kalkulator03.py
     :linenos:
     :lineno-start: 60
-    :lines: 60
+    :lines: 60-65
 
-Powyższa instrukcja zdarzenie kliknięcia przycisku (``clicked``) wiąże (``conect()``)
-z metodą ``koniec()``, którą musimy dopisać na końcu klasy ``Kalkulator()``:
+Jednym ze zdarzeń jest kliknięcie przycisku (``clicked``), które wiążemy za pomocą metody
+``conect()`` z metodami ``koniec()`` i ``dzialanie()``.
+Metody te dodajemy na końcu klasy ``Kalkulator()``:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: kalkulator04.py
+.. literalinclude:: kalkulator03.py
     :linenos:
-    :lineno-start: 67
-    :lines: 67-68
+    :lineno-start: 73
+    :lines: 73-102
 
-Funkcja ``koniec()``, obsługująca wydarzenie (ang. *event*) kliknięcia przycisku, tj.
-wywołuje metodę ``close()`` okna głównego, co powoduje jego zamknięcie.
+Metoda ``koniec()`` wywołana po kliknięciu przycisku "Koniec" wywołuje metodę ``close()`` okna głównego,
+co powoduje jego zamknięcie.
 
 .. note::
 
-    Omówiony fragment kodu ilustruje mechanizm zwany :term:`sygnały i sloty` (ang. *signals & slots*).
+    Omówiony fragment kodu ilustruje mechanizm zwany w bibliotece Qt :term:`sygnały i sloty` (ang. *signals & slots*).
     Zapewnia on komunikację między obiektami. Sygnał powstaje w momencie wystąpienia jakiegoś wydarzenia,
     np. kliknięcia. Slot może z kolei być wbudowaną w Qt funkcją lub Pythonowym wywołaniem (ang. *callable*),
     np. klasą lub metodą.
+
+Działania
+*********
+
+Ze zdarzeniem kliknięcia przycisków działań powiązana została metoda ``działania()``.
+Ponieważ jedna metoda ma obsłużyć cztery sygnały, musimy znać źródło sygnału (ang. *source*),
+czyli nadawcę (ang. *sender*): ``nadawca = self.sender()``.
+
+W bloku ``try:`` przekształcamy wprowadzone w polach tekstowych liczby na typ zmiennoprzecinkowy.
+Operacja ta z powodu błędnych danych może zwrócić wyjątek, który przechwytujemy w klauzuli
+``except ValueError`` i wyświetlamy ostrzeżenie: ``QMessageBox.warning()``.
+
+Jeżeli dane są poprawne, w złożonej instrukcji warunkowej sprawdzamy nadawcę
+(np. ``if nadawca.text() == "&Dodaj":``) i wykonujemy odpowiednie działanie.
+
+Podczas dzielenia ponownie korzystamy z przechwytywania wyjątków, tym razem do obsługi
+ewentualnego błędu dzielenia przez zero (``ZeroDivisionError``).
+
+.. figure:: img/kalkulator06.png
+
+Instrukcja ``round(liczba1 / liczba2, 9)`` zaokrągla wynik dzielenia do 9 miejsc po przecinku.
+
+Na koniec zamieniamy uzyskany wynik na ciąg znaków i wypisujemy w polu tekstowym za pomocą
+metody ``setText()``: ``self.wynikEdt.setText(str(wynik))``.
+
+Sprawdź działanie programu.
+
+.. figure:: img/kalkulator05.png
+
+.. tip::
+
+    Jeżeli po zaimplementowaniu działań, aplikacja po uruchomieniu nie aktywuje kursora
+    w pierwszym polu edycyjnym, należy tuż przed ustawianiem właściwości okna głównego
+    (``self.setGeometry()``) umieścić wywołanie ``self.liczba_1.setFocus()``,
+    które ustawia focus na wybranym elemencie.
+
+Zamykanie aplikacji
+********************
 
 Zamknięcie okna również jest rodzajem wydarzenia (`QCloseEvent <http://doc.qt.io/qt-6/qcloseevent.html>`_),
 które można przechwycić. Np. po to, aby zapobiec utracie niezapisanych danych.
@@ -243,126 +287,55 @@ Do klasy ``Kalkulator()`` dopiszmy kolejna metodę:
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: kalkulator04.py
-    :linenos:
-    :lineno-start: 70
-    :lines: 81
-
-W nadpisanej metodzie `closeEvent() <http://doc.qt.io/qt-6/qwidget.html#closeEvent>`_
-wyświetlamy użytkownikowi prośbę o potwierdzenie zamknięcia
-za pomocą metody ``question()`` (ang. pytanie) klasy ``QMessageBox``.
-Do konstruktora metody przekazujemy:
-
-* obiekt rodzica – ``self`` oznacza okno główne;
-* tytuł kona dialogowego;
-* komunikat dla użytkownika, np. pytanie;
-* kombinację standardowych przycisków, np. ``QMessageBox.Yes | QMessageBox.No``;
-* przycisk domyślny – ``QMessageBox.No``.
-
-Udzielona odpowiedź ``odp``, np. kliknięcie przycisku "Tak", decyduje o zezwoleniu
-na obsłużenie wydarzenia ``event.accept()`` lub odrzuceniu go ``event.ignore()``.
-
-Może wygodnie byłoby zamykać aplikację naciśnięciem klawisza :kbd:`ESC`?
-Dopiszmy jeszcze jedną funkcję:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: kalkulator04.py
-    :linenos:
-    :lineno-start: 86
-    :lines: 86-88
-
-Podobnie jak w przypadku ``closeEvent()`` tworzymy własną wersję funkcji
-`keyPressEvent <http://doc.qt.io/qt-5/qwidget.html#keyPressEvent>`_ obsługującej
-naciśnięcia klawiszy `QKeyEvent <http://doc.qt.io/qt-5/qkeyevent.html>`_.
-Sprawdzamy naciśnięty klawisz ``if e.key() == Qt.Key_Escape:`` i zamykamy okno.
-
-Przetestuj działanie aplikacji.
-
-.. figure:: img//kalkulator04.png
-
-Działania
-*********
-
-Kalkulator powinien liczyć. Zaczniemy od dodawania, ale na początku wszystkie
-sygnały wygenerowane przez przyciski działań połączymy z jednym slotem.
-Pod instrukcją ``koniecBtn.clicked.connect(self.koniec)`` dodajemy:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: kalkulator05.py
-    :linenos:
-    :lineno-start: 65
-    :lines: 65-68
-
-Następnie zaczynamy implementację funkcji ``dzialanie()``. Na końcu klasy ``Kalkulator()`` dodajemy:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: kalkulator05.py
-    :linenos:
-    :lineno-start: 94
-    :lines: 94-111
-
-Ponieważ jedna funkcja ma obsłużyć cztery sygnały, musimy znać źródło sygnału (ang. *source*),
-czyli nadawcę (ang. *sender*): ``nadawca = self.sender()``.
-Dalej rozpoczynamy blok ``try: except:`` – użytkownik może wprowadzić błędne dane,
-tj. pusty ciąg znaków lub ciąg, którego nie da się przekształcić na liczbę zmiennoprzecinkową (``float()``).
-W przypadku wyjątku, wyświetlamy ostrzeżenie o błędnych danych: ``QMessageBox.warning()``
-
-Jeżeli dane są liczbami, sprawdzamy nadawcę (``if nadawca.text() == "&Dodaj":``)
-i jeżeli jest to przycisk dodawania, obliczamy sumę ``wynik = liczba1 + liczba2``.
-Na koniec wyświetlamy ją po zamianie na tekst (``str()``) w polu tekstowym za pomocą
-metody ``setText()``: ``self.wynikEdt.setText(str(wynik))``.
-
-Sprawdź działanie programu.
-
-.. figure:: img//kalkulator05.png
-
-Dopiszemy obsługę pozostałych działań. Instrukcję warunkową w funkcji ``dzialanie()``
-rozbudowujemy następująco:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: kalkulator06.py
+.. literalinclude:: kalkulator03.py
     :linenos:
     :lineno-start: 103
     :lines: 103-115
 
-Na uwagę zasługuje tylko dzielenie. Po pierwsze określamy dokładność dzielenia do 9
-miejsc po przecinku ``round(liczba1 / liczba2, 9)``. Po drugie zabezpieczamy się
-przed dzieleniem przez zero. Znów wykorzystujemy konstrukcję ``try: except:``,
-w której przechwytujemy wyjątek ``ZeroDivisionError`` i wyświetlamy odpowiednie ostrzeżenie.
+W nadpisanej metodzie `closeEvent() <http://doc.qt.io/qt-6/qwidget.html#closeEvent>`_
+wyświetlamy użytkownikowi prośbę o potwierdzenie zamknięcia za pomocą okna dialogowego
+utworzonego za pomocą klasy ``QMessageBox``.
 
-Pozostaje przetestować aplikację.
+.. figure:: img//kalkulator04.png
 
-.. figure:: img/kalkulator06.png
+Używamy następujących metod:
 
-.. tip::
+* ``setWindowTitle()`` – do ustawienia tytuł okna,
+* ``setText()`` – do podania komunikatu dla użytkownika, w tym przypadku pytania,
+* ``setStandardButtons`` – do zdefiniowania dostępnych przycisków,
+* ``setDefaultButton`` – do wskazania przycisku domyślnego.
 
-    Jeżeli po zaimplementowaniu działań, aplikacja po uruchomieniu nie aktywuje kursora
-    w pierwszym polu edycyjnym, należy tuż przed ustawianiem właściwości okna głównego
-    (``self.setGeometry()``) umieścić wywołanie ``self.liczba1Edt.setFocus()``,
-    które ustawia focus na wybranym elemencie.
+Jeżeli użytkownik kliknie przycisk "Yes" (``if odp == QMessageBox.StandardButton.Yes.value:``),
+zezwalamy na dalszą obsługę zdarzenia ``event.accept()``, w przeciwnym razie odrzucamy je ``event.ignore()``.
+
+Naciśnięcie klawisza
+********************
+
+Może wygodnie byłoby zamykać aplikację naciśnięciem klawisza :kbd:`ESC`?
+Dopiszmy jeszcze jedną metodę w klasie ``Kalkulator``:
+
+.. raw:: html
+
+    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: kalkulator03.py
+    :linenos:
+    :lineno-start: 116
+    :lines: 116-119
+
+Podobnie jak w przypadku ``closeEvent()`` tworzymy własną wersję funkcji
+`keyPressEvent <http://doc.qt.io/qt-6/qwidget.html#keyPressEvent>`_ obsługującej
+naciśnięcia klawiszy `QKeyEvent <http://doc.qt.io/qt-6/qkeyevent.html>`_.
+Sprawdzamy naciśnięty klawisz ``if e.key() == Qt.Key_Escape:`` i jeżeli jest to :kbd:`ESC`,
+zamykamy okno.
 
 Materiały
 ***************
 
-1. Strona główna `dokumentacji Qt5 <http://doc.qt.io/qt-5/>`_
-2. `Lista klas Qt5 <http://doc.qt.io/qt-5/classes.html>`_
-3. `PyQt5 Reference Guide <http://pyqt.sourceforge.net/Docs/PyQt5/>`_
-4. `Przykłady PyQt5 <https://github.com/baoboa/pyqt5/tree/master/examples>`_
-5. `Signals and slots <http://doc.qt.io/qt-5/signalsandslots.html>`_
-6. `Kody klawiszy <http://doc.qt.io/qt-5/qt.html#Key-enum>`_
+1. Strona główna `dokumentacji Qt6 <http://doc.qt.io/qt-6/>`_
+2. `Lista klas Qt6 <http://doc.qt.io/qt-6/classes.html>`_
+3. `PyQt6 Reference Guide <http://pyqt.sourceforge.net/Docs/PyQt6/>`_
+4. `Przykłady PyQt6 <https://github.com/baoboa/pyqt6/tree/master/examples>`_
+5. `Signals and slots <http://doc.qt.io/qt-6/signalsandslots.html>`_
+6. `Kody klawiszy <http://doc.qt.io/qt-6/qt.html#Key-enum>`_
