@@ -103,3 +103,6 @@ $RECYCLE.BIN/
 # Python virtual environment
 .venv/
 .pve/
+
+# pliki tekstowe
+.txt
