@@ -105,4 +105,4 @@ $RECYCLE.BIN/
 .pve/
 
 # pliki tekstowe
-.txt
+*.txt
