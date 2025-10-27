@@ -1,7 +1,7 @@
 .. _pyqt6:
 
-Aplikacje okienkowe Qt6
-###########################
+Aplikacje okienkowe Qt
+######################
 
 `PyQt <https://pl.wikipedia.org/wiki/PyQt>`_ to zbiór bibliotek `Pythona <https://www.python.org/>`_
 tworzonych przez `Riverbank Computing <https://riverbankcomputing.com/software/pyqt/intro>`_
@@ -10,8 +10,6 @@ framework `Qt <https://pl.wikipedia.org/wiki/Qt>`_
 (zob. również oficjalną stronę `Qt Company <http://www.qt.io/>`_)
 dostępny w wersji `Open Source <https://pl.wikipedia.org/wiki/Otwarte_oprogramowanie>`_  na licencji `GNU LGPL <https://pl.wikipedia.org/wiki/GNU_Lesser_General_Public_License>`_ .
 Działa w wielu systemach operacyjnych.
-
-Nasze scenariusze przygotowane zostały z wykorzystaniem Pythona 3 i biblioteki PyQt6.
 
 **Instalacja**
 
@@ -27,7 +25,6 @@ Bibliotekę instalujemy w :ref:`środowisku wirtualnym Pythona <venv>` za pomoc�
     kalkulator/index
     widzety/index
     todopw/index
-
 
 .. note::
 
