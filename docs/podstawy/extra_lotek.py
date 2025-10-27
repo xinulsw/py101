@@ -16,6 +16,7 @@ def main(args):
         zapisz_ustawienia(nick, dane)
 
     mick, n, maks, ile_typowan = dane[0:1] + [int(x) for x in dane[1:4]]
+    print(mick, n, maks, ile_typowan)  # tę instrukcję można później zakomentować
 
     liczby = losuj_liczby(n, maks)
 

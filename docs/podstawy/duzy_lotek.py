@@ -5,7 +5,7 @@ error = False
 try:
     n = int(input('Podaj liczbę losowanych liczb: '))
     maks = int(input('Podaj maksymalną losowaną liczbę: '))
-    if n > maks:
+    if n >= maks:
         error = True
 except ValueError:
     error = True
@@ -17,7 +17,7 @@ if error:
 # losowanie liczb
 liczby = []
 while len(liczby) < n:
-    liczba = random.randint(1, maks)
+    liczba = random.randint(0, maks)
     if liczby.count(liczba) == 0:
         liczby.append(liczba)
 

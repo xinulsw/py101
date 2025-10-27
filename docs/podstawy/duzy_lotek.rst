@@ -25,7 +25,7 @@ danych wejściowych.
 **Dane**:
 
 * ``n`` – liczba całkowita pobierana z klawiatury,
-* ``maks`` – liczba całkowita pobierana z klawiatury,
+* ``maks`` – liczba naturalna pobierana z klawiatury większa od ``n``,
 * ``typ`` – liczba całkowita pobierana z klawiatury z zakresu ``<0; maks>``.
 
 **Wynik** – przykładowe komunikaty:

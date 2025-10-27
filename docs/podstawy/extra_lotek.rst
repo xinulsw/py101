@@ -31,7 +31,7 @@ Realizację kolejnych zadań zakoduj w funkcjach umieszczonych w module.
 **Dane**:
 
 * ``nick`` – nick użytkownika, ciąg znaków pobierany z klawiatury,
-* ``n`` – liczba całkowita pobierana z klawiatury,
+* ``n`` – liczba naturalna pobierana z klawiatury większa od ``n``,
 * ``maks`` – liczba całkowita pobierana z klawiatury,
 * ``ile_typowan`` – liczba całkowita pobierana z klawiatury,
 * ``typ`` – liczba całkowita pobierana z klawiatury z zakresu ``<0; maks>``.
@@ -83,7 +83,7 @@ W nowym pliku :file:`extra_lotek.py` umieszczamy początkowy kod:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 
@@ -118,7 +118,11 @@ o tym, jak zakończył się program, np. zero (``0``) oznacza, że program zako�
     a także usunąć argument ``args`` z definicji funkcji głównej. Trzeba jednak pamiętać o wywołaniu
     funkcji głównej, tj. umieszczeniu instrukcji ``main()`` bez wcięcia po definicji funkcji głównej.
 
-Moduły
+    Instrukcja ``pass`` nie jest wykonywana, to informacja, że w danym miejscu zostanie wstawiony jakiś kod.
+    Pozwala również uniknąć błędu w miejscach, w których brak kodu jest niedozwolony, np.
+    po instrukcji warunkowej lub pętli.
+
+Moduł
 ******
 
 Często używane funkcje umieszczamy w osobnych modułach (zob. :term:`moduł`), z których
@@ -129,12 +133,15 @@ importujemy je do różnych programów za pomocą instrukcji ``import`` lub ``fr
     Jeżeli program korzysta z niewielu i/lub unikalnych funkcji,
     możemy umieścić je na początku programu w jednym pliku.
 
+Wczytywanie ustawień
+--------------------
+
 W katalogu ze skryptem naszego programu tworzymy nowy plik ``modul_lotek.py``,
 dodajemy importy modułów wbudowanych oraz funkcji wczytującej zapisanie ustawienia:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>modul_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: modul_lotek.py
@@ -147,17 +154,103 @@ z ustawieniami użytkownika. Za pomocą metody ``isfile()`` sprawdzamy, czy plik
 w ścieżce przeszukiwania, czyli w praktyce w katalogu naszego programu głównego. Jeżeli tak, otwieramy go
 w domyślnym trybie "do odczytu" – ``with open(nazwa_pliku) as plik:`` – i udostępniamy w zmiennej ``plik``.
 
-Odczytujemy wiersz z pliku
+Plik zawiera jeden wiersz w formacie ``nick;liczba losowanych liczb;maksymalna liczba;liczba typowań``.
+Do jego odczytania używamy metody ``readline()``. Otrzymany ciąg znaków dzielimy za pomocą
+metody ``split()`` i znaku średnika na części, które zwracana są w postaci listy ``dane``.
 
-Zmienne lokalne w funkcjach są niezależne od zmiennych w programie głównym,
-ponieważ definiowane są w różnych zasięgach, tj. przestrzeniach nazw.
-Możliwe jest modyfikowanie zmiennych globalnych dostępnych w całym programie,
-o ile wskażemy je w funkcji instrukcją typu: ``global nazwa_zmiennej``.
+Pobieranie ustawień
+--------------------
 
-Na początku z modułu ``totomodul``, którego nazwa jest taka sama jak nazwa pliku,
-importujemy potrzebne funkcje. Następnie w funkcji głównej ``main()``
-wywołujemy je podając nazwę i ewentualne argumenty.
-Zwracane przez nie wartości zostają przypisane podanym zmiennym.
+Do naszego modułu dodajemy kolejną funkcję o nazwie ``pobierz_ustawienia()``, której zadaniem
+będzie pobieranie danych wejściowych z klawiatury:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>modul_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: modul_lotek.py
+    :linenos:
+    :lineno-start: 16
+    :lines: 16-37
+
+Funkcja ``pobierz_ustawienia()`` wykorzystuje nieskończoną pętlę warunkową ``while True``,
+w której pobierane są kolejne dane wejściowe. W przypadku podania błędnych danych pętla zaczyna działanie od początku
+dzięki instrukcji ``continue``, jeżeli dane są poprawne przerywamy działanie pętli instrukcją
+``break`` i zwracamy je w postaci listy ``dane``.
+
+.. note::
+
+    Wyjaśnienie instrukcji ``try ... except`` znajdziesz w materiale :ref:`Duży lotek <duzy_lotek>`_.
+
+Zapisywanie ustawień
+--------------------
+
+Dodajemy do modułu funkcję ``zapisz_ustawienia()``, która pobierać będzie dwa parametry
+zawierające nick użytkownika i dane do zapisania.
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>modul_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: modul_lotek.py
+    :linenos:
+    :lineno-start: 38
+    :lines: 38-42
+
+Początek funkcji jest prawie identyczny jak w funkcji ``wczytaj_ustawienia()`` z tą tylko różnicą,
+że plik otwierany jest w trybie do zapisu, tj, podajemy drugi argument w funkcji ``open()`` – znak ``w``.
+W efekcie, jeżeli pliku nie ma na dysku – zostanie zapisany, jeżeli jest – zostanie nadpisany.
+Parametr ``dane`` jest 4-elementową listą zawierająca pobrane od użytkownika lub odczytane z dysku
+dane wejściowe. Dane te łączymy za pomocą metody ``join()`` i znaku średnika. Otrzymany ciąg znaków
+uzupełniamy znakiem końca wiersza i zapisujemy w pliku za pomocą metody ``.write()``.
+
+Dane wejściowe
+**************
+
+Wykorzystajmy przygotowane funkcje w programie głównym. W dotychczasowym kodzie zapisanym w pliku :file:`extra_lotek.py`,
+instrukcję ``pass`` zastępujemy kodem:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 9
+    :lines: 9-20
+
+Po pobraniu nicka z klawiatury wywołujemy funkcję ``wczytaj_ustawienia()``, która zwróci listę
+z odczytanymi danymi lub wartość ``False``. W instrukcji warunkowej, jeżeli lista nie jest pusta,
+wypisujemy dane poza nickiem.
+
+Jeżeli nie udało się odczytać danych (``not dane``) lub jeżeli użytkownik chce zmienić odczytane dane
+(``input('Zmieniasz (t/n)? ').lower() == 't'``), wywołujemy funkcję ``pobierz_dane()``, a następnie
+funkcję ``zapisz_ustawienia()``, która zapisuje listę ``dane`` zawierającą nick i pozostałe informacje.
+
+W kolejnej instrukcji przypisujemy elementy listy ``dane`` do osobnych zmiennych.
+Instrukcja ``[int(x) for x in dane[1:4]]`` to :term:`wyrażenie listowe`. Można je rozumieć
+jako skrócony zapis pętli ``for``, która odczytuje trzy ostatnie elementy listy ``dane[1:4]``,
+zamienia je na liczby całkowite ``int(x)`` i tworzy nową listę. Jej elementy to liczby
+przypisywane do zmiennych ``m, maks`` i ``ile_typowan``.
+
+Losowanie i sprawdzanie
+***********************
+
+Funkcje, które losują liczby do odgadnięcia, pobierają typy użytkownika, sprawdzają i wypisują wyniki
+umieszczamy w module :file:`modul_lotek.py`:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>modul_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: modul_lotek.py
+    :linenos:
+    :lineno-start: 44
+    :lines: 44-85
 
 Warto zauważyć, że funkcja może zwracać więcej niż jedną wartość naraz,
 np. w postaci krotki ``return (ile, maks, ilelos)`` (zob. :term:`krotka`).
@@ -167,20 +260,6 @@ kilku zmiennym dzięki operacji tzw. **rozpakowania krotki**:
 ``ileliczb, maksliczba, ilerazy = ustawienia()``. Należy jednak
 pamiętać, aby liczba zmiennych z lewej strony wyrażenia odpowiadała liczbie
 elementów w krotki.
-
-Konstrukcja ``while True`` oznacza nieskończoną pętlę. Stosujemy ją w funkcji
-``ustawienia()``, aby wymusić na użytkowniku podanie poprawnych danych.
-
-
-
-.. note::
-
-    **Komentarze**: w rozbudowanych programach dobrą praktyką ułatwiającą późniejsze przeglądanie
-    i poprawianie kodu jest opatrywanie jego fragmentów **komentarzami**. Zazwyczaj umieszczamy
-    je po znaku ``#``. Z kolei funkcje opatruje się krótkim opisem
-    działania i/lub wymaganych argumentów, ograniczanym **potrójnymi cudzysłowami**.
-    Notacja ``"""..."""`` lub ``'''...'''`` pozwala zamieszczać teksty wielowierszowe.
-
 
 Ćwiczenie
 ==========
@@ -210,39 +289,6 @@ Konstrukcja ``while True`` oznacza nieskończoną pętlę. Stosujemy ją w funkc
   Metoda napisów ``join()`` pozwala połączyć elementy listy (muszą być typu *string*)
   podanymi znakami, np. przecinkami (``", "``).
 
-
-Zapis/odczyt plików
-*******************
-
-Uruchamiając wielokrotnie program, musimy podawać wiele danych, aby zadziałał.
-Dodamy więc możliwość zapamiętywania ustawień i ich zmiany. Dane zapisywać
-będziemy w zwykłym pliku tekstowym. W pliku :file:`toto2.py` dodajemy
-tylko jedną zmienną ``nick``:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: toto32.py
-    :linenos:
-    :emphasize-lines: 2
-    :lineno-start: 8
-    :lines: 8-9
-
-W pliku :file:`totomodul.py` zmieniamy funkcję ``ustawienia()`` oraz dodajemy
-dwie nowe: ``czytaj_ust()`` i ``zapisz_ust()``.
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: totomodul32.py
-    :linenos:
-    :emphasize-lines: 14, 21, 34-35, 37, 42, 51
-    :lineno-start: 1
-    :lines: 1-55
 
 **Operacje na plikach**:
 

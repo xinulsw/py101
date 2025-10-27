@@ -8,22 +8,19 @@ def wczytaj_ustawienia(nick):
     if os.path.isfile(nazwa_pliku):
         with open(nazwa_pliku) as plik:
             wiersz = plik.readline()
-            if wiersz.find(nick) != -1:
-                dane = wiersz.split(';')
-                return dane
+            dane = wiersz.split(';')
+            return dane
     return False
 
 
 def pobierz_ustawienia(nick):
-    """Funkcja pobiera nick użytkownika, ilość losowanych liczb, maksymalną
-    losowaną wartość oraz ilość typowań. Ustawienia zapisuje."""
     error = False
     while True:
         try:
             n = int(input('Podaj liczbę losowanych liczb: '))
             maks = int(input('Podaj maksymalną losowaną liczbę: '))
             ile_typowan = int(input('Podaj liczbę typowań: '))
-            if n > maks:
+            if n >= maks:
                 error = True
         except ValueError:
             error = True
@@ -41,8 +38,7 @@ def pobierz_ustawienia(nick):
 def zapisz_ustawienia(nick, dane):
     nazwa_pliku = nick + '.txt'
     with open(nazwa_pliku, 'w') as plik:
-        plik.write(';'.join(dane))
-    return dane
+        plik.write(';'.join(dane) + '\n')
 
 
 def losuj_liczby(n, maks):
