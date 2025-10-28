@@ -209,8 +209,8 @@ uzupełniamy znakiem końca wiersza i zapisujemy w pliku za pomocą metody ``.wr
 Dane wejściowe
 **************
 
-Wykorzystajmy przygotowane funkcje w programie głównym. W dotychczasowym kodzie zapisanym w pliku :file:`extra_lotek.py`,
-instrukcję ``pass`` zastępujemy kodem:
+Wykorzystajmy przygotowane funkcje w programie głównym. Na początku pliku :file:`extra_lotek.py`
+importujemy dodane funkcje:
 
 .. raw:: html
 
@@ -219,8 +219,20 @@ instrukcję ``pass`` zastępujemy kodem:
 .. highlight:: python
 .. literalinclude:: extra_lotek.py
     :linenos:
-    :lineno-start: 9
-    :lines: 9-20
+    :lineno-start: 1
+    :lines: 1-2
+
+Następnie instrukcję ``pass`` zastępujemy poniższym kodem:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 7
+    :lines: 7-18
 
 Po pobraniu nicka z klawiatury wywołujemy funkcję ``wczytaj_ustawienia()``, która zwróci listę
 z odczytanymi danymi lub wartość ``False``. W instrukcji warunkowej, jeżeli lista nie jest pusta,
@@ -231,6 +243,7 @@ Jeżeli nie udało się odczytać danych (``not dane``) lub jeżeli użytkownik 
 funkcję ``zapisz_ustawienia()``, która zapisuje listę ``dane`` zawierającą nick i pozostałe informacje.
 
 W kolejnej instrukcji przypisujemy elementy listy ``dane`` do osobnych zmiennych.
+Do wskazania poszczególnych elementów listy używamy notacji wycinkowej.
 Instrukcja ``[int(x) for x in dane[1:4]]`` to :term:`wyrażenie listowe`. Można je rozumieć
 jako skrócony zapis pętli ``for``, która odczytuje trzy ostatnie elementy listy ``dane[1:4]``,
 zamienia je na liczby całkowite ``int(x)`` i tworzy nową listę. Jej elementy to liczby
@@ -252,100 +265,42 @@ umieszczamy w module :file:`modul_lotek.py`:
     :lineno-start: 44
     :lines: 44-85
 
-Warto zauważyć, że funkcja może zwracać więcej niż jedną wartość naraz,
-np. w postaci krotki ``return (ile, maks, ilelos)`` (zob. :term:`krotka`).
+Dodane instrukcje to kod omówiony w scenariuszu :ref:`Duży lotek <duzy-lotek>`_ przekształcony
+na funkcje. Warto zwrócic uwagę, że zwracają one wartości, tj. listę wylosowanych liczb ``liczby``,
+zbiór typów użytkownika ``typy`` oraz liczbę trafień ``len(trafione)``.
 
-Wiele wartości zwracanych w krotce można jednocześnie przypisać
-kilku zmiennym dzięki operacji tzw. **rozpakowania krotki**:
-``ileliczb, maksliczba, ilerazy = ustawienia()``. Należy jednak
-pamiętać, aby liczba zmiennych z lewej strony wyrażenia odpowiadała liczbie
-elementów w krotki.
+Następnie w programie głównym uzupełniamy importy na początku pliku:
 
-Ćwiczenie
-==========
+.. raw:: html
 
-* Przenieś kod powtarzany w pętli ``for`` (linie 17-24) do funkcji zapisanej w module
-  programu.Wywołanie funkcji: ``iletraf = wyniki(set(liczby), typy)`` umieść w linii 17
-  programu głównego. Wykorzystaj szkielet funkcji:
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-.. code-block:: python
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 1
+    :lines: 1-3
+    :emphasize-lines: 2
 
-    def wyniki(liczby, typy):
-        """Funkcja porównuje wylosowane i wytypowane liczby,
-        zwraca ilość trafień"""
-        ...
+Następnie dopisujemy kod w funkcji głównej przed instrukcją ``return 0``:
 
-        return len(trafione)
+.. raw:: html
 
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-* Popraw wyświetlanie listy trafionych liczb. W funkcji ``wyniki()`` przed instrukcją
-  ``print("Trafione liczby: %s" % trafione``) wstaw:
-  ``trafione = ", ".join(map(str, trafione))``.
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 19
+    :lines: 19-25
 
-  Funkcja ``map()`` (zob. :ref:`mapowanie funkcji <map-fun>`) pozwala na zastosowanie
-  jakiejś innej funkcji, w tym wypadku ``str`` (czyli konwersji na napis),
-  do każdego elementu sekwencji, w tym wypadku zbioru ``trafione``.
+Po wylosowaniu liczb wykorzystujemy pętlę ``for i in range(ile_typowan)``, aby użytkownik mógł kilka razy typować liczby.
+Wewnątrz pętli pobieramy typy, sprawdzamy i wypisujemy wyniki. Jeżeli liczba odgadniętych liczb,
+czyli wartość zwrócona przez funkcję ``wypisz_wyniki()`` równa jest liczbie losowanych liczb, kończymy
+pętlę instrukcją ``break``.
 
-  Metoda napisów ``join()`` pozwala połączyć elementy listy (muszą być typu *string*)
-  podanymi znakami, np. przecinkami (``", "``).
-
-
-**Operacje na plikach**:
-
-* ``plik = open(nazwapliku, tryb)`` – otwarcie pliku w trybie ``"w"`` (zapis), "r" (odczyt) lub "a" (dopisywanie);
-* ``plik.readline()`` – odczytanie pojedynczej linii z pliku;
-* ``plik.write(napis)`` – zapisanie podanego napisu do pliku;
-* ``plik.close()`` – zamknięcie pliku.
-
-**Operacje na tekstach**:
-
-* operator ``+``: konkatenacja, czyli łączenie tekstów,
-* ``linia.split(";")`` – rozbijanie tekstu wg podanego znaku na elementy listy,
-* ``";".join(gracz)`` – wspomniane już złączanie elementów listy za pomocą podanego znaku,
-* ``odp.lower()`` – zmiana wszystkich znaków na małe litery,
-* ``str(arg)`` – przekształcanie podanego argumentu na typ tekstowy.
-
-W funkcji ``ustawienia()`` pobieramy nick użytkownika i tworzymy nazwę pliku
-z ustawieniami, następnie próbujemy je odczytać wywołując funkcję ``czytaj_ust()``.
-Funkcja ta sprawdza, czy podany plik istnieje na dysku i otwiera go do odczytu.
-Plik powinien zawierać 1 linię, która przechowuje ustawienia w formacie:
-``nick;ile_liczb;maks_liczba;ile_prób``. Po jej odczytaniu i rozbiciu na elementy
-(``linia.split(";")``) zwracamy ją jako listę ``gracz``.
-
-Jeżeli uda się odczytać zapisane ustawienia, pytamy użytkownika,
-czy chce je zmienić. Jeżeli brak ustawień lub użytkownik chce je zmienić,
-pobieramy informacje, tworzymy z nich listę i przekazujemy do zapisania:
-``zapisz_ust(nazwapliku, gracz)``.
-
-Ponieważ w programie głównym oczekujemy, że funkcja ``ustawienia()``
-zwróci dane typu *napis, liczba, liczba, liczba* – używamy konstrukcji:
-``return gracz[0:1] + [int(x) for x in gracz[1:4]]``.
-
-Na początku za pomocą notacji wycinkowej (ang. *slice*, :term:`notacja wycinkowa`)
-tworzymy 1-elementową listę zawierającą nick użytkownika (``gracz[0:1]``).
-Pozostałe elementy z listy ``gracz`` (``gracz[1:4]``) umieszczamy w wyrażeniu listowym
-(:term:`wyrażenie listowe`). Przy użyciu pętli przekształca ono każdy element
-na liczbę całkowitą i umieszcza w nowej liście.
-
-Na końcu operator ``+`` ponownie tworzy nową listę, która zawiera wartości oczekiwanych typów.
-
-Ćwiczenie
-=========
-
-Przećwicz w konsoli notację wycinkową, wyrażenia listowe i łączenie list:
-
-.. code-block:: bash
-
-    ~$ python3
-    >>> dane = ['a', 'b', 'c', '1', '2', '3']
-    >>> dane[0:3]
-    >>> dane[3:6]
-    >>> duze = [x.upper() for x in dane[0:3]]
-    >>> kwadraty = [int(x)**2 for x in dane[3:6]]
-    >>> duze + kwadraty
-
-Słowniki
-******************
+Słowniki i serializacja danych
+*******************************
 
 Skoro umiemy już zapamiętywać wstępne ustawienia programu, możemy również
 zapamiętywać losowania użytkownika, tworząc rejestr do celów informacyjnych
@@ -416,33 +371,45 @@ o ich właściwe zamknięcie.
 
 Przetestuj, przynajmniej kilkukrotnie, działanie programu.
 
-Ćwiczenie
-==============
+Ćwiczenia
+*********
 
-Załóżmy, że jednak chcielibyśmy zapisywać historię losowań w pliku tekstowym,
-którego poszczególne linie zawierałyby dane jednego losowania, np.:
-``wylosowane:[4, 5, 7];dane:(3, 10);ile:0;czas:1434482711.67``
+1) Przećwicz w konsoli notację wycinkową, wyrażenia listowe i łączenie list:
 
-Funkcja zapisująca dane mogłaby wyglądać np. tak:
+.. code-block:: bash
 
-.. raw:: html
+    ~$ python3
+    >>> dane = ['a', 'b', 'c', '1', '2', '3']
+    >>> dane[0:3]
+    >>> dane[3:6]
+    >>> duze = [x.upper() for x in dane[0:3]]
+    >>> kwadraty = [int(x)**2 for x in dane[3:6]]
+    >>> duze + kwadraty
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+2) Załóżmy, że jednak chcielibyśmy zapisywać historię losowań w pliku tekstowym,
+   którego poszczególne linie zawierałyby dane jednego losowania, np.:
+   ``wylosowane:[4, 5, 7];dane:(3, 10);ile:0;czas:1434482711.67``
 
-.. code-block:: python
+   Funkcja zapisująca dane mogłaby wyglądać np. tak:
 
-    def zapisz_str(nazwapliku, dane):
-        """Funkcja zapisuje dane w formacie txt do pliku"""
-        with open(nazwapliku, "w") as plik:
-            for slownik in dane:
-                linia = [k + ":" + str(w) for k, w in slownik.iteritems()]
-                linia = ";".join(linia)
-                # plik.write(linia+"\n") – zamiast tak, można:
-                print >>plik, linia
+   .. raw:: html
 
-Napisz funkcję ``czytaj_str()`` odczytującą tak zapisane dane. Funkcja
-powinna zwrócić listę słowników.
+       <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+   .. code-block:: python
+
+       def zapisz_str(nazwapliku, dane):
+           """Funkcja zapisuje dane w formacie txt do pliku"""
+           with open(nazwapliku, "w") as plik:
+               for slownik in dane:
+                   linia = [k + ":" + str(w) for k, w in slownik.iteritems()]
+                   linia = ";".join(linia)
+                   # plik.write(linia+"\n") – zamiast tak, można:
+                   print >>plik, linia
+
+   Napisz funkcję ``czytaj_str()`` odczytującą tak zapisane dane. Funkcja
+   powinna zwrócić listę słowników.
 
 .. admonition:: Pojęcia
 
-    :term:`funkcja`, :term:`moduł`
+    :term:`funkcja`, :term:`moduł`, :term:`notacja wycinkowa`, :term:`serializacja`

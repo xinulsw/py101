@@ -1,7 +1,5 @@
-from modul_lotek import wczytaj_ustawienia
-from modul_lotek import pobierz_ustawienia, zapisz_ustawienia
-from modul_lotek import losuj_liczby, pobierz_typy
-from modul_lotek import wypisz_wyniki
+from modul_lotek import wczytaj_ustawienia, pobierz_ustawienia, zapisz_ustawienia
+from modul_lotek import losuj_liczby, pobierz_typy, wypisz_wyniki
 
 
 def main(args):

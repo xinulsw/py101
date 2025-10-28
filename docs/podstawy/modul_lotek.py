@@ -52,7 +52,7 @@ def losuj_liczby(n, maks):
 
 
 def pobierz_typy(n, maks):
-    """Funkcja pobiera od użytkownika jego typy wylosowanych liczb"""
+    """Funkcja pobiera od użytkownika typy wylosowanych liczb"""
     print(f'Wytypuj {n} z {maks} liczb: ')
     typy = set()
     error = False
@@ -67,24 +67,24 @@ def pobierz_typy(n, maks):
         if error:
             print('Błędne dane!')
             continue
-
         typy.add(typ)
-
     return typy
 
 def wypisz_wyniki(liczby, typy):
-    print('\nWylosowane liczby:', liczby)
+    print()
     trafione = set(liczby) & typy
     if trafione:
         print(f'Trafione liczby: {trafione}')
         print(f'Liczba trafień {len(trafione)}')
     else:
         print('Brak trafień. Spróbuj jeszcze raz!')
+
+    print('Wylosowane liczby:', liczby)
     print()
     return len(trafione)
 
 
-def czytaj_json(nazwapliku):
+def wczytaj_json(nazwapliku):
     """Funkcja odczytuje dane w formacie json z pliku"""
     dane = []
     if os.path.isfile(nazwapliku):
