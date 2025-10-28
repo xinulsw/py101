@@ -23,6 +23,9 @@ def main(args):
         if wypisz_wyniki(liczby, typy) == n:
             break
 
+    from datetime import datetime
+    losowanie = {'czas': datetime.now()}
+    print(losowanie)
     return 0
 
 if __name__ == '__main__':

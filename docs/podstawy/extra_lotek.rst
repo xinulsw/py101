@@ -299,14 +299,23 @@ Wewnątrz pętli pobieramy typy, sprawdzamy i wypisujemy wyniki. Jeżeli liczba 
 czyli wartość zwrócona przez funkcję ``wypisz_wyniki()`` równa jest liczbie losowanych liczb, kończymy
 pętlę instrukcją ``break``.
 
-Słowniki i serializacja danych
-*******************************
+Historia typowań
+*******************
 
 Skoro umiemy już zapamiętywać wstępne ustawienia programu, możemy również
-zapamiętywać losowania użytkownika, tworząc rejestr do celów informacyjnych
-i/lub statystycznych. Zadanie wymaga po pierwsze zdefiniowania jakieś struktury,
-w której będziemy przechowywali dane, po drugie zapisu danych albo w plikach,
-albo w bazie danych.
+zapamiętywać losowania i typowania użytkownika, tworząc rejestr do celów informacyjnych
+i/lub statystycznych. Przyjmijmy, że będziemy zapisywali dane ostatniego typowania
+i będą one zawierały:
+
+* ``czas`` – data typowania,
+* ``ustawienia`` – krotka z liczbą losowanych liczb, liczbą maksymalną i liczbą typowań,
+* ``wylosowane`` – krotka z wylosowanymi liczbami,
+* ``trafione`` – krotka z trafionymi liczbami.
+
+Do przechowywania tych informacji wykorzystamy słownik, w którym kluczami będą nazwy danych.
+Przykładowy słownik będzie wyglądał następująco:
+
+losowanie = {'czas': }
 
 Na początku dopiszemy kod w programie głównym :file:`toto2.py`:
 
@@ -329,10 +338,7 @@ zainicjujemy danymi o grach zapisanymi wcześniej: ``losowania = czytaj(nazwapli
 Każda gra w liście ``losowania`` to :term:`słownik`. Struktura ta pozwala
 przechowywać dane w parach "klucz: wartość", przy czym indeksami mogą być napisy:
 
-* ``"czas"`` – będzie indeksem daty gry (potrzebny import modułu ``time``!),
-* ``"dane"`` – będzie wskazywał tuplę z ustawieniami,
-* ``"wylosowane"`` – listę wylosowanych liczb,
-* ``"ile"`` – ilość trafień.
+
 
 Na koniec dane ostatniej gry dopiszemy do listy (``losowania.append()``),
 a całą listę zapiszemy do pliku: ``zapisz(nazwapliku, losowania)``.
