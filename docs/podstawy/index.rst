@@ -3,7 +3,7 @@
 Podstawy Pythona
 #################
 
-Poznawanie Pythona zrealizujemy poprzez rozwiązywanie prostych zadań,
+Poznawanie Pythona zrealizujemy poprzez rozwiązywanie zadań,
 które pozwolą zaprezentować możliwości tego języka.
 
 .. tip::

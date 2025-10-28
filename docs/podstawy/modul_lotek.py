@@ -8,7 +8,7 @@ def wczytaj_ustawienia(nick):
     if os.path.isfile(nazwa_pliku):
         with open(nazwa_pliku) as plik:
             wiersz = plik.readline()
-            dane = wiersz.split(';')
+            dane = wiersz.strip().split(';')
             return dane
     return False
 
@@ -20,7 +20,7 @@ def pobierz_ustawienia(nick):
             n = int(input('Podaj liczbę losowanych liczb: '))
             maks = int(input('Podaj maksymalną losowaną liczbę: '))
             ile_typowan = int(input('Podaj liczbę typowań: '))
-            if n >= maks:
+            if n >= maks or ile_typowan < 1:
                 error = True
         except ValueError:
             error = True
@@ -31,7 +31,7 @@ def pobierz_ustawienia(nick):
         else:
             break  # dane poprawne
 
-    dane = [nick, str(n), str(maks), str(ile_typowan)]
+    dane = [nick, n, maks, ile_typowan]
     return dane
 
 
@@ -79,21 +79,22 @@ def wypisz_wyniki(liczby, typy):
     else:
         print('Brak trafień. Spróbuj jeszcze raz!')
 
-    print('Wylosowane liczby:', liczby)
     print()
     return len(trafione)
 
 
-def wczytaj_json(nazwapliku):
+def wczytaj_dane(nick):
     """Funkcja odczytuje dane w formacie json z pliku"""
+    nazwa_pliku = nick + '.json'
     dane = []
-    if os.path.isfile(nazwapliku):
-        with open(nazwapliku, "r") as plik:
+    if os.path.isfile(nazwa_pliku):
+        with open(nazwa_pliku, 'r') as plik:
             dane = json.load(plik)
     return dane
 
 
-def zapisz_json(nazwapliku, dane):
+def zapisz_dane(nick, dane):
     """Funkcja zapisuje dane w formacie json do pliku"""
-    with open(nazwapliku, "w") as plik:
+    nazwa_pliku = nick + '.json'
+    with open(nazwa_pliku, 'w') as plik:
         json.dump(dane, plik)

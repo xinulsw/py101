@@ -155,8 +155,9 @@ w ścieżce przeszukiwania, czyli w praktyce w katalogu naszego programu główn
 w domyślnym trybie "do odczytu" – ``with open(nazwa_pliku) as plik:`` – i udostępniamy w zmiennej ``plik``.
 
 Plik zawiera jeden wiersz w formacie ``nick;liczba losowanych liczb;maksymalna liczba;liczba typowań``.
-Do jego odczytania używamy metody ``readline()``. Otrzymany ciąg znaków dzielimy za pomocą
-metody ``split()`` i znaku średnika na części, które zwracana są w postaci listy ``dane``.
+Do jego odczytania używamy metody ``readline()``. Z otrzymanego ciągu znaków usuwamy znaki końca wiersza
+przy użyciu metody ``strip()``. Następnie dzielimy tekst za pomocą metody ``split()`` i znaku średnika na części,
+które zwracane są w postaci listy ``dane``.
 
 Pobieranie ustawień
 --------------------
@@ -172,7 +173,7 @@ będzie pobieranie danych wejściowych z klawiatury:
 .. literalinclude:: modul_lotek.py
     :linenos:
     :lineno-start: 16
-    :lines: 16-37
+    :lines: 16-36
 
 Funkcja ``pobierz_ustawienia()`` wykorzystuje nieskończoną pętlę warunkową ``while True``,
 w której pobierane są kolejne dane wejściowe. W przypadku podania błędnych danych pętla zaczyna działanie od początku
@@ -181,7 +182,8 @@ dzięki instrukcji ``continue``, jeżeli dane są poprawne przerywamy działanie
 
 .. note::
 
-    Wyjaśnienie instrukcji ``try ... except`` znajdziesz w materiale :ref:`Duży lotek <duzy_lotek>`_.
+    Wyjaśnienie instrukcji ``try ... except`` znajdziesz w materiale :ref:`Duży lotek <duzy-lotek>`
+    w sekcji "Poprawność danych".
 
 Zapisywanie ustawień
 --------------------
@@ -204,7 +206,7 @@ Początek funkcji jest prawie identyczny jak w funkcji ``wczytaj_ustawienia()`` 
 W efekcie, jeżeli pliku nie ma na dysku – zostanie zapisany, jeżeli jest – zostanie nadpisany.
 Parametr ``dane`` jest 4-elementową listą zawierająca pobrane od użytkownika lub odczytane z dysku
 dane wejściowe. Dane te łączymy za pomocą metody ``join()`` i znaku średnika. Otrzymany ciąg znaków
-uzupełniamy znakiem końca wiersza i zapisujemy w pliku za pomocą metody ``.write()``.
+uzupełniamy znakiem końca wiersza ``\n`` i zapisujemy w pliku za pomocą metody ``.write()``.
 
 Dane wejściowe
 **************
@@ -220,7 +222,7 @@ importujemy dodane funkcje:
 .. literalinclude:: extra_lotek.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-2
+    :lines: 1
 
 Następnie instrukcję ``pass`` zastępujemy poniższym kodem:
 
@@ -232,14 +234,14 @@ Następnie instrukcję ``pass`` zastępujemy poniższym kodem:
 .. literalinclude:: extra_lotek.py
     :linenos:
     :lineno-start: 7
-    :lines: 7-18
+    :lines: 9-20
 
 Po pobraniu nicka z klawiatury wywołujemy funkcję ``wczytaj_ustawienia()``, która zwróci listę
-z odczytanymi danymi lub wartość ``False``. W instrukcji warunkowej, jeżeli lista nie jest pusta,
-wypisujemy dane poza nickiem.
+z odczytanymi danymi lub wartość ``False``. W instrukcji warunkowej, jeżeli lista nie jest pusta
+(``if dane:``), wypisujemy dane oprócz nicka.
 
-Jeżeli nie udało się odczytać danych (``not dane``) lub jeżeli użytkownik chce zmienić odczytane dane
-(``input('Zmieniasz (t/n)? ').lower() == 't'``), wywołujemy funkcję ``pobierz_dane()``, a następnie
+Jeżeli nie udało się odczytać danych (``if not dane``) lub jeżeli użytkownik chce zmienić odczytane dane
+(``or input('Zmieniasz (t/n)? ').lower() == 't'``), wywołujemy funkcję ``pobierz_dane()``, a następnie
 funkcję ``zapisz_ustawienia()``, która zapisuje listę ``dane`` zawierającą nick i pozostałe informacje.
 
 W kolejnej instrukcji przypisujemy elementy listy ``dane`` do osobnych zmiennych.
@@ -263,10 +265,10 @@ umieszczamy w module :file:`modul_lotek.py`:
 .. literalinclude:: modul_lotek.py
     :linenos:
     :lineno-start: 44
-    :lines: 44-85
+    :lines: 44-84
 
-Dodane instrukcje to kod omówiony w scenariuszu :ref:`Duży lotek <duzy-lotek>`_ przekształcony
-na funkcje. Warto zwrócic uwagę, że zwracają one wartości, tj. listę wylosowanych liczb ``liczby``,
+Dodane instrukcje to kod omówiony w scenariuszu :ref:`Duży lotek <duzy-lotek>` przekształcony
+na funkcje. Warto zwrócić uwagę, że zwracają one wartości, tj. listę wylosowanych liczb ``liczby``,
 zbiór typów użytkownika ``typy`` oraz liczbę trafień ``len(trafione)``.
 
 Następnie w programie głównym uzupełniamy importy na początku pliku:
@@ -279,7 +281,7 @@ Następnie w programie głównym uzupełniamy importy na początku pliku:
 .. literalinclude:: extra_lotek.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-3
+    :lines: 1-2
     :emphasize-lines: 2
 
 Następnie dopisujemy kod w funkcji głównej przed instrukcją ``return 0``:
@@ -291,8 +293,8 @@ Następnie dopisujemy kod w funkcji głównej przed instrukcją ``return 0``:
 .. highlight:: python
 .. literalinclude:: extra_lotek.py
     :linenos:
-    :lineno-start: 19
-    :lines: 19-25
+    :lineno-start: 21
+    :lines: 21-30
 
 Po wylosowaniu liczb wykorzystujemy pętlę ``for i in range(ile_typowan)``, aby użytkownik mógł kilka razy typować liczby.
 Wewnątrz pętli pobieramy typy, sprawdzamy i wypisujemy wyniki. Jeżeli liczba odgadniętych liczb,
@@ -308,79 +310,87 @@ i/lub statystycznych. Przyjmijmy, że będziemy zapisywali dane ostatniego typow
 i będą one zawierały:
 
 * ``czas`` – data typowania,
+* ``n`` – liczba losowanych liczb,
+* ``maks`` – maksymalna losowana liczba,
+* ``ile_typowan`` – liczba typowań,
 * ``ustawienia`` – krotka z liczbą losowanych liczb, liczbą maksymalną i liczbą typowań,
 * ``wylosowane`` – krotka z wylosowanymi liczbami,
-* ``trafione`` – krotka z trafionymi liczbami.
+* ``ile_trafionych`` – liczba trafionych liczb.
 
 Do przechowywania tych informacji wykorzystamy słownik, w którym kluczami będą nazwy danych.
-Przykładowy słownik będzie wyglądał następująco:
 
-losowanie = {'czas': }
-
-Na początku dopiszemy kod w programie głównym :file:`toto2.py`:
+Zaczniemy od dodania dwóch funkcji w pliku modułu:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>modul_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
-.. literalinclude:: toto33.py
+.. literalinclude:: modul_lotek.py
     :linenos:
-    :emphasize-lines: 4-6, 19-31
-    :lineno-start: 1
-    :lines: 1-
+    :lineno-start: 86
+    :lines: 86-100
 
-Dane graczy zapisywać będziemy w plikach nazwanych nickiem użytkownika
-z rozszerzeniem ".json": ``nazwapliku = nick + ".json"``.
-Informacje o grach umieścimy w liście ``losowania``, którą na początku
-zainicjujemy danymi o grach zapisanymi wcześniej: ``losowania = czytaj(nazwapliku)``.
-
-Każda gra w liście ``losowania`` to :term:`słownik`. Struktura ta pozwala
-przechowywać dane w parach "klucz: wartość", przy czym indeksami mogą być napisy:
-
-
-
-Na koniec dane ostatniej gry dopiszemy do listy (``losowania.append()``),
-a całą listę zapiszemy do pliku: ``zapisz(nazwapliku, losowania)``.
-
-Teraz zobaczmy, jak wyglądają funkcje ``czytaj_json()`` i ``zapisz_json()`` w module
-:file:`totomodul.py`:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: totomodul33.py
-    :linenos:
-    :lineno-start: 102
-    :lines: 102-
-
-Kiedy czytamy i zapisujemy dane, ważną sprawą staje się ich format. Najprościej
+Kiedy czytamy i zapisujemy dane w plikach, ważną sprawą staje się ich format. Najprościej
 zapisywać dane jako znaki, tak jak zrobiliśmy to z ustawieniami, jednak często
 programy użytkowe potrzebują zapisywać złożone struktury danych, np.
 listy, zbiory czy słowniki. Znakowy zapis wymagałby wtedy wielu dodatkowych
 manipulacji, aby możliwe było poprawne odtworzenie informacji. Prościej
 jest skorzystać z *serializacji*, czyli zapisu danych obiektowych (zob. :term:`serializacja`).
-Często stosowany jest prosty format tekstowy `JSON <https://pl.wikipedia.org/wiki/JSON>`_.
+Często stosowany jest wtedy prosty format tekstowy `JSON <https://pl.wikipedia.org/wiki/JSON>`_.
 
-W funkcji ``czytaj()`` zawartość podanego pliki dekodujemy do listy: ``dane = json.load(plik)``.
-Funkcja ``zapisz()`` oprócz nazwy pliku wymaga listy danych. Po otwarciu
-pliku w trybie zapisu ``"w"``, co powoduje wyczyszczenie jego zawartości,
-dane są serializowane i zapisywane formacie JSON: ``json.dump(dane, plik)``.
+W funkcji ``wczytaj_dane()`` zawartość pliku o podanej nazwie dekoduje do listy: ``dane = json.load(plik)``,
+która jest zwracana. Funkcja ``zapisz_dane()`` otwiera plik o podanej nazwie w trybie do zapisu
+i zapisuje podaną listę danych w formacie JSON: ``json.dump(dane, plik)``. Ewentualne dane znajdujące się
+w pliku są nadpisywane.
 
-Dobrą praktyką jest zwalnianie uchwytu do otwartego pliku i przydzielonych mu zasobów
-poprzez jego zamknięcie: ``plik.close()``. Tak robiliśmy w funkcjach
-czytających i zapisujących ustawienia. Teraz jednak pliki otworzyliśmy przy
-użyciu konstrukcji typu ``with open(nazwapliku, "r") as plik:``, która zadba
-o ich właściwe zamknięcie.
+Pozostaje nam wykorzystać przygotowane funkcje w programie głównym. Na początku dodajemy importy:
 
-Przetestuj, przynajmniej kilkukrotnie, działanie programu.
+.. raw:: html
+
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 1
+    :lines: 1-3
+    :emphasize-lines: 3
+
+Dalej na końcu funkcji ``main()``, ale przed instrukcją ``return 0`` dopisujemy:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>extra_lotek.py</i><span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. highlight:: python
+.. literalinclude:: extra_lotek.py
+    :linenos:
+    :lineno-start: 31
+    :lines: 31-42
+
+Do zmiennej ``losowania`` przypisujemy listę zwróconą przez funkcję ``wczytaj_dane()``.
+Następnie tworzymy słownik ``losowanie``, zawierający wszystkie omówione wyżej dane aktualnej "gry".
+Na uwagę zasługuje obsługa daty i czasu przy użyciu metod z podmodułu ``datetime``:
+
+* ``now()`` – metoda zwraca obiekt reprezentujący aktualną datę i czas,
+* ``strftime()`` – metoda pozwala przekształcić obiekt w ciąg znaków według ciągu formatującego
+  '%d.%m.%Y %H:%M:%S', który oznacza zapis w postaci ``dzień.miesiąc.rok godzina:minuta:sekunda``,
+  np.: ``21.10.2025 16:07:23``.
+
+.. note::
+
+    Serializacja JSON nie obsługuje obiektów typu ``datetime``, dlatego trzeba je zamieniać
+    na ciąg znaków. Alternatywnie do pokazanego wyżej sposobu można użyć metody zwracającej
+    datę w formacie ISO 8601, np. ``datetime.now().isoformat()``.
+
+Przygotowany słownik dodajemy do listy słowników: ``losowania.append(losowanie)``,
+którą wypisujemy w celach poglądowych ;-) i zapisujemy za pomocą funkcji ``zapisz_dane()``.
 
 Ćwiczenia
 *********
 
-1) Przećwicz w konsoli notację wycinkową, wyrażenia listowe i łączenie list:
+1) Przećwicz w trybie interaktywnym notację wycinkową, wyrażenia listowe i łączenie list:
 
 .. code-block:: bash
 
@@ -392,29 +402,39 @@ Przetestuj, przynajmniej kilkukrotnie, działanie programu.
     >>> kwadraty = [int(x)**2 for x in dane[3:6]]
     >>> duze + kwadraty
 
-2) Załóżmy, że jednak chcielibyśmy zapisywać historię losowań w pliku tekstowym,
+2) Sprawdź w trybie interaktywnym, jak wygląda znakowa reprezentacja aktualnej daty i czasu
+   w formacie ISO 8601.
+
+3) Załóżmy, że jednak chcielibyśmy zapisywać historię losowań w pliku tekstowym,
    którego poszczególne linie zawierałyby dane jednego losowania, np.:
-   ``wylosowane:[4, 5, 7];dane:(3, 10);ile:0;czas:1434482711.67``
+   ``czas:2025-10-28T15:31:27.047438;n:2;maks:10;ile_typowan:2;wylosowane:(5, 7);trafionych:2``
 
    Funkcja zapisująca dane mogłaby wyglądać np. tak:
 
    .. raw:: html
 
-       <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+      <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-   .. code-block:: python
+   .. code:: python
 
-       def zapisz_str(nazwapliku, dane):
+       def zapisz_txt(nick, dane):
            """Funkcja zapisuje dane w formacie txt do pliku"""
+           nazwa_pliku = nick + "_losowania.txt"
            with open(nazwapliku, "w") as plik:
                for slownik in dane:
-                   linia = [k + ":" + str(w) for k, w in slownik.iteritems()]
-                   linia = ";".join(linia)
-                   # plik.write(linia+"\n") – zamiast tak, można:
-                   print >>plik, linia
+                   wiersz = [k + ":" + str(w) for k, w in slownik.iteritems()]
+                   wiersz = ";".join(wiersz)
+                   print >>plik, wiersz + '\n'
 
-   Napisz funkcję ``czytaj_str()`` odczytującą tak zapisane dane. Funkcja
-   powinna zwrócić listę słowników.
+
+   Napisz funkcję ``czytaj_txt()`` odczytującą tak zapisane dane, która zwraca listę słowników.
+
+   Użyj obydwu funkcji w programie ``extra_lotek.py`` tak, aby wypisywane były dane zwracane
+   przez funkcję ``zapisz_txt()``.
+
+    .. tip::
+
+        Nie musisz zastępować funkcji zapisujących dane w formacie JSON.
 
 .. admonition:: Pojęcia
 
