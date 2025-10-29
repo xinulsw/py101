@@ -30,9 +30,9 @@ w Pythona modułu *sqlite3* zrealizować przy użyciu technik ORM.
     Ze względu na przejrzystość i poglądowość instrukcji nie wgłębiamy
     się w techniczne różnice w implementacji technik ORM w obydwu
     rozwiązaniach. Poznanie ich interfejsu jest wystarczające, aby
-    efektywnie obsługiwać bazy danych. Co ciekawe, dopóki używamy
+    efektywnie obsługiwać bazy danych. Dopóki używamy
     bazy SQLite3, systemy ORM można traktować jako swego rodzaju
-    nakładkę na owmówiony wyżej moduł *sqlite3* wbudowany w Pythona.
+    nakładkę na omówiony wyżej moduł *sqlite3* wbudowany w Pythona.
 
 Połączenie z bazą
 ***********************

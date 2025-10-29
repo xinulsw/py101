@@ -1,11 +1,9 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 from peewee import *
 
 if os.path.exists('test.db'):
     os.remove('test.db')
+
 # tworzymy instancję bazy używanej przez modele
 baza = SqliteDatabase('test.db')  # ':memory:'
 
@@ -29,7 +27,7 @@ class Uczen(BazaModel):
 
 
 baza.connect()  # nawiązujemy połączenie z bazą
-baza.create_tables([Klasa, Uczen], True)  # tworzymy tabele
+baza.create_tables([Klasa, Uczen])  # tworzymy tabele
 
 # dodajemy dwie klasy, jeżeli tabela jest pusta
 if Klasa().select().count() == 0:

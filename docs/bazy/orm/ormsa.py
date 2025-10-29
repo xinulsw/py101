@@ -1,15 +1,13 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session
 
 if os.path.exists('test.db'):
     os.remove('test.db')
 # tworzymy instancję klasy Engine do obsługi bazy
-baza = create_engine('sqlite:///test.db')  # ':memory:'
+baza = create_engine('sqlite:///test.db', echo=True)  # ':memory:'
 
 # klasa bazowa
 BazaModel = declarative_base()
@@ -37,8 +35,8 @@ class Uczen(BazaModel):
 BazaModel.metadata.create_all(baza)
 
 # tworzymy sesję, która przechowuje obiekty i umożliwia "rozmowę" z bazą
-BDSesja = sessionmaker(bind=baza)
-sesja = BDSesja()
+# BDSesja = sessionmaker(bind=baza)
+sesja = Session(baza)
 
 # dodajemy dwie klasy, jeżeli tabela jest pusta
 if not sesja.query(Klasa).count():
@@ -70,7 +68,7 @@ inst_uczen.klasa_id = sesja.query(Klasa.id).filter(
     Klasa.nazwa == '1B').scalar()
 
 # usunięcie ucznia o identyfikatorze 3
-sesja.delete(sesja.query(Uczen).get(3))
+sesja.delete(sesja.get(Uczen, 3))
 
 czytajdane()
 
