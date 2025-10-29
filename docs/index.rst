@@ -6,8 +6,7 @@ Python – materiały
     Niniejsze materiały to zaktualizowane i zmienione wersje szkoleń z języka Python
     przygotowanych i realizowanych w ramach projektu `Koduj z Klasą <http://www.ceo.org.pl/koduj>`_
     prowadzonego przez Fundację `Centrum Edukacji Obywatelskiej <http://www.ceo.org.pl/>`_.
-    Zobacz: `oryginalne repozytorium <https://github.com/koduj-z-klasa/python101/>`_
-    i `wersję HTML dokumentacji <http://python101.rtfd.io>`_.
+    Zobacz: `repozytorium <https://github.com/koduj-z-klasa/python101/>`_.
 
     Początkowe materiały zakładały wykorzystanie języka Python w wersji 2.
     W wersji obecnej wszędzie, gdzie to możliwe, używany jest Python 3.

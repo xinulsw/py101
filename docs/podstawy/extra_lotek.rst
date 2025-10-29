@@ -40,7 +40,7 @@ Realizację kolejnych zadań zakoduj w funkcjach umieszczonych w module.
 
 Komunikaty podczas pierwszego uruchomienia:
 
-.. note::
+.. code::
 
     Podaj nick: adam
     Podaj liczbę losowanych liczb: 3
@@ -57,7 +57,7 @@ Komunikaty podczas pierwszego uruchomienia:
 
 Początkowe komunikaty po kolejnym uruchomieniu przez tego samego użytkownika:
 
-.. note::
+.. code::
 
     Podaj nick: adam
     Ustawienia:
@@ -375,7 +375,7 @@ Na uwagę zasługuje obsługa daty i czasu przy użyciu metod z podmodułu ``dat
 
 * ``now()`` – metoda zwraca obiekt reprezentujący aktualną datę i czas,
 * ``strftime()`` – metoda pozwala przekształcić obiekt w ciąg znaków według ciągu formatującego
-  '%d.%m.%Y %H:%M:%S', który oznacza zapis w postaci ``dzień.miesiąc.rok godzina:minuta:sekunda``,
+  ``%d.%m.%Y %H:%M:%S``, który oznacza zapis w postaci ``dzień.miesiąc.rok godzina:minuta:sekunda``,
   np.: ``21.10.2025 16:07:23``.
 
 .. note::
@@ -407,6 +407,7 @@ którą wypisujemy w celach poglądowych ;-) i zapisujemy za pomocą funkcji ``z
 
 3) Załóżmy, że jednak chcielibyśmy zapisywać historię losowań w pliku tekstowym,
    którego poszczególne linie zawierałyby dane jednego losowania, np.:
+
    ``czas:2025-10-28T15:31:27.047438;n:2;maks:10;ile_typowan:2;wylosowane:(5, 7);trafionych:2``
 
    Funkcja zapisująca dane mogłaby wyglądać np. tak:
