@@ -14,7 +14,7 @@ class Klasa(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     nazwa: Mapped[str] = mapped_column(String(100), nullable=False)
     profil: Mapped[str] = mapped_column(String(100), default='')
-    uczniowie: Mapped[List["Uczen"]] = relationship('Uczen', back_populates='klasa')
+    uczniowie: Mapped[List["Uczen"]] = relationship(back_populates='klasa')
 
 
 class Uczen(Base):
@@ -23,7 +23,7 @@ class Uczen(Base):
     imie: Mapped[str] = mapped_column(String(100), nullable=False)
     nazwisko: Mapped[str] = mapped_column(String(100), nullable=False)
     klasa_id: Mapped[int] = mapped_column(ForeignKey('klasa.id'), nullable=False)
-    klasa: Mapped["Klasa"] = relationship("Klasa", back_populates="uczniowie")
+    klasa: Mapped["Klasa"] = relationship(back_populates="uczniowie")
 
 
 if os.path.exists('test.db'):
