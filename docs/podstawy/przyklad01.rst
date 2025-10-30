@@ -22,12 +22,12 @@ Napisz program :file:`witaj.py`, który pobiera od użytkownika imię oraz rok u
 
 **Wynik**:
 
-* komunikaty wypisane na ekranie:
+* przykładowe komunikaty wypisane na ekranie:
 
 .. code::
 
-    Witaj *imie*! Mów mi Python.
-    Mam *wiek_py* lat*, ty masz wiek_u*.
+    Witaj Piotr! Mów mi Python.
+    Mam 36 lat, ty masz 17.
 
 .. tip::
 

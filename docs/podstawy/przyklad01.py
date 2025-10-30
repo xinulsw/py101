@@ -1,5 +1,5 @@
 # inicjalizujemy zmienne
-akt_rok = 2024
+akt_rok = 2025
 py_rok = 1989
 
 # pobieramy dane

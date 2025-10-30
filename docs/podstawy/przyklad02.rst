@@ -20,9 +20,9 @@ Uzupełnij program :file:`witaj.py` z :ref:`przykładu 1 <przyklad1>`, który po
 
     Witaj *imie*! Mów mi Python.
     Mam *wiek_py* lat, ty masz *wiek_u*.
-    Jestem starszy od ciebie!
+    Jestem starszy!
     lub:
-    Jestem młodszy od ciebie lub mamy tyle samo lat!
+    Jestem młodszy lub mamy tyle samo lat!
 
 .. raw:: html
 
@@ -59,8 +59,8 @@ Bloki kodu i wcięcia
 
    .. code-block::
 
-       Jestem starszy od ciebie.
-       Jestem młodszy od ciebie.
+       Jestem starszy.
+       Jestem młodszy.
        Mamy tyle samo lat.
 
 .. tip::
@@ -76,7 +76,7 @@ Bloki kodu i wcięcia
         if warunek_3:
             pass
 
-    Możesz użyć instrukcji warunkowych zagnieżdżonych:
+    Jednak lepiej użyć instrukcji warunkowych zagnieżdżonych:
 
     .. code-block::
 
@@ -88,7 +88,7 @@ Bloki kodu i wcięcia
             else:
                 pass
 
-    Możesz użyć jednej złożonej instrukcji warunkowej, w której sprawdzamy kolejne warunki za pomocą
+    A najlepiej użyć jednej złożonej instrukcji warunkowej, w której sprawdzamy kolejne warunki za pomocą
     słowa kluczowego ``elif``:
 
     .. code-block::
