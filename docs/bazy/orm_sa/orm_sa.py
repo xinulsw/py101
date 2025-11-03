@@ -4,11 +4,18 @@ from typing import List
 from sqlalchemy import ForeignKey, Integer, String, create_engine
 from sqlalchemy.orm import Session
 
-class Base(DeclarativeBase):
-  pass
+plik_bazy = 'test_sa.db'
+if os.path.exists(plik_bazy):
+    os.remove(plik_bazy)
 
-# klasy Klasa i Uczen opisują rekordy tabel "klasa" i "uczen"
-# oraz relacje między nimi
+# tworzymy instancję klasy Engine do obsługi bazy
+baza = create_engine('sqlite:///' + plik_bazy)  # ':memory:'
+
+# klasa bazowa dla modeli
+class Base(DeclarativeBase):
+    pass
+
+# klasy Klasa i Uczen opisują rekordy tabel "klasa" i "uczen" oraz relacje między nimi
 class Klasa(Base):
     __tablename__ = 'klasa'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -26,23 +33,10 @@ class Uczen(Base):
     klasa: Mapped["Klasa"] = relationship(back_populates="uczniowie")
 
 
-if os.path.exists('test.db'):
-    os.remove('test.db')
-# tworzymy instancję klasy Engine do obsługi bazy
-baza = create_engine('sqlite:///test.db', echo=True)  # ':memory:'
-
-# klasa bazowa
-BazaModel = declarative_base()
-
-
-
-
-
 # tworzymy tabele
-BazaModel.metadata.create_all(baza)
+Base.metadata.create_all(baza)
 
 # tworzymy sesję, która przechowuje obiekty i umożliwia "rozmowę" z bazą
-# BDSesja = sessionmaker(bind=baza)
 sesja = Session(baza)
 
 # dodajemy dwie klasy, jeżeli tabela jest pusta
@@ -59,7 +53,6 @@ sesja.add_all([
     Uczen(imie='Jan', nazwisko='Kos', klasa_id=inst_klasa.id),
     Uczen(imie='Piotr', nazwisko='Kowalski', klasa_id=inst_klasa.id),
 ])
-
 
 def czytajdane():
     for uczen in sesja.query(Uczen).join(Klasa).all():

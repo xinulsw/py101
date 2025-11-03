@@ -3,82 +3,74 @@
 Systemy ORM
 ##################
 
-.. contents::
-    :depth: 1
-    :local:
+Znajomość języka SQL jest oczywiście niezbędna, aby korzystać z wszystkich możliwości baz danych,
+niemniej w wielu projektach można je obsługiwać inaczej, tj. za pomocą systemów ORM (ang. *Object-Relational Mapping*
+– mapowanie obiektowo-relacyjne). Pozwalają one traktować tabele w sposób obiektowy,
+co bywa wygodniejsze w budowaniu logiki aplikacji.
 
-Znajomość języka SQL jest oczywiście niezbędna, aby korzystać z wszystkich
-możliwości baz danych, niemniej w wielu niespecjalistycznych projektach można
-je obsługiwać inaczej, tj. za pomocą systemów ORM (ang. Object-Relational Mapping
-– mapowanie obiektowo-relacyjne). Pozwalają one traktować tabele w sposób
-obiektowy, co bywa wygodniejsze w budowaniu logiki aplikacji.
+Używanie systemów ORM, takich jak :term:`Peewee` czy :term:`SQLAlchemy`, w prostych projektach
+sprowadza się do schematu, który poglądowo można opisać w trzech krokach:
 
-Używanie systemów ORM, takich jak :term:`Peewee` czy :term:`SQLAlchemy`,
-w prostych projektach sprowadza się do schematu, który poglądowo można opisać
-w trzech krokach:
-
-1. Nawiązanie połączenia z bazą
-2. Deklaracja modelu opisującego bazę i utworzenie struktury bazy
-3. Wykonywanie operacji :term:`CRUD`
+1. deklaracja modelu opisującego bazę
+2. utworzenie na podstawie modelu tabel w bazie,
+3. wykonywanie operacji :term:`CRUD`.
 
 Poniżej spróbujemy pokazać, jak operacje wykonywane przy użyciu wbudowanego
-w Pythona modułu *sqlite3* zrealizować przy użyciu technik ORM.
+w Pythona modułu *sqlite3* zrealizować przy użyciu biblioteki Peewee.
 
 .. note::
 
-    Wyjaśnienia podanego niżej kodu są w wielu miejscach uproszczone.
-    Ze względu na przejrzystość i poglądowość instrukcji nie wgłębiamy
-    się w techniczne różnice w implementacji technik ORM w obydwu
-    rozwiązaniach. Poznanie ich interfejsu jest wystarczające, aby
-    efektywnie obsługiwać bazy danych. Dopóki używamy
-    bazy SQLite3, systemy ORM można traktować jako swego rodzaju
-    nakładkę na omówiony wyżej moduł *sqlite3* wbudowany w Pythona.
+    Wyjaśnienia podanego niżej kodu są uproszczone ze względu na przejrzystość i poglądowość instrukcji.
+    Do używania systemów ORM wystarczające jest poznanie ich interfejsu API.
 
-Połączenie z bazą
-***********************
+Klasa bazowa
+************
 
-W ulubionym edytorze utwórz dwa puste pliki o nazwach :file:`ormpw.py` i :file:`ormsa.py`.
+W ulubionym edytorze utwórz dwa puste pliki o nazwach :file:`orm_pw.py` i :file:`orm_sa.py`.
 Pierwszy z nich zawierał będzie kod wykorzystujący ORM Peewee, drugi ORM SQLAlchemy.
 
 .. raw:: html
 
     <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormpw.py
+.. literalinclude:: orm_pw.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-15
+    :lines: 1-16
 
 .. raw:: html
 
     <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormsa.py
+.. literalinclude:: orm_sa.py
     :linenos:
     :lineno-start: 1
-    :lines: 1-15
+    :lines: 1-17
 
 W jednym i drugim przypadku importujemy najpierw potrzebne klasy.
-Następnie tworzymy instancje ``baza`` służące do nawiązania połączeń
-z bazą przechowywaną w pliku :file:`test.db`. Jeżeli zamiast nazwy pliku,
+Następnie tworzymy obiekt ``baza`` do obsługi bazy SQlite3 przechowywanej
+w zdefiniowanym pliku. Jeżeli zamiast nazwy pliku,
 podamy ``:memory:`` bazy umieszczone zostaną w pamięci RAM (przydatne
 podczas testowania).
 
+Do utworzenia modeli danych potrzebna będzie **klasa bazowa**. W przypadku systemu Peewee
+tworzymy ją w oparciu o klasę ``Model`` i w klasie ``Meta`` dodatkowo przypisujemy
+obiekt służący do komunikacji z bazą do atrybutu ``database``. W SqlAlchemy
+klasa bazowa tworzona jest w oparciu o klasę ``DeclarativeBase``.
+
+
 .. note::
 
-    Moduły ``os`` i ``sys`` nie są niezbędne do działania prezentowanego kodu,
-    ale można z nich skorzystać, kiedy chcemy sprawdzić obecność pliku na
-    dysku (``os.path.ispath()``) lub zatrzymać wykonywanie skryptu w dowolnym
-    miejscu (``sys.exit()``). W podanych przykładach usuwamy plik bazy,
-    jeżeli znajduje się na dysku, aby zapewnić bezproblemowe działanie
-    kompletnych skryptów.
+    Moduły ``os`` i ``sys`` nie są niezbędne do działania prezentowanego kodu.
+    W podanych przykładach usuwamy plik bazy, jeżeli znajduje się na dysku (``if os.path.ispath()``),
+    aby zapewnić bezproblemowe działanie podczas wielokrotnego uruchamiania skryptów.
 
-Model danych i baza
-***********************
+Model danych
+*************
 
 Przez model rozumiemy tutaj deklaracje klas i ich właściwości (atrybutów)
-opisujące obiekty, którymi się zajmujemy. Systemy ORM na podstawie klas tworzą
-odpowiednie tablice, pola, uwzględniając ich typy i powiązania.
+opisujące obiekty, które będą przechowywane w bazie. Systemy ORM na podstawie klas tworzą
+odpowiednie tabele i pola, uwzględniając ich typy i powiązania.
 Wzajemne powiązanie klas i ich właściwości z tabelami i kolumnami w bazie stanowi
 właśnie istotę mapowania relacyjno-obiektowego.
 
@@ -86,7 +78,7 @@ właśnie istotę mapowania relacyjno-obiektowego.
 
     <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormpw.py
+.. literalinclude:: orm_pw.py
     :linenos:
     :lineno-start: 18
     :lines: 18-32
@@ -95,7 +87,7 @@ właśnie istotę mapowania relacyjno-obiektowego.
 
     <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormsa.py
+.. literalinclude:: orm_sa.py
     :linenos:
     :lineno-start: 18
     :lines: 18-37
@@ -162,7 +154,7 @@ wykorzystujemy metody sesji, w ramach której komunikujemy się z bazą.
 
     <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormpw.py
+.. literalinclude:: orm_pw.py
     :linenos:
     :lineno-start: 34
     :lines: 34-63
@@ -171,7 +163,7 @@ wykorzystujemy metody sesji, w ramach której komunikujemy się z bazą.
 
     <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormsa.py
+.. literalinclude:: orm_sa.py
     :linenos:
     :lineno-start: 39
     :lines: 39-65
@@ -255,7 +247,7 @@ tabelę lub do usunięcia instancji danej klasy.
 
     <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormpw.py
+.. literalinclude:: orm_pw.py
     :linenos:
     :lineno-start: 65
     :lines: 65-
@@ -264,7 +256,7 @@ tabelę lub do usunięcia instancji danej klasy.
 
     <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: ormsa.py
+.. literalinclude:: orm_sa.py
     :linenos:
     :lineno-start: 67
     :lines: 67-

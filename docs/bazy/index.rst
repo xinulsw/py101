@@ -5,13 +5,13 @@ Bazy danych w Pythonie
 
 Tworzenie i zarządzanie bazami danymi za pomocą Pythona z wykorzystaniem
 wbudowanego modułu `sqlite3 DB-API <https://docs.python.org/2/library/sqlite3.html>`_,
-a także zewnętrznych bibliotek ORM:
+a także bibliotek ORM:
 `Peewee <http://peewee.readthedocs.org/en/latest/index.html>`_
 oraz `SQLAlchemy <http://www.sqlalchemy.org>`_.
 
 Poniższe przykłady wykorzystywać będą prostą, wydajną, stosowaną zarówno w prostych,
 jak i zaawansowanych projektach, `bazę danych SQLite3 <http://www.sqlite.org/>`_.
-Gdy zajdzie potrzeba, można je jednak wyorzystać w pracy z innymi bazami,
+Gdy zajdzie potrzeba, można je jednak wykorzystać w pracy z innymi bazami,
 takimi jak np. MySQL, MariaDB czy PostgresSQL.
 
 Do testowania baz danych SQLite można wykorzystać przygotowane przez jej twórców
