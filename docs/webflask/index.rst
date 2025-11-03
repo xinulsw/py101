@@ -5,7 +5,7 @@ Aplikacje WWW (Flask)
 
 `Python <https://www.python.org/>`_ znakomicie nadaje się do tworzenia aplikacji internetowych
 dzięki takim rozszerzeniom jak micro-framework `Flask <http://flask.pocoo.org/>`_.
-Upraszcza on projektowanie zapewniając przejrzysty schemat łączenia adresów URL, żródła danych,
+Upraszcza on projektowanie zapewniając przejrzysty schemat łączenia adresów URL, źródła danych,
 widoków i szablonów. Domyślnie dostajemy również deweloperski serwer WWW,
 nie musimy instalować żadnych dodatkowych narzędzi typu LAMP (WAMP).
 
