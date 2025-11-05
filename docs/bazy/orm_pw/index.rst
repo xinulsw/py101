@@ -146,7 +146,8 @@ Odczytywanie danych polega na u użyciu metody ``select()`` obiektu z opcjonalny
 które zawężają zbiór zwracanych rekordów. Do tej pory użyliśmy już instrukcji:
 
 - ``Klasa().select().count()`` – wybieramy wszystkie klasy i je zliczamy;
-– ``Klasa.select().where(Klasa.nazwa == '1A').get()`` – wybieramy obiekt reprezentujący klasę o nazwie ``1A``.
+- ``Klasa.select().where(Klasa.nazwa == '1A').get()`` – wybieramy obiekt reprezentujący klasę o nazwie ``1A``.
+
 
 Do skryptu dodajemy poniższy kod, który wypisze dane wszystkich klas oraz wszystkich uczniów zapisanych w bazie:
 
@@ -160,45 +161,24 @@ Do skryptu dodajemy poniższy kod, który wypisze dane wszystkich klas oraz wszy
     :lines: 52-67
 
 Metoda ``select()`` wywołana dla danej klasy zwraca listę obiektów zapisanych w bazie.
-Elementy listy odczytujemy w pętli `for klasa in klasy:` i wypisujemy atrybuty kolejnych obiektów używając
+Elementy listy odczytujemy w pętli ``for klasa in klasy:`` i wypisujemy atrybuty kolejnych obiektów używając
 notacji z kropką: ``print(klasa.id, klasa.nazwa, klasa.profil)``.
 
 Funkcja ``czytaj_dane()``, pokazuje jak odczytywać dane obiektów połączonych relacjami, tj. dane z wielu tabel.
 Oprócz metody ``select()`` używamy metody ``join()``, aby wskazać obiekt (tabelę) połączony relacją zawierający
 dodatkowe dane, w tym przypadku informacje o klasie, do której przypisany jest uczeń: ``Uczen.select().join(Klasa)``.
+Zwrócone rekordy odczytujemy w pętli ``for``.
 
-Pętla ``for`` odczytuje zwrócone rekordy...
+Dodatkowe metody dostępne podczas odczytywania danych to:
 
-Odczytywanie danych z wielu tabel połączonych relacjami może być w porównaniu
-do zapytań SQL-a bardzo proste. W Peewee wystarcza polecenie: ``Uczen.select()``,
-ale przy próbie odczytania klasy, do której przypisano ucznia (``inst_uczen.klasa.nazwa``),
-wykonane zostanie dodatkowe zapytanie, co nie jest efektywne.
-Dlatego lepiej otwarcie wskazywać na powiązania między obiektami,
-czyli w zależności od ORM-u używać:
-``Uczen.select().join(Klasa)`` lub ``sesja.query(Uczen).join(Klasa).all()``.
-Tak właśnie postępujemy w bliźniaczych funkcjach ``czytajdane()``, które
-pokazują, jak pobierać i wyświetlać wszystkie rekordy z tabel powiązanych
-relacjami.
+- ``.get()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak;
+- ``.first()`` - zwróci z kolei pierwszy rekord ze wszystkich pasujących.
 
-Systemy ORM oferują pewne ułatwiania w zależności od tego, ile rekordów lub pól
-i w jakiej formie chcemy wydobyć. Metody w Peewee:
+Modyfikowanie danych
+====================
 
-    - ``.get()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak;
-    - ``.first()`` - zwróci z kolei pierwszy rekord ze wszystkich pasujących.
-
-Metody SQLAlchemy:
-
-    - ``.get(id)`` - zwraca pojedynczy rekord na podstawie podanego identyfikatora;
-    - ``.one()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak;
-    - ``.scalar()`` - zwraca pierwszy element pierwszego zwróconego rekordu lub wyjątek ``MultipleResultsFound``;
-    - ``.all()`` - zwraca pasujące rekordy w postaci listy.
-
-Modyfikowanie i usuwanie danych
-=================================
-
-Systemy ORM ułatwiają modyfikowanie i usuwanie danych z bazy, ponieważ
-operacje te sprowadzają się do zmiany wartości pól klasy reprezentującej
-tabelę lub do usunięcia instancji danej klasy.
+Systemy ORM ułatwiają modyfikowanie danych w bazie, ponieważ operacja ta polega
+na zmianie wartości pól wybranego obiektu. W naszym skrypcie dopisujemy kod:
 
 .. raw:: html
 
@@ -206,59 +186,52 @@ tabelę lub do usunięcia instancji danej klasy.
 
 .. literalinclude:: orm_pw.py
     :linenos:
-    :lineno-start: 65
-    :lines: 65-
+    :lineno-start: 68
+    :lines: 68-73
+
+Powyższy kod pokazuje, jak zmienić przypisanie ucznia do klasy. Na początku zwróć uwagę na kwerendy warunkowe:
+
+- ``Uczen().select().join(Klasa).where(Uczen.id == 2).get()`` – zwraca obiekt
+  ucznia o identyfikatorze "2";
+- ``Klasa.select().where(Klasa.nazwa == '1B').get()`` – zwraca obiekt klasy o nazwię "1B".
+
+Modyfikacja polega na przypisaniu obiektu ``nowa_klasa`` do odpowiedniego atrybutu obiektu ``uczen``.
+
+Usuwanie danych
+================
+
+Usuwanie jest jeszcze prostsze. Wystarczy użyć metody ``delete_instance()`` obiektu przeznaczonego do
+usunięcia.
 
 .. raw:: html
 
-    <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
-.. literalinclude:: orm_sa.py
+.. literalinclude:: orm_pw.py
     :linenos:
-    :lineno-start: 67
-    :lines: 67-
+    :lineno-start: 74
+    :lines: 74-
 
-Załóżmy, że chcemy zmienić przypisanie ucznia do klasy. W obydwu systemach
-tworzymy więc obiekt reprezentujący ucznia o identyfikatorze "2". Stosujemy
-omówione wyżej metody zapytań. W następnym kroku modyfikujemy odpowiednie
-pole tworzące relację z tabelą "klasy", do którego przypisujemy
-pobrany w zapytaniu obiekt (Peewee) lub identyfikator (SQLAlchemy).
-Różnice, tzn. przypisywanie obiektu lub identyfikatora, wynikają ze sposobu
-definiowania modeli w obu rozwiązanich.
+Za pomocą kwerendy warunkowej tworzymy obiekt ucznia o identyfikatorze "3",
+a następnie wywołujemy metodę ``delete_instance()``.
 
-Usuwanie jest jeszcze prostsze. W Peewee wystarczy do zapytania zwracającego
-obiekt reprezentujący ucznia o podanym id "dokleić" odpowiednią metodę:
-``Uczen.select().where(Uczen.id == 3).get().delete_instance()``.
-W SQLAlchemy korzystamy jak zwykle z metody sesji, której przekazujemy
-obiekt reprezentujący ucznia: ``sesja.delete(sesja.query(Uczen).get(3))``.
-
-Po zakończeniu operacji wykonywanych na danych powinniśmy pamiętać o zamknięciu
-połączenia, robimy to używając metody obiektu bazy ``baza.close()`` (Peewee)
-lub sesji ``sesja.close()`` (SQLAlchemy). UWAGA: operacje dokonywane
-podczas sesji w SQLAlchemy muszą zostać zapisane w bazie, dlatego przed
-zamknięciem połączenia trzeba umieścić polecenie ``sesja.commit()``.
+Po zakończeniu operacji wykonywanych na danych powinniśmy pamiętać o zamknięciu połączenia.
+Robimy to używając metody obiektu bazy ``baza.close()``
 
 Zadania
 ********
 
-- Spróbuj dodać do bazy korzystając z systemu Peewee lub SQLAlchemy
-  wiele rekordów na raz pobranych z pliku. Wykorzystaj i zmodyfikuj
-  funkcję ``pobierz_dane()`` opisaną w materiale :ref:`Dane z pliku <dane_z_pliku>`.
+1) Spróbuj dodać do bazy korzystając z systemu Peewee wiele rekordów na raz pobranych z pliku
+   :download:`uczniowie.csv <uczniowie.csv>`.
+   Wykorzystaj i zmodyfikuj funkcję ``pobierz_dane()`` opisaną w materiale :ref:`Dane z pliku <dane_z_pliku>`.
 
-- Postaraj się przedstawione aplikacje wyposażyć w konsolowy interfejs,
-  który umożliwi operacje odczytu, zapisu, modyfikowania i usuwania rekordów.
-  Dane powinny być pobierane z klawiatury od użytkownika.
+2) Postaraj się przedstawione aplikacje wyposażyć w konsolowy interfejs,
+   który umożliwi operacje odczytu, zapisu, modyfikowania i usuwania rekordów.
+   Dane powinny być pobierane z klawiatury od użytkownika.
 
-- Przedstawione rozwiązania warto użyć w aplikacjach internetowych
-  jako relatywnie szybki i łatwy sposób obsługi danych. Zobacz,
-  jak to zrobić na przykładzie scenariusza aplikacji :ref:`Quiz ORM <quiz-orm>`.
+3) Przedstawione rozwiązania warto użyć w aplikacjach internetowych
+   jako relatywnie szybki i łatwy sposób obsługi danych. Zobacz,
+   jak to zrobić na przykładzie scenariusza aplikacji :ref:`Quiz ORM <quiz-orm>`.
 
-- Przejrzyj scenariusz aplikacji internetowej :ref:`Czat <czat1>`, zbudowanej z użyciem
-  frameworku *Django*, korzystającego z własnego modelu ORM.
-
-Źródła
-********
-
-* :download:`orm.zip <orm.zip>`
-
-
+4) Przejrzyj scenariusz aplikacji internetowej :ref:`Czat <czat1>`, zbudowanej z użyciem
+   frameworku *Django*, korzystającego z własnego modelu ORM.

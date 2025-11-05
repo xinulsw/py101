@@ -22,7 +22,8 @@ Zobacz: :ref:`instalacja klienta SQLite3 <sqlite3-install>`.
     :maxdepth: 2
 
     sql/index
-    orm/index
+    orm_pw/index
+    orm_sa/index
     sqlorm/index
     sql/dane
     sqlite3

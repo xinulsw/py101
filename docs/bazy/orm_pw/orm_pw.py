@@ -67,12 +67,13 @@ czytaj_dane()
 
 # zmiana klasy ucznia o identyfikatorze 2
 uczen = Uczen().select().join(Klasa).where(Uczen.id == 2).get()
-uczen.klasa = Klasa.select().where(Klasa.nazwa == '1B').get()
+nowa_klasa = Klasa.select().where(Klasa.nazwa == '1B').get()
+uczen.klasa = nowa_klasa
 uczen.save()  # zapisanie zmian w bazie
 
 # usunięcie ucznia o identyfikatorze 3
-Uczen.select().where(Uczen.id == 3).get().delete_instance()
+uczen = Uczen.select().where(Uczen.id == 3).get()
+uczen.delete_instance()
 
 czytaj_dane()
-
 baza.close()

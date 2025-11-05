@@ -12,7 +12,7 @@ Frameworki takie jak Flask czy Django korzystają z tego wzorca
 Model
 *********
 
-**Modele** – :term:`model` w Django reprezentuje źródło informacji;
+**Modele** – :term:`model bazy danych` w Django reprezentuje źródło informacji;
 są to klasy Pythona opisujące pojedyncze tabele w bazie danych (zob. :term:`ORM`);
 atrybuty klasy odpowiadają polom tabeli, ewentualne funkcje wykonują operacje na danych.
 Instancja klasy odpowiada rekordowi danych. Modele definiujemy w pliku :file:`models.py`.

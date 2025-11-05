@@ -171,7 +171,7 @@ Model danych i migracje
 Budowanie aplikacji w Django nawiązuje do wzorca projektowego :term:`MVC`, czyli
 Model-Widok-Kontroler (zob. materiał :ref:`MVC <mvc_wzorzec>`).
 
-Zaczynamy od zdefiniowania **modelu** (zob. :term:`model`), czyli klasy, która posłuży do utworzenia tabeli
+Zaczynamy od zdefiniowania **modelu** (zob. :term:`model bazy danych`), czyli klasy, która posłuży do utworzenia tabeli
 w bazie danych zawierającej wiadomości. Atrybuty klasy odpowiadają polom tabeli. Instancje (obiekty) tej klasy
 reprezentować będą wiadomości utworzone przez użytkowników, czyli rekordy tabeli.
 Każda wiadomość będzie zwierała treść, datę dodania oraz identyfikator autora (użytkownika).
