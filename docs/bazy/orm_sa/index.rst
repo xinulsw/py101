@@ -1,4 +1,4 @@
-.. _systemy_orm:
+.. _orm_sqlalchemy:
 
 Systemy ORM
 ##################

@@ -1,14 +1,9 @@
-.. _systemy_orm:
+.. _orm_peewee:
 
-Systemy ORM
-##################
+System ORM Peewee
+#################
 
-Znajomość języka SQL jest oczywiście bardzo zalecana, aby rozumieć i korzystać z wszystkich możliwości baz danych,
-niemniej w wielu projektach można je obsługiwać inaczej, np. za pomocą systemów ORM (ang. *Object-Relational Mapping*
-– mapowanie obiektowo-relacyjne). Pozwalają one traktować tabele i relacje w sposób obiektowy, co bywa wygodniejsze,
-kiedy obsługujemy bazę danych za pomocą obiektowego języka programowania.
-
-Używanie systemów ORM, takich jak :term:`Peewee` czy :term:`SQLAlchemy`, w prostych projektach
+Używanie systemów ORM, takich jak :term:`Peewee`, w prostych projektach
 sprowadza się do schematu, który poglądowo można opisać w trzech krokach:
 
 1. deklaracja modelu opisującego bazę
