@@ -12,11 +12,6 @@ funkcji.
 Przed rozpoczęciem pracy przygotuj w wybranym katalogu :ref:`wirtualne środowisko Pythona <venv>`
 i zainstaluj pakiet *Matplotlib*.
 
-.. note::
-
-    W systemach **Linux** *matplotlib* wymaga pakietu ``python-tk`` (systemy oparte na Debianie)
-    lub ``tk`` (systemy oparte na Arch Linux).
-
 .. contents::
     :depth: 1
     :local:
@@ -24,13 +19,12 @@ i zainstaluj pakiet *Matplotlib*.
 .. note::
 
     Bibliotekę *matplotlib* można importować na kilka sposobów. Najprostszym jest użycie
-    instrukcji ``import pylab``, która udostępnia moduł *pyplot* (do tworzenia wykresów) oraz
-    bibliotekę *numpy* (funkcje matematyczne) w jednej przestrzeni nazw. Tak będziemy
+    instrukcji ``import pylab``, która udostępnia moduł ``pyplot`` (do tworzenia wykresów) oraz
+    bibliotekę ``numpy`` (funkcje matematyczne) w jednej przestrzeni nazw. Tak będziemy
     robić w konsoli i początkowych przykładach.
 
     Oficjalna dokumentacja sugeruje jednak, aby w bardziej złożonych projektach stosować
-    jawne importy podane niżej. Tak zrobimy w przykładach korzystających
-    z funkcji matematycznych.
+    importy jawne. Tak zrobimy w przykładach korzystających z funkcji matematycznych.
 
 .. code-block:: python
 
@@ -43,11 +37,7 @@ i zainstaluj pakiet *Matplotlib*.
     Jeżeli konsolę rozszerzoną uruchomimy poleceniem ``ipython --pylab``, nie trzeba będzie
     podawać przedrostka ``pylab`` przy korzystaniu z funkcji rysowania.
 
-
-Funkcja liniowa
-***************
-
-Zabawę zacznijmy w konsoli Pythona:
+Zacznijmy od prostego przykładu, który możemy przetestować w konsoli Pythona:
 
 .. raw:: html
 
@@ -58,17 +48,25 @@ Zabawę zacznijmy w konsoli Pythona:
     import pylab
     x = [1,2,3]
     y = [4,6,5]
-    pylab.plot(x,y)
+    pylab.plot(x, y)
     pylab.show()
 
-Tworzenie wykresów jest proste. Musimy mieć zbiór wartości *x* i odpowiadający
-im zbiór wartości *y*. Obie listy przekazujemy jako argumenty funkcji ``plot()``,
-a następnie rysujemy funkcją ``show()``.
+Tworzenie wykresów punktowych jest proste. Postępujemy według schematu:
 
-Spróbujmy zrealizować bardziej złożone zadanie.
+- przygotowujemy dwie listy wartości ``x`` i ``y`` – odpowiadające sobie wartości należy
+rozumieć jako współrzędne punktów w 2-wymiarowym układzie współrzędnych,
+- obie listy przekazujemy jako argumenty metody ``plot()``,
+- wyświetlamy wykres za pomocą metody ``show()``.
 
-ZADANIE: wykonaj wykres funkcji *f(x) = a*x + b*, gdzie *x* = <-10;10> z krokiem 1,
-*a* = 1, *b* = 2.
+Funkcja liniowa
+***************
+
+*ZADANIE*: Wykonaj wykres funkcji ``f(x) = a*x + b``.
+
+*DANE WEJŚCIOWE*:
+
+- lista ``x`` zawierające liczby całkowite z zakresu ``<-10;10>`` z krokiem 1,
+- współczynniki ``a`` = 1, ``b`` = 2, liczby całkowite.
 
 W pliku :file:`pylab01.py` umieszczamy poniższy kod:
 
@@ -80,14 +78,13 @@ W pliku :file:`pylab01.py` umieszczamy poniższy kod:
 .. literalinclude:: pylab01.py
     :linenos:
 
-Na początku dla ułatwienia importujemy interfejs ``pylab``. Następnie postępujemy
-wg omówionego schematu: zdefiniuj dziedzinę argumentów funkcji, a następnie zbiór wyliczonych
-wartości. W powyższym przypadku generujemy listę wartości *x* za pomocą funkcji
-``range()`` – co warto przetestować w interaktywnej konsoli Pythona.
-Wartości *y* wyliczamy w pętli i zapisujemy w liście.
+Na początku importujemy interfejs ``pylab``. Następnie postępujemy wg omówionego schematu:
+definiujemy dziedzinę argumentów funkcji, a następnie zbiór wyliczonych wartości.
+W powyższym przypadku generujemy listę wartości ``x`` za pomocą funkcji ``range()``.
+Wartości ``y`` wyliczamy w pętli i zapisujemy w liście.
 
-Dodatkowe metody: ``title()`` ustawia tytuł wykresu, ``grid()`` włącza wyświetlanie
-pomocniczej siatki. Uruchom program.
+Dodatkowe metody: ``title()`` – ustawia tytuł wykresu, ``grid()`` – włącza wyświetlanie
+pomocniczej siatki.
 
 Ćwiczenie 1
 ============
