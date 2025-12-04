@@ -1,14 +1,14 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import pylab
 
 a = int(input('Podaj współczynnik a: '))
 b = int(input('Podaj współczynnik b: '))
-x = range(-10, 11)  # lista argumentów x
+x_min = int(input('Podaj wartość minimalną x: '))
+x_max = int(input('Podaj wartość maksymalną x: '))
 
-# wyrażenie listowe wylicza dziedzinę y
-y = [a * i + b for i in x]  # lista wartości
+x = range(x_min, x_max)  # lista argumentów x
+
+# wyrażenie listowe wylicza zbiór wartości
+y = [a * i + b for i in x]
 
 pylab.plot(x, y)
 pylab.title('Wykres f(x) = a*x - b')

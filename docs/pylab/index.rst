@@ -65,8 +65,8 @@ Funkcja liniowa
 
 *DANE WEJŚCIOWE*:
 
-- lista ``x`` zawierające liczby całkowite z zakresu ``<-10;10>`` z krokiem 1,
-- współczynniki ``a`` = 1, ``b`` = 2, liczby całkowite.
+- współczynniki ``a`` = 1, ``b`` = 2, liczby całkowite,
+- lista argumentów ``x`` zawierająca liczby całkowite z zakresu ``<-10;10>`` z krokiem 1.
 
 W pliku :file:`pylab01.py` umieszczamy poniższy kod:
 
@@ -83,14 +83,18 @@ definiujemy dziedzinę argumentów funkcji, a następnie zbiór wyliczonych wart
 W powyższym przypadku generujemy listę wartości ``x`` za pomocą funkcji ``range()``.
 Wartości ``y`` wyliczamy w pętli i zapisujemy w liście.
 
-Dodatkowe metody: ``title()`` – ustawia tytuł wykresu, ``grid()`` – włącza wyświetlanie
-pomocniczej siatki.
+Dodatkowe metody:
+
+- ``title()`` – dodaje tytuł wykresu,
+- ``grid()`` – włącza wyświetlanie pomocniczej siatki.
+
+Uruchom skrypt.
 
 Ćwiczenie 1
 ============
 
-Zmodyfikuj kod tak, aby współczynniki *a* i *b* mógł podawać użytkownik.
-Nie zapomnij przekonwertować danych tekstowych na liczby całkowite.
+Zmodyfikuj powyższy kod tak, aby współczynniki ``a`` i ``b`` oraz zakres argumentów ``x``
+pobierane były z klawiatury. Sprawdź poprawność działania programu.
 
 Ćwiczenie 2
 ============
@@ -107,13 +111,13 @@ W konsoli Pythona wydajemy następujące polecenia:
     >>> x = range(11)
     >>> for i in x:
     ...   print(a + i)
-    >>> y = [a + i for i in range(11)]
+    >>> y = [a + i for i in x]
     >>> print(y)
 
 Powyższy przykład wykorzystuje tzw. :term:`wyrażenie listowe`, które zwięźle
 zastępuje pętlę i zwraca listę wartości. Jego działanie należy rozumieć następująco:
-dla każdej wartości ``i`` (nazwa zmiennej dowolna) w liście ``x`` wylicz wyrażenie
-``a + i`` i umieść w liście ``y``.
+dla każdej wartości ``i`` (nazwa zmiennej dowolna) odczytywanej w pętli z listy ``x`` (``for i in x``)
+wylicz wyrażenie ``a + i`` i umieść w liście ``y``.
 
 Użyj wyrażenia listowego w naszym programie:
 
