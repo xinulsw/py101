@@ -1,42 +1,45 @@
 .. _orm_sqlalchemy:
 
-Systemy ORM
-##################
+System ORM SQLAlchemy
+#####################
 
-Znajomość języka SQL jest oczywiście niezbędna, aby korzystać z wszystkich możliwości baz danych,
-niemniej w wielu projektach można je obsługiwać inaczej, tj. za pomocą systemów ORM (ang. *Object-Relational Mapping*
-– mapowanie obiektowo-relacyjne). Pozwalają one traktować tabele w sposób obiektowy,
-co bywa wygodniejsze w budowaniu logiki aplikacji.
-
-Używanie systemów ORM, takich jak :term:`Peewee` czy :term:`SQLAlchemy`, w prostych projektach
+Używanie systemów ORM, takich jak :term:`SQLAlchemy`, w prostych projektach
 sprowadza się do schematu, który poglądowo można opisać w trzech krokach:
 
 1. deklaracja modelu opisującego bazę
 2. utworzenie na podstawie modelu tabel w bazie,
 3. wykonywanie operacji :term:`CRUD`.
 
-Poniżej spróbujemy pokazać, jak operacje wykonywane przy użyciu wbudowanego
-w Pythona modułu *sqlite3* zrealizować przy użyciu biblioteki Peewee.
+Przez model (zob. też: :term:`model bazy danych`) rozumiemy tutaj deklaracje klas i ich właściwości (atrybutów)
+opisujące obiekty, które będą przechowywane w bazie. Systemy ORM na podstawie klas tworzą
+odpowiednie tabele i pola, uwzględniając ich typy i powiązania. Odwzorowanie klas i ich właściwości
+na tabele, kolumny i relacje w bazie stanowi istotę mapowania relacyjno-obiektowego.
+
+Poniżej spróbujemy pokazać, jak wykonywać typowe operacje na bazie z wykorzystaniem biblioteki SQLAlchemy.
 
 .. note::
 
     Wyjaśnienia podanego niżej kodu są uproszczone ze względu na przejrzystość i poglądowość instrukcji.
     Do używania systemów ORM wystarczające jest poznanie ich interfejsu API.
 
+Środowisko pracy
+================
+
+Do tworzenia aplikacji możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+Sugerujemy jednak wykorzystanie środowiska **PyCharm** lub innego, ponieważ w ułatwiają pracę nad projektami
+w języku Python.
+
+Przed rozpoczęciem pracy przygotuj w wybranym katalogu, np. :file:`baza_orm`` :ref:`wirtualne środowisko Pythona <venv>`
+i w aktywnym środowisku zainstaluj pakiet *SQLAlchemy*:
+
+.. code-block:: bash
+
+    (.venv) ~/baza_orm$ pip install sqlalchemy
+
 Klasa bazowa
 ************
 
-W ulubionym edytorze utwórz dwa puste pliki o nazwach :file:`orm_pw.py` i :file:`orm_sa.py`.
-Pierwszy z nich zawierał będzie kod wykorzystujący ORM Peewee, drugi ORM SQLAlchemy.
-
-.. raw:: html
-
-    <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. literalinclude:: orm_pw.py
-    :linenos:
-    :lineno-start: 1
-    :lines: 1-16
+W ulubionym edytorze utwórz dwa plik o nazwie :file:`orm_sa.py`.
 
 .. raw:: html
 
@@ -47,41 +50,21 @@ Pierwszy z nich zawierał będzie kod wykorzystujący ORM Peewee, drugi ORM SQLA
     :lineno-start: 1
     :lines: 1-17
 
-W jednym i drugim przypadku importujemy najpierw potrzebne klasy.
-Następnie tworzymy obiekt ``baza`` do obsługi bazy SQlite3 przechowywanej
-w zdefiniowanym pliku. Jeżeli zamiast nazwy pliku,
-podamy ``:memory:`` bazy umieszczone zostaną w pamięci RAM (przydatne
-podczas testowania).
+Na początku importujemy potrzebne klasy. Dalej tworzymy zmienną ``plik_bazy``,
+która będzie przechowywała nazwę pliku z bazą danych.
+Jeżeli plik znajduje się na dysku (``if os.path.exists()``), usuwamy go (os.remove()),
+aby zapewnić bezproblemowe działanie skryptu podczas wielokrotnego uruchamiania.
 
-Do utworzenia modeli danych potrzebna będzie **klasa bazowa**. W przypadku systemu Peewee
-tworzymy ją w oparciu o klasę ``Model`` i w klasie ``Meta`` dodatkowo przypisujemy
-obiekt służący do komunikacji z bazą do atrybutu ``database``. W SqlAlchemy
-klasa bazowa tworzona jest w oparciu o klasę ``DeclarativeBase``.
+Następnie tworzymy obiekt ``baza`` do obsługi bazy SQlite3 przechowywanej w pliku :file:`baza_sa.db`.
 
-
-.. note::
-
-    Moduły ``os`` i ``sys`` nie są niezbędne do działania prezentowanego kodu.
-    W podanych przykładach usuwamy plik bazy, jeżeli znajduje się na dysku (``if os.path.ispath()``),
-    aby zapewnić bezproblemowe działanie podczas wielokrotnego uruchamiania skryptów.
+Do utworzenia modeli danych potrzebna będzie **klasa bazowa**, którą tworzymy w oparciu o klasę
+``DeclarativeBase``.
 
 Model danych
 *************
 
-Przez model rozumiemy tutaj deklaracje klas i ich właściwości (atrybutów)
-opisujące obiekty, które będą przechowywane w bazie. Systemy ORM na podstawie klas tworzą
-odpowiednie tabele i pola, uwzględniając ich typy i powiązania.
-Wzajemne powiązanie klas i ich właściwości z tabelami i kolumnami w bazie stanowi
-właśnie istotę mapowania relacyjno-obiektowego.
-
-.. raw:: html
-
-    <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. literalinclude:: orm_pw.py
-    :linenos:
-    :lineno-start: 18
-    :lines: 18-32
+Dodajemy definicje klas opisujących dwa obiekty reprezentujące klasę i ucznia. Każda klasa ma swoją nazwę
+i profil, każdy uczeń ma imię, nazwisko oraz przynależy do jakiejś klasy.
 
 .. raw:: html
 
@@ -92,72 +75,54 @@ właśnie istotę mapowania relacyjno-obiektowego.
     :lineno-start: 18
     :lines: 18-37
 
-W obydwu przypadkach deklarowanie modelu opiera się na pewnej "klasie" podstawowej,
-którą nazwaliśmy ``BazaModel``. Dziedzicząc z niej, deklarujemy następnie
-własne klasy o nazwach *Klasa* i *Uczen* reprezentujące tabele w bazie.
-Właściwości tych klas odpowiadają kolumnom; w SQLAlchemy używamy nawet
-klasy o nazwie ``Column()``, która wyraźnie wskazuje na rodzaj tworzonego atrybutu.
-Obydwa systemy wymagają określenia *typu danych* definiowanych pól. Służą temu odpowiednie
-klasy, np. ``CharField()`` lub ``String()``. Możemy również definiować dodatkowe
-cechy pól, takie jak np. nie zezwalanie na wartości puste (``null=False`` lub ``nullable=False``)
-lub określenie wartości domyślnych (``default=''``).
+Tworzenie modelu opiera się na dziedziczonej klasie podstawowej ``Base`` i mapowaniu deklaratywnym
+(ang. *Declarative Mapping*). Definicje klas o nazwach ``Klasa`` i ``Uczen`` z jednej strony opisują
+obiekty Pythona, z drugiej strony zawierają metainformacje opisujące tabele SQL,
+które utworzone zostaną w bazie. Definicje wykorzystują również wskazówki dotyczące typów danych
+(ang. *type hinst*). Przeanalizujmy kilka fragmentów kodu:
 
-Warto zwrócić uwagę, na sposób określania relacji. W *Peewee* używamy
-konstruktora klasy: ``ForeignKeyField(Klasa, related_name = 'uczniowie')``.
-Przyjmuje on nazwę klasy powiązanej, z którą tworzymy relację, i nazwę atrybutu
-określającego relację zwrotną w powiązanej klasie. Dzięki temu
-wywołanie w postaci ``Klasa.uczniowie`` da nam dostęp do obiektów
-reprezentujących uczniów przypisanych do danej klasy. Zuważmy, że *Peewee*
-nie wymaga definiowania kluczy głównych, są tworzone automatycznie
-pod nazwą ``id``.
+- ``__tablename__`` – określa nazwę tabeli w bazie danych,
+- ``id: Mapped[int]`` – nazwa pola z adnotacją typu danych,
+- ``mapped_column()`` - funkcja pozwalająca definiować ograniczenia pól tworzonych w tabelach, np.:
 
-W SQLAlchemy dla odmiany nie tylko jawnie określamy klucze główne
-(``primary_key=True``), ale i podajemy nazwy tabel (``__tablename__ = 'klasa'``).
-Klucz obcy oznaczamy odpowiednim parametrem w klasie definiującej pole
-(``Column(Integer, ForeignKey('klasa.id'))``). Relację zwrotną
-tworzymy za pomocą konstruktora ``relationship('Uczen', backref='klasa')``,
-w którym podajemy nazwę powiązanej klasy i nazwę atrybutu tworzącego
-powiązanie. W tym wypadku wywołanie typu ``uczen.klasa`` udostępni obiekt
-reprezentujący klasę, do której przypisano ucznia.
+  - ``Integer`` – pole przechowuje liczby całkowite,
+  - ``String(100)`` – pole przechowuje maksymalnie 40 znaków,
+  - ``primary_key=True`` – pole jest kluczem głównym,
+  - ``nullable=False`` – pole nie może zawierać wartości null,
+  - ``default=''`` – domyślna wartość pola,
+  - ``ForeignKey()`` – definiuje klucz obcy, jako argument podajemy nazwę tabeli i klucza głównego,
 
-Po zdefiniowaniu przemyślanego modelu, co jest relatywnie najtrudniejsze,
-trzeba przetestować działanie mechanizmów ORM w praktyce, czyli utworzyć
-tabele i kolumny w bazie. W Peewee łączymy się z bazą i wywołujemy
-metodę ``.create_tables()``, której podajemy nazwy klas reprezentujących
-tabele. Dodatkowy parametr ``True`` powoduje sprawdzenie przed utworzeniem,
-czy tablic w bazie już nie ma. SQLAlchemy wymaga tylko wywołania metody
-``.create_all()`` kontenera *metadata* zawartego w klasie bazowej.
+- ``relationship()`` – funkcja, która tworzy relację zwrotną między dwoma zmapowanymi klasami podanymi
+  w adnotacji typu, np.: ``Mapped[List["Uczen"]]``, ``Mapped["Klasa"]``; argument ``back_populates``
+  pozwala wskazać nazwę relacji w powiązanej klasie.
 
-Podane kody można już uruchomić, oba powinny utworzyć bazę ``test.db``
-w katalogu, z którego uruchamiamy skrypt.
+Relacja zwrotna pozwala na dostęp do powiązanych obiektów, np. kod typu ``klasa.uczniowie``
+da nam dostęp do uczniów należących do danej klasy, a kod ``uczen.klasa`` wskaże klasę,
+do której należy uczeń.
 
-.. note::
+Zdefiniowane model możemy sprawdzić za pomocą kodu tworzącego tabele: ``Base.metadata.create_all(baza)``.
 
-    Warto wykorzystać :ref:`interpreter sqlite3 <sqlite3>`
-    i sprawdzić, jak wygląda kod tworzący tabele wygenerowany przez ORM-y.
-    Poniżej przykład ilustrujący SQLAlchemy.
+Omówiony kod można uruchomić. W katalogu, z którego uruchamiamy skrypt, powinien zostać utworzony
+plik bazy :file:`baza_sa.db`.
+
+Ćwiczenie
+==========
+
+1) Wykorzystaj :ref:`interpreter sqlite3 <sqlite3>` i sprawdź, czy zostały utworzone tabele,
+   czyli jak wygląda kod SQL wygenerowany przez ORM. Przykładowy zrzut poniżej.
 
 .. figure:: sqlite3_2.png
 
-Operacje CRUD
-***********************
+.. note::
 
-Wstawianie i odczytywanie danych
-=================================
+    Nazwy utworzonych tabel to nazwy klas, które je opisują, podobnie nazwy pól odpowiadają nazwom atrybutów.
+    Warto zauważyć, że *Peewee* nie wymaga definiowania kluczy głównych, są tworzone automatycznie
+    jako pola o nazwie ``id`` zawierające liczby całkowite.
 
-Podstawowe operacje wykonywane na bazie, np, wstawianie i odczytywanie danych,
-w Peewee wykonywane są za pomocą obiektów reprezentujących rekordy
-zdefiniowanych tabel oraz ich metod. W SQLAlchemy oprócz obiektów
-wykorzystujemy metody sesji, w ramach której komunikujemy się z bazą.
+Dodawanie danych
+****************
 
-.. raw:: html
-
-    <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. literalinclude:: orm_pw.py
-    :linenos:
-    :lineno-start: 34
-    :lines: 34-63
+Do pliku :file:`orm_sa.py` dodajemy następujący kod:
 
 .. raw:: html
 
@@ -165,18 +130,26 @@ wykorzystujemy metody sesji, w ramach której komunikujemy się z bazą.
 
 .. literalinclude:: orm_sa.py
     :linenos:
-    :lineno-start: 39
-    :lines: 39-65
+    :lineno-start: 38
+    :lines: 38-57
 
-Dodawanie informacji w systemach ORM polega na utworzeniu instancji odpowiedniego
-obiektu i podaniu w jego konstruktorze wartości atrybutów reprezentujących pola rekordu:
-``Klasa(nazwa = '1A', profil = 'matematyczny')``. Utworzony rekord zapisujemy metodą
-``.save()`` obiektu w Peewee lub metodą ``.add()`` :ref:`sesji <sesja>` w SQLAlchemy.
-Można również dodawać wiele rekordów na raz. Peewee oferuje metodę ``.insert_many()``,
-która jako parametr przyjmuje listę słowników zawierających dane w formacie
-"klucz":"wartość", przy czym kluczem jest nazwa pola klasy (tabeli).
-SQLAlchemy ma metodę ``.add_all()`` wymagającą listy konstruktorów obiektów,
-które chcemy dodać.
+Wykonywanie operacji na bazie danych wymaga utworzenia obiektu sesji, tworzonego w kontekście:
+``with Session(baza) as sesja`` – co ułatwia pracę z bazą.
+
+Metoda ``add()`` pozwala na tworzenie nowych rekordów. Jako argument podajemy nazwę modelu
+z wymaganymi argumentami.
+
+W ramach sesji można wykonywać wiele operacji, jednak aby zostały odzwierciedlone w bazie danych,
+trzeba wywołać metodę ``commit()``.
+
+.. note::
+
+    Dopiero po zatwierdzeniu zmian metodą ``commit()`` mamy dostęp do identyfikatorów nowo
+    utworzonych obiektów.
+
+Metoda ``add_all()`` pozwala dodać wiele rekordów na raz. Jako argument podajemy listę obiektów.
+Zwróć uwagę, w jaki sposób wskazujemy klasę do której należy uczeń.
+
 
 Zanim dodamy pierwsze informacje sprawdzamy, czy w tabeli *klasa* są jakieś wpisy, a więc
 wykonujemy prostą kwerendę zliczającą. Peewee używa
@@ -245,7 +218,7 @@ tabelę lub do usunięcia instancji danej klasy.
 
 .. raw:: html
 
-    <div class="code_no">Peewee. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. literalinclude:: orm_pw.py
     :linenos:
