@@ -56,6 +56,14 @@ with Session(baza) as sesja:
 
     sesja.commit()
 
+    # odczytujemy wiele rekordów
+    print('Klasy:')
+    klasy = sesja.query(Klasa).all()
+    for klasa in klasy:
+        print(klasa.id, klasa.nazwa, klasa.profil)
+    print()
+
+
 exit()
 
 def czytajdane():

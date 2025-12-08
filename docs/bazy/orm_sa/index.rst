@@ -116,8 +116,6 @@ plik bazy :file:`baza_sa.db`.
 .. note::
 
     Nazwy utworzonych tabel to nazwy klas, które je opisują, podobnie nazwy pól odpowiadają nazwom atrybutów.
-    Warto zauważyć, że *Peewee* nie wymaga definiowania kluczy głównych, są tworzone automatycznie
-    jako pola o nazwie ``id`` zawierające liczby całkowite.
 
 Dodawanie danych
 ****************
@@ -133,10 +131,11 @@ Do pliku :file:`orm_sa.py` dodajemy następujący kod:
     :lineno-start: 38
     :lines: 38-57
 
-Wykonywanie operacji na bazie danych wymaga utworzenia obiektu sesji, tworzonego w kontekście:
-``with Session(baza) as sesja`` – co ułatwia pracę z bazą.
+Wykonywanie operacji na bazie danych wymaga utworzenia obiektu sesji:
+``with Session(baza) as sesja``. Użycie konstrukcji ``with ... as ...``
+pozwala uniknąć niektórych błędów podczas wykonywania operacji na bazie.
 
-Metoda ``add()`` pozwala na tworzenie nowych rekordów. Jako argument podajemy nazwę modelu
+Do tworzenia nowych rekordów używamy metody ``add()``. Jako argument podajemy nazwę modelu
 z wymaganymi argumentami.
 
 W ramach sesji można wykonywać wiele operacji, jednak aby zostały odzwierciedlone w bazie danych,
@@ -147,9 +146,23 @@ trzeba wywołać metodę ``commit()``.
     Dopiero po zatwierdzeniu zmian metodą ``commit()`` mamy dostęp do identyfikatorów nowo
     utworzonych obiektów.
 
-Metoda ``add_all()`` pozwala dodać wiele rekordów na raz. Jako argument podajemy listę obiektów.
-Zwróć uwagę, w jaki sposób wskazujemy klasę do której należy uczeń.
+Metoda ``add_all()`` służy do dodawania wielu rekordów na raz. Jako argument podajemy listę obiektów
+``uczniowie``. Warto zwrócić uwagę, że aby określić klasę, do której należy uczeń, atrybutowi ``klasa_id``
+modelu przypisujemy identyfikator obiektu reprezentującego klasę.
 
+Ćwiczenie
+==========
+
+1) Ponownie wykonaj dotychczasowy kod i sprawdź za pomocą interpretera ``sqlite3``,
+   czy w tabelach znalazły się odpowiednie dane.
+
+   .. tip::
+
+      W interpreterze możesz wykorzystać proste kwerendy SQL, np.:
+      ``SELECT * FROM klasa;`` oraz ``SELECT * FROM uczen;``.
+
+Odczyt danych
+*************
 
 Zanim dodamy pierwsze informacje sprawdzamy, czy w tabeli *klasa* są jakieś wpisy, a więc
 wykonujemy prostą kwerendę zliczającą. Peewee używa
