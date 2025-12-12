@@ -1,7 +1,7 @@
 import os
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import List
-from sqlalchemy import ForeignKey, Integer, String, create_engine
+from sqlalchemy import ForeignKey, Integer, String, create_engine, select
 from sqlalchemy.orm import Session
 
 plik_bazy = 'baza_sa.db'
@@ -53,39 +53,53 @@ with Session(baza) as sesja:
     ]
     # dodajemy dane wielu uczniów
     sesja.add_all(uczniowie)
-
     sesja.commit()
 
     # odczytujemy wiele rekordów
     print('Klasy:')
-    klasy = sesja.query(Klasa).all()
+    zapytanie = select(Klasa)
+    klasy = sesja.scalars(zapytanie)
     for klasa in klasy:
         print(klasa.id, klasa.nazwa, klasa.profil)
     print()
 
-
-exit()
-
-def czytajdane():
-    # if not sesja.query(Klasa).count():
-    for uczen in sesja.query(Uczen).join(Klasa).all():
-        print(uczen.id, uczen.imie, uczen.nazwisko, uczen.klasa.nazwa)
+    # odczytujemy jeden rekord
+    zapytanie = select(Klasa).where(Klasa.nazwa == '1A')
+    klasa = sesja.scalar(zapytanie)
+    print('Klasa:', klasa.nazwa)
     print()
 
+    def wypisz_listę_uczniow():
+        """ Odczytujemy i wypisujemy dane uczniów, w tym klasę"""
+        if sesja.query(Uczen).count():
+            print('Uczniowie:')
+            uczniowie = sesja.query(Uczen).join(Klasa).all()
+            for uczen in uczniowie:
+                print(uczen.id, uczen.imie, uczen.nazwisko, uczen.klasa.nazwa)
+            print()
+        else:
+            print('Brak uczniów w bazie!')
 
-czytajdane()
-# tworzymy instancję klasy Klasa reprezentującą klasę "1A"
-# klasa1 = sesja.query(Klasa).filter_by(nazwa='1A').one()
-# zmiana klasy ucznia o identyfikatorze 2
-inst_uczen = sesja.query(Uczen).filter(Uczen.id == 2).one()
-inst_uczen.klasa_id = sesja.query(Klasa.id).filter(
-    Klasa.nazwa == '1B').scalar()
+    wypisz_listę_uczniow()
 
-# usunięcie ucznia o identyfikatorze 3
-sesja.delete(sesja.get(Uczen, 3))
+    # zmiana klasy ucznia o identyfikatorze 2
+    uczen = sesja.query(Uczen).filter(Uczen.id == 2).one()
+    id_klasa = sesja.query(Klasa.id).filter(Klasa.nazwa == '1A').scalar()
+    print('Zmieniam klasę ucznia:', uczen.imie, uczen.nazwisko, uczen.klasa.nazwa)
+    uczen.klasa_id = id_klasa
+    sesja.commit()
+    wypisz_listę_uczniow()
 
-czytajdane()
+    # usunięcie ucznia o identyfikatorze 3
+    uczen = sesja.get(Uczen, 3)
+    print('Usuwam ucznia:', uczen.id, uczen.imie, uczen.nazwisko)
+    sesja.delete(uczen)
+    sesja.flush()
+    wypisz_listę_uczniow()
 
-# zapisanie zmian w bazie i zamknięcie sesji
-sesja.commit()
-sesja.close()
+    print('Usuwam uczniów z klasy 1A')
+    from sqlalchemy import delete
+    id_klasa = sesja.query(Klasa.id).filter(Klasa.nazwa == '1A').scalar()
+    zapytanie = delete(Uczen).where(Uczen.klasa_id==id_klasa)
+    sesja.execute(zapytanie)
+    wypisz_listę_uczniow()

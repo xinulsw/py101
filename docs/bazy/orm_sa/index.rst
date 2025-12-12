@@ -164,6 +164,37 @@ modelu przypisujemy identyfikator obiektu reprezentującego klasę.
 Odczyt danych
 *************
 
+Odczyt danych może być realizowany na wiele sposobów. Zacznijmy od uzupełnienia kodu skryptu:
+
+.. raw:: html
+
+    <div class="code_no">SQLAlchemy. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. literalinclude:: orm_sa.py
+    :linenos:
+    :lineno-start: 58
+    :lines: 58-81
+
+Do tworzenia zapytań odczytujących dane używamy metody ``query()`` obiektu sesji.
+
+Do odczytywaniu wielu rekordów służy metoda ``select()`` modelu, która zwraca listę obiektów
+zapisanych w bazie. Listę możemy odczytać za pomocą pętli, np.: ``for klasa in klasy:``.
+Mamy również dostęp do atrybutów odczytywanych obiektów, możemy je wypisać dzięki notacji z kropką:
+``print(klasa.id, klasa.nazwa, klasa.profil)``.
+
+Do odczytania jednego rekordu (obiektu) z bazy danych na podstawie wartości któregoś z jego atrybutów,
+możemy użyć metody ``where()``, która odpowiada klauzuli warunkowej ``WHERE`` języka SQL, np.:
+``Klasa.select().where(Klasa.nazwa == '1A').get()``. Dopóki interesuje nas jeden rekord z jednej tabeli,
+możemy też użyć skróconego zapytania: ``klasa = Klasa.get(Klasa.nazwa == '1A')``.
+
+W funkcji ``wypisz_liste_uczniow()`` do sprawdzenia liczby obiektów zapisanych w bazie używamy metody ``count()``.
+Jeżeli w bazie zapisano jakichś uczniów (``if Uczen().select().count():``),
+pobieramy ich dane używając złączenia z modelem ``Klasa``.
+Używamy metody ``join()``, która odpowiada klauzuli ``INNER JOIN`` języka SQL:
+``Uczen.select().join(Klasa)``. Zwróconą listę rekordów odczytujemy za pomocą pętli ``for``.
+Jeżeli w bazie nie ma żadnych uczniów, wypisujemy odpowiedni komunikat.
+
+
 Zanim dodamy pierwsze informacje sprawdzamy, czy w tabeli *klasa* są jakieś wpisy, a więc
 wykonujemy prostą kwerendę zliczającą. Peewee używa
 metod odpowiednich obiektów: ``Klasa().select().count()``, natomiast
