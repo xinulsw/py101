@@ -1,7 +1,7 @@
 import os
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import List
-from sqlalchemy import ForeignKey, Integer, String, create_engine, select
+from sqlalchemy import ForeignKey, Integer, String, create_engine, select, func
 from sqlalchemy.orm import Session
 
 plik_bazy = 'baza_sa.db'
@@ -58,9 +58,9 @@ with Session(baza) as sesja:
     # odczytujemy wiele rekordów
     print('Klasy:')
     zapytanie = select(Klasa)
-    klasy = sesja.scalars(zapytanie)
+    klasy = sesja.execute(zapytanie)
     for klasa in klasy:
-        print(klasa.id, klasa.nazwa, klasa.profil)
+        print(klasa[0].id, klasa[0].nazwa, klasa[0].profil)
     print()
 
     # odczytujemy jeden rekord
@@ -71,9 +71,10 @@ with Session(baza) as sesja:
 
     def wypisz_listę_uczniow():
         """ Odczytujemy i wypisujemy dane uczniów, w tym klasę"""
-        if sesja.query(Uczen).count():
+        # if sesja.query(Uczen).count():
+        if sesja.execute(select(func.count()).select_from(Uczen)):
             print('Uczniowie:')
-            uczniowie = sesja.query(Uczen).join(Klasa).all()
+            uczniowie = sesja.scalars(select(Uczen).join(Klasa))
             for uczen in uczniowie:
                 print(uczen.id, uczen.imie, uczen.nazwisko, uczen.klasa.nazwa)
             print()
@@ -83,8 +84,8 @@ with Session(baza) as sesja:
     wypisz_listę_uczniow()
 
     # zmiana klasy ucznia o identyfikatorze 2
-    uczen = sesja.query(Uczen).filter(Uczen.id == 2).one()
-    id_klasa = sesja.query(Klasa.id).filter(Klasa.nazwa == '1A').scalar()
+    uczen = sesja.scalar(select(Uczen).where(Uczen.id == 2))
+    id_klasa = sesja.scalar(select(Klasa.id).where(Klasa.nazwa == '1A'))
     print('Zmieniam klasę ucznia:', uczen.imie, uczen.nazwisko, uczen.klasa.nazwa)
     uczen.klasa_id = id_klasa
     sesja.commit()
@@ -99,7 +100,7 @@ with Session(baza) as sesja:
 
     print('Usuwam uczniów z klasy 1A')
     from sqlalchemy import delete
-    id_klasa = sesja.query(Klasa.id).filter(Klasa.nazwa == '1A').scalar()
-    zapytanie = delete(Uczen).where(Uczen.klasa_id==id_klasa)
+    id_klasa = sesja.scalar(select(Klasa.id).where(Klasa.nazwa == '1A'))
+    zapytanie = delete(Uczen).where(Uczen.klasa_id == id_klasa)
     sesja.execute(zapytanie)
     wypisz_listę_uczniow()

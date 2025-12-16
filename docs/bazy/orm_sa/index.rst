@@ -173,19 +173,20 @@ Odczyt danych może być realizowany na wiele sposobów. Zacznijmy od uzupełnie
 .. literalinclude:: orm_sa.py
     :linenos:
     :lineno-start: 58
-    :lines: 58-81
+    :lines: 58-84
 
-Do tworzenia zapytań odczytujących dane używamy metody ``query()`` obiektu sesji.
+Do tworzenia zapytań używamy funkcji ``select()``, np.:
 
-Do odczytywaniu wielu rekordów służy metoda ``select()`` modelu, która zwraca listę obiektów
-zapisanych w bazie. Listę możemy odczytać za pomocą pętli, np.: ``for klasa in klasy:``.
-Mamy również dostęp do atrybutów odczytywanych obiektów, możemy je wypisać dzięki notacji z kropką:
-``print(klasa.id, klasa.nazwa, klasa.profil)``.
+- ``select(Klasa)`` – odczytujemy wszystkie obiekty modelu ``Klasa``,
+- ``select(Klasa).where(Klasa.nazwa == '1A')`` – odczytujemy obiekt reprezentujący klasę *1A*,
+  metoda ``where()`` odpowiada klauzuli ``WHERE`` języka SQL,
+- ``select(Uczen).join(Klasa)`` – odczytujemy obiekty modelu ``Uczen`` razem z danymi o klasie, do której uczeń należy,
+  metoda ``join()`` odpowiada klauzuli ``JOIN`` języka SQL.
 
-Do odczytania jednego rekordu (obiektu) z bazy danych na podstawie wartości któregoś z jego atrybutów,
-możemy użyć metody ``where()``, która odpowiada klauzuli warunkowej ``WHERE`` języka SQL, np.:
-``Klasa.select().where(Klasa.nazwa == '1A').get()``. Dopóki interesuje nas jeden rekord z jednej tabeli,
-możemy też użyć skróconego zapytania: ``klasa = Klasa.get(Klasa.nazwa == '1A')``.
+Zapytania wykonujemy za pomocą metod sesji:
+
+- ``scalars()`` – zwraca wszystkie pasujące obiekty, które można odczytywać np. w pętli ``for``,
+- ``scalar()`` – zwraca pierwszy pasujący element.
 
 W funkcji ``wypisz_liste_uczniow()`` do sprawdzenia liczby obiektów zapisanych w bazie używamy metody ``count()``.
 Jeżeli w bazie zapisano jakichś uczniów (``if Uczen().select().count():``),
