@@ -135,6 +135,22 @@ Wykonywanie operacji na bazie danych wymaga utworzenia obiektu sesji:
 ``with Session(baza) as sesja``. Użycie konstrukcji ``with ... as ...``
 pozwala uniknąć niektórych błędów podczas wykonywania operacji na bazie.
 
+.. _sesja:
+
+.. note::
+
+    Mechanizm sesji jest unikalny dla SQLAlchemy, pozwala m. in. zarządzać
+    transakcjami i połączeniami z wieloma bazami. Stanowi "przechowalnię"
+    dla tworzonych obiektów, zapamiętuje wykonywane na nich operacje,
+    które mogą zostać zapisane w bazie lub w razie potrzeby odrzucone.
+    W prostych aplikacjach wykorzystuje się jedną instancję sesji,
+    w bardziej złożonych można korzystać z wielu.
+    Instancja sesji tworzona jest za pomocą klasy ``Session`` z parametrem wskazującym bazę.
+    Jeżeli nie używamy polecenia ``with ... as ...``, musimy pamiętać o zamknięciu sesji
+    metodą ``close()``. Obiekt sesji zawiera metody pozwalające komunikować się
+    z bazą. Jeżeli zmiany w sesji mają zostać zapisane w bazie danych, używamy metody
+    ``commit()`` lub ``flush()`` do ich zatwierdzenia.
+
 Do tworzenia nowych rekordów używamy metody ``add()``. Jako argument podajemy nazwę modelu
 z wymaganymi argumentami.
 
@@ -188,71 +204,28 @@ Zapytania wykonujemy za pomocą metod sesji:
 - ``scalars()`` – zwraca wszystkie pasujące obiekty, które można odczytywać np. w pętli ``for``,
 - ``scalar()`` – zwraca pierwszy pasujący element.
 
-W funkcji ``wypisz_liste_uczniow()`` do sprawdzenia liczby obiektów zapisanych w bazie używamy metody ``count()``.
-Jeżeli w bazie zapisano jakichś uczniów (``if Uczen().select().count():``),
-pobieramy ich dane używając złączenia z modelem ``Klasa``.
-Używamy metody ``join()``, która odpowiada klauzuli ``INNER JOIN`` języka SQL:
-``Uczen.select().join(Klasa)``. Zwróconą listę rekordów odczytujemy za pomocą pętli ``for``.
-Jeżeli w bazie nie ma żadnych uczniów, wypisujemy odpowiedni komunikat.
+.. tip::
 
+    Dodatkowo można używać:
 
-Zanim dodamy pierwsze informacje sprawdzamy, czy w tabeli *klasa* są jakieś wpisy, a więc
-wykonujemy prostą kwerendę zliczającą. Peewee używa
-metod odpowiednich obiektów: ``Klasa().select().count()``, natomiast
-SQLAlchemy korzysta metody ``.query()`` sesji, która pozwala pobierać dane
-z określonej jako klasa tabeli. Obydwa rozwiązania umożliwiają łańcuchowe
-wywoływanie charakterytycznych dla kwerend operacji poprzez "doklejanie"
-kolejnych metod, np. ``sesja.query(Klasa).count()``.
-
-Tak właśnie konstruujemy kwerendy warunkowe. W Peewee definiujemy warunki jako
-prametry metody ``.where(Klasa.nazwa == '1A')``. Podobnie w SQLAlchemy,
-tyle, że metody sesji inaczej się nazywają i przyjmują postać
-``.filter_by(nazwa = '1A')`` lub ``.filter(Klasa.nazwa == '1A')``. Pierwsza
-wymaga podania warunku w formacie "klucz"="wartość", druga w postaci
-wyrażenia SQL (należy uważać na użycie poprawnego operatora ``==``).
-
-Pobieranie danych z wielu tabel połączonych relacjami może być w porównaniu
-do zapytań SQL-a bardzo proste. W zależności od ORM-a wystarcza polecenie:
-``Uczen.select()`` lub ``sesja.query(Uczen).all()``, ale przy próbie
-odczytu klasy, do której przypisano ucznia (``inst_uczen.klasa.nazwa``),
-wykonane zostanie dodatkowe zapytanie, co nie jest efektywne.
-Dlatego lepiej otwarcie wskazywać na powiązania między obiektami,
-czyli w zależności od ORM-u używać:
-``Uczen.select().join(Klasa)`` lub ``sesja.query(Uczen).join(Klasa).all()``.
-Tak właśnie postępujemy w bliźniaczych funkcjach ``czytajdane()``, które
-pokazują, jak pobierać i wyświetlać wszystkie rekordy z tabel powiązanych
-relacjami.
-
-Systemy ORM oferują pewne ułatwiania w zależności od tego, ile rekordów lub pól
-i w jakiej formie chcemy wydobyć. Metody w Peewee:
-
-    - ``.get()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak;
-    - ``.first()`` - zwróci z kolei pierwszy rekord ze wszystkich pasujących.
-
-Metody SQLAlchemy:
-
-    - ``.get(id)`` - zwraca pojedynczy rekord na podstawie podanego identyfikatora;
-    - ``.one()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak;
-    - ``.scalar()`` - zwraca pierwszy element pierwszego zwróconego rekordu lub wyjątek ``MultipleResultsFound``;
+    - ``.get(id)`` - zwraca pojedynczy rekord na podstawie podanego identyfikatora,
+    - ``.one()`` - zwraca pojedynczy rekord pasujący do zapytania lub wyjątek ``DoesNotExist``, jeżeli go brak,
+    - ``.scalar()`` - zwraca pierwszy element pierwszego zwróconego rekordu lub wyjątek ``MultipleResultsFound``,
     - ``.all()`` - zwraca pasujące rekordy w postaci listy.
 
-.. _sesja:
+W funkcji ``wypisz_liste_uczniow()`` do sprawdzenia liczby obiektów zapisanych w bazie używamy zapytania
+zawierającego:
 
-.. note::
+- funkcję ``select()``, której argumentem jest funkcja count() wywoływana z przestrzeni nazw ``func``
+  udostępniającej funkcje SQL,
+- metody ``select_from()``, które pozwala określić źródło danych na podstawie podanego modelu.
 
-    Mechanizm sesji jest unikalny dla SQLAlchemy, pozwala m. in. zarządzać
-    transakcjami i połączeniami z wieloma bazami. Stanowi "przechowalnię"
-    dla tworzonych obiektów, zapamiętuje wykonywane na nich operacje,
-    które mogą zostać zapisane w bazie lub w razie potrzeby odrzucone.
-    W prostych aplikacjach wykorzystuje się jedną instancję sesji,
-    w bardziej złożonych można korzystać z wielu.
-    Instancja sesji (``sesja = BDSesja()``) tworzona jest na podstawie klasy, która z kolei
-    powstaje przez wywołanie konstruktora z opcjonalnym parametrem
-    wskazującym bazę: ``BDSesja = sessionmaker(bind=baza)``. Jak pokazano
-    wyżej, obiekt sesji zawiera metody pozwalające komunikować się
-    z bazą. Warto również zauważyć, że po wykonaniu wszystkich zamierzonych
-    operacji w ramach sesji zapisujemy dane do bazy wywołując polecenie
-    ``sesja.commit()``.
+Systemy ORM oferują pewne ułatwiania w zależności od tego, ile rekordów lub pól
+i w jakiej formie chcemy wydobyć. Metody SQLAlchemy:
+
+
+
+
 
 Modyfikowanie i usuwanie danych
 =================================
