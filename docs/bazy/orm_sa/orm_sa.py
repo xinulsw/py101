@@ -1,7 +1,7 @@
 import os
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import List
-from sqlalchemy import ForeignKey, Integer, String, create_engine, select, func
+from sqlalchemy import ForeignKey, Integer, String, create_engine
 from sqlalchemy.orm import Session
 
 plik_bazy = 'baza_sa.db'
@@ -55,6 +55,7 @@ with Session(baza) as sesja:
     sesja.add_all(uczniowie)
     sesja.commit()
 
+    from sqlalchemy import select, func, delete
     # odczytujemy wiele rekordów
     print('Klasy:')
     zapytanie = select(Klasa)
@@ -72,7 +73,7 @@ with Session(baza) as sesja:
     def wypisz_listę_uczniow():
         """ Odczytujemy i wypisujemy dane uczniów, w tym klasę"""
         # if sesja.query(Uczen).count():
-        if sesja.execute(select(func.count()).select_from(Uczen)):
+        if sesja.execute(select(func.count()).select_from(Uczen)).scalar():
             print('Uczniowie:')
             uczniowie = sesja.scalars(select(Uczen).join(Klasa))
             for uczen in uczniowie:
@@ -99,8 +100,8 @@ with Session(baza) as sesja:
     wypisz_listę_uczniow()
 
     print('Usuwam uczniów z klasy 1A')
-    from sqlalchemy import delete
     id_klasa = sesja.scalar(select(Klasa.id).where(Klasa.nazwa == '1A'))
     zapytanie = delete(Uczen).where(Uczen.klasa_id == id_klasa)
     sesja.execute(zapytanie)
+    sesja.commit()
     wypisz_listę_uczniow()
