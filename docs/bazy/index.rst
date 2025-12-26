@@ -10,7 +10,7 @@ Omawiamy następujące możliwości:
   bazami SQLite, który wymaga znajomości języka SQL;
 - `Peewee <http://peewee.readthedocs.org/en/latest/index.html>`_ – prosty, mały system ORM;
 - `SQLAlchemy <http://www.sqlalchemy.org>`_ – rozbudowany system ORM, oferujący zestaw narzędzi
-   ułatwiających wykorzystanie możliwości języka SQL.
+  ułatwiających wykorzystanie możliwości języka SQL.
 
 Znajomość języka SQL jest zalecana, aby rozumieć i korzystać z wszystkich możliwości baz danych.
 Systemy ORM (ang. *Object-Relational Mapping* – mapowanie obiektowo-relacyjne) pozwalają jednak traktować
@@ -38,7 +38,7 @@ np. polski program `SQLiteStudio <https://sqlitestudio.pl/>`_.
     sqlite3
 
 Materiały
-***************
+==========
 
 1. `Moduł sqlite3 Pythona`_
 2. `Baza SQLite3`_

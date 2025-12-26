@@ -280,6 +280,3 @@ Zadania
 
 4) Przejrzyj scenariusz aplikacji internetowej :ref:`Czat <czat1>`, zbudowanej z użyciem
    frameworku *Django*, korzystającego z własnego modelu ORM.
-
-
-
