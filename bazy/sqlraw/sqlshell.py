@@ -1,33 +1,28 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# Minimala powłoka SQLite
-# https://docs.python.org/2/library/sqlite3.html
-
 import sqlite3
 
 con = sqlite3.connect(":memory:")
 con.isolation_level = None
 cur = con.cursor()
 
-buffer = ""
+bufor = ""
 
-print "Podaj polecenie SQL do wykonania w sqlite3."
-print "Naciśnij Enter, aby wyjść."
+print("Podaj polecenie SQL do wykonania w sqlite3.")
+print("Naciśnij Enter, aby wyjść.")
 
 while True:
-    line = raw_input()
+    line = input()
     if line == "":
         break
-    buffer += line
-    if sqlite3.complete_statement(buffer):
+    bufor += line
+    if sqlite3.complete_statement(bufor):
         try:
-            buffer = buffer.strip()
-            cur.execute(buffer)
+            bufor = bufor.strip()
+            cur.execute(bufor)
 
-            if buffer.lstrip().upper().startswith("SELECT"):
-                print cur.fetchall()
+            if bufor.lstrip().upper().startswith("SELECT"):
+                print(cur.fetchall())
         except sqlite3.Error as e:
-            print "Wystąpił błąd:", e.args[0]
-        buffer = ""
+            print("Wystąpił błąd:", e.args[0])
+        bufor = ""
 
 con.close()
