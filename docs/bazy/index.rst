@@ -46,7 +46,7 @@ Materiały
 4. `Baza SQLite3`_
 5. `Peewee (ang.)`_
 6. `Tutorial Peewee (ang.)`_
-7. `SQLAlchemy ORM Tutorial (ang.)`_
+7. `SQLAlchemy ORM (ang.)`_
 8. `Tutorial SQLAlchemy (ang.)`_
 
 .. _Język SQL: http://pl.wikipedia.org/wiki/SQL
@@ -55,5 +55,5 @@ Materiały
 .. _Baza SQLite3: http://www.sqlite.org/
 .. _Peewee (ang.): http://peewee.readthedocs.org/en/latest/index.html
 .. _Tutorial Peewee (ang.): https://docs.peewee-orm.com/en/latest/peewee/quickstart.html
-.. _SQLAlchemy ORM Tutorial (ang.): http://www.sqlalchemy.org/
+.. _SQLAlchemy ORM (ang.): http://www.sqlalchemy.org/
 .. _Tutorial SQLAlchemy (ang.): https://docs.sqlalchemy.org/en/20/tutorial/index.html
