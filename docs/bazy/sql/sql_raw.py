@@ -1,21 +1,21 @@
 import sqlite3
 
 # utworzenie połączenia z bazą przechowywaną w pamięci RAM
-con = sqlite3.connect(':memory:')
-# dostęp do kolumn przez indeksy i przez nazwy pól
+con = sqlite3.connect('baza.db')
+# dostęp do pól rekordów przez indeksy i przez nazwy pól
 con.row_factory = sqlite3.Row
 # utworzenie obiektu kursora
 cur = con.cursor()
 
 # tworzenie tabel
+cur.execute("DROP TABLE IF EXISTS klasa")
+cur.execute("DROP TABLE IF EXISTS uczen")
 cur.executescript("""
-    DROP TABLE IF EXISTS klasa;
     CREATE TABLE IF NOT EXISTS klasa (
         id INTEGER PRIMARY KEY,
         nazwa varchar(250) NOT NULL,
         profil varchar(250) DEFAULT ''
     );
-    DROP TABLE IF EXISTS uczen;
     CREATE TABLE IF NOT EXISTS uczen (
         id INTEGER PRIMARY KEY,
         imie varchar(250) NOT NULL,
@@ -41,7 +41,7 @@ cur.executemany('INSERT INTO uczen VALUES(NULL,?,?,?)', uczniowie)
 con.commit()
 
 def wypisz_listę_uczniow():
-    """ Odczytujemy i wypisujemy dane uczniów, w tym klasę"""
+    """ Odczytujemy i wypisujemy dane uczniów, w tym klasę """
     cur.execute("SELECT count(*) FROM uczen")
     if (cur.fetchone()[0]):
         print('Uczniowie:')
@@ -66,8 +66,8 @@ klasa_id = cur.fetchone()[0]
 cur.execute('UPDATE uczen SET klasa_id=? WHERE id=?', (klasa_id, uczen_id))
 wypisz_listę_uczniow()
 
-# usunięcie ucznia o identyfikatorze 1
-cur.execute('DELETE FROM uczen WHERE id=?', (1,))
+# usunięcie ucznia o podanym imieniu i nazwisku
+cur.execute('DELETE FROM uczen WHERE imie=? and nazwisko=?', ('Jan', 'Kos'))
 wypisz_listę_uczniow()
 
 con.close()

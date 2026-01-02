@@ -40,18 +40,20 @@ np. polski program `SQLiteStudio <https://sqlitestudio.pl/>`_.
 Materiały
 ==========
 
-1. `Moduł sqlite3 Pythona`_
-2. `Baza SQLite3`_
-3. `Język SQL`_
-4. `Peewee (ang.)`_
-5. `Tutorial Peewee (ang.)`_
-6. `SQLAlchemy ORM Tutorial (ang.)`_
-7. `Tutorial SQLAlchemy (ang.)`_
+1. `Język SQL`_
+2. `Tutorial SQL`_
+3. `Moduł sqlite3 Pythona`_
+4. `Baza SQLite3`_
+5. `Peewee (ang.)`_
+6. `Tutorial Peewee (ang.)`_
+7. `SQLAlchemy ORM Tutorial (ang.)`_
+8. `Tutorial SQLAlchemy (ang.)`_
 
-.. _Moduł sqlite3 Pythona: https://docs.python.org/2/library/sqlite3.html
-.. _Baza SQLite3: http://www.sqlite.org/
 .. _Język SQL: http://pl.wikipedia.org/wiki/SQL
+.. _Tutorial SQL: https://www.samouczekprogramisty.pl/kurs-sql/
+.. _Moduł sqlite3 Pythona: https://docs.python.org/3/library/sqlite3.html
+.. _Baza SQLite3: http://www.sqlite.org/
 .. _Peewee (ang.): http://peewee.readthedocs.org/en/latest/index.html
-.. _Tutorial Peewee (ang.): http://www.blog.pythonlibrary.org/2014/07/17/an-intro-to-peewee-another-python-orm/
+.. _Tutorial Peewee (ang.): https://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 .. _SQLAlchemy ORM Tutorial (ang.): http://www.sqlalchemy.org/
-.. _Tutorial SQLAlchemy (ang.): http://www.pythoncentral.io/introductory-tutorial-python-sqlalchemy/
+.. _Tutorial SQLAlchemy (ang.): https://docs.sqlalchemy.org/en/20/tutorial/index.html
