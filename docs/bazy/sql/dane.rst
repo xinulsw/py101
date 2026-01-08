@@ -8,6 +8,12 @@ do formatu `CSV (comma-separated values) <https://pl.wikipedia.org/wiki/CSV_(for
 czyli pliku tekstowego, w którym każda linia reprezentuje pojedynczy rekord,
 a wartości pól oddzielone są jakimś separatorem, najczęściej przecinkiem lub średnikiem.
 
+.. note::
+
+    Do kodowania i uruchamiania skryptu możesz użyć dowolnych narzędzi, np. ulubionego edytora kodu i terminala.
+    Sugerujemy jednak wykorzystanie środowiska typu **PyCharm** lub innego, ponieważ ułatwiają przygotowania
+    i pracę nad projektami w języku Python.
+
 Załóżmy więc, że mamy plik :download:`uczniowie.csv` w formacie CSV z danymi uczniów. Każda linia zawiera
 dane jednego rekordu, np: ``Jan,Nowak,2``. Poniżej podamy przykłady dwóch funkcji,
 które odczytują dane i zwracają je w postaci listy, której elementami są listy zawierające poszczególne wartości pól

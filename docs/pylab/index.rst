@@ -4,32 +4,41 @@ Matplotlib
 ################
 
 Jedną z potężniejszych bibliotek Pythona jest `matplotlib <http://pl.wikipedia.org/wiki/Matplotlib>`_,
-która służy do tworzenia różnego rodzaju wykresów. *Pylab* to :term:`API` ułatwiające
-korzystanie z omawianej biblioteki na wzór środowiska `Matlab <http://pl.wikipedia.org/wiki/MATLAB>`_.
-Poniżej pokazujemy, jak łatwo przy użyciu Pythona wizualizować wykresy różnych
-funkcji.
+która służy do tworzenia różnego rodzaju wykresów. W tym scenariuszu pokażemy, jak przygotować wykresy funkcji
+w dwuwymiarowym układzie współrzędnych.
 
-Przed rozpoczęciem pracy przygotuj w wybranym katalogu :ref:`wirtualne środowisko Pythona <venv>`
-i zainstaluj pakiet *Matplotlib*.
-
-.. contents::
-    :depth: 1
-    :local:
+Środowisko pracy
+================
 
 .. note::
 
-    Bibliotekę *matplotlib* można importować na kilka sposobów. Najprostszym jest użycie
-    instrukcji ``import pylab``, która udostępnia moduł ``pyplot`` (do tworzenia wykresów) oraz
-    bibliotekę ``numpy`` (funkcje matematyczne) w jednej przestrzeni nazw. Tak będziemy
-    robić w konsoli i początkowych przykładach.
+    Do kodowania i uruchamiania skryptu możesz użyć dowolnych narzędzi, np. ulubionego edytora kodu i terminala.
+    Sugerujemy jednak wykorzystanie środowiska typu **PyCharm** lub innego, ponieważ ułatwiają przygotowania
+    i pracę nad projektami w języku Python.
 
-    Oficjalna dokumentacja sugeruje jednak, aby w bardziej złożonych projektach stosować
-    importy jawne. Tak zrobimy w przykładach korzystających z funkcji matematycznych.
+Przed rozpoczęciem pracy przygotuj w wybranym katalogu, np. :file:`matplot`` :ref:`wirtualne środowisko Pythona <venv>`
+i w aktywnym środowisku zainstaluj pakiet *Matplotlib*:
 
-.. code-block:: python
+.. code-block:: bash
 
-    import numpy as np
-    import matplotlib.pyplot as plt
+    (.venv) ~/matplot$ pip install matplotlib
+
+.. note::
+
+    *Matplotlib* oferuje dwa główne style kodowania:
+
+    - styl jawny, zorientowany obiektowo, w którym po kolei tworzymy wszystkie elementy budujące wykres,
+      takie jak *Figure*, *Axes* czy *Axis*,
+    - styl niejawny, w którym korzystamy z funkcji interfejsu ``pyplot``.
+
+    Oficjalna dokumentacja sugeruje, aby w bardziej złożonych projektach stosować
+    styl jawny. Tak zrobimy w przykładach korzystających z funkcji matematycznych,
+    które zaczynać będziemy następującymi importami:
+
+    .. code-block:: python
+
+        import numpy as np
+        import matplotlib.pyplot as plt
 
 
 .. tip::

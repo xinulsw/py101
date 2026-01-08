@@ -15,6 +15,12 @@ jak wykorzystywać język SQL w skryptach wykonywanych w wierszu poleceń.
 
 .. _SQL: http://pl.wikipedia.org/wiki/SQL
 
+.. note::
+
+    Do kodowania i uruchamiania skryptu możesz użyć dowolnych narzędzi, np. ulubionego edytora kodu i terminala.
+    Sugerujemy jednak wykorzystanie środowiska typu **PyCharm** lub innego, ponieważ ułatwiają przygotowania
+    i pracę nad projektami w języku Python.
+
 Połączenie z bazą
 *****************
 
