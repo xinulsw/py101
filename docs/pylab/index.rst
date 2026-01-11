@@ -16,7 +16,7 @@ w dwuwymiarowym układzie współrzędnych.
     Sugerujemy jednak wykorzystanie środowiska typu **PyCharm** lub innego, ponieważ ułatwiają przygotowania
     i pracę nad projektami w języku Python.
 
-Przed rozpoczęciem pracy przygotuj w wybranym katalogu, np. :file:`matplot`` :ref:`wirtualne środowisko Pythona <venv>`
+Przed rozpoczęciem pracy przygotuj w wybranym katalogu, np. :file:`matplot` :ref:`wirtualne środowisko Pythona <venv>`
 i w aktywnym środowisku zainstaluj pakiet *Matplotlib*:
 
 .. code-block:: bash
@@ -37,14 +37,15 @@ i w aktywnym środowisku zainstaluj pakiet *Matplotlib*:
 
     .. code-block:: python
 
-        import numpy as np
         import matplotlib.pyplot as plt
+        import numpy as np
 
+    W pierwszym wierszu importujemy interfejs ``pyplot`` pod skróconą nazwą (aliasem) ``plt``.
+    W drugim importujemy towarzyszącą modułowi ``matplotlib`` bibliotekę ``numpy`` pod aliasem ``np``.
+    Dostarcza ona wielu narzędzi wspomagających obliczenia naukowe.
 
-.. tip::
-
-    Jeżeli konsolę rozszerzoną uruchomimy poleceniem ``ipython --pylab``, nie trzeba będzie
-    podawać przedrostka ``pylab`` przy korzystaniu z funkcji rysowania.
+Anatomia wykresu
+****************
 
 Zacznijmy od prostego przykładu, który możemy przetestować w konsoli Pythona:
 
@@ -54,50 +55,81 @@ Zacznijmy od prostego przykładu, który możemy przetestować w konsoli Pythona
 
 .. code-block:: python
 
-    import pylab
-    x = [1,2,3]
-    y = [4,6,5]
-    pylab.plot(x, y)
-    pylab.show()
+    import matplotlib.pyplot as plt
+    x = [1, 2, 3]
+    y = [4, 6, 5]
+    plt.plot(x, y)
+    plt.show()
 
 Tworzenie wykresów punktowych jest proste. Postępujemy według schematu:
 
-- przygotowujemy dwie listy wartości ``x`` i ``y`` – odpowiadające sobie wartości należy
-rozumieć jako współrzędne punktów w 2-wymiarowym układzie współrzędnych,
+- przygotowujemy dwie listy wartości: argumentów ``x`` i wartości ``y``, odpowiadające sobie wartości
+  zinterpretowane zostaną jako współrzędne punktów w 2-wymiarowym układzie współrzędnych,
 - obie listy przekazujemy jako argumenty metody ``plot()``,
 - wyświetlamy wykres za pomocą metody ``show()``.
+
+W powyższym przykładzie zastosowaliśmy niejawny styl kodowania wystarczający do prostych pojedynczych wykresów.
+W jawnym stylu kodowania dwie ostatnie linie zastąpimy poniższym kodem:
+
+.. code-block:: python
+
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    plt.show()
+
+Żeby lepiej go rozumieć, musimy poznać składniki wykresu. Twórcy pakietu przyjęli następującą terminologię:
+
+- **Figure** – nadrzędny pojemnik zawierający wszystkie inne składniki, w praktyce będzie to okno zawierające wykres(y),
+- **Axes** – obiekt reprezentujący pojedynczy wykres i jego elementy, wykresów w figurze może być wiele.
+
+Najprostszym sposobem stworzenia omówionych obiektów jest użycie metody ``subplots()``: ``fig, ax = plt.subplots()``.
+
+Figura (*Figure*) zawiera wykres(y). Wykres (*Axes*) może z kolei zawierać różne elementy
+pokazane na poniższym diagramie:
+
+.. figure:: img/anatomy.webp
+
+- **Title** – tytuł ustawiany za pomocą: ``plt.title()`` lub ``ax.set_title()``,
+- **Legend** – legenda wykresu może być dodana za pomocą ``plt.legend()`` lub
+  ``ax.legend()``,
+- **Axis** – obiekty reprezentujące osie X, Y (2D) i ewentualnie Z (3D), zawierają:
+
+    - skalę osi (ang. *tick*) – znaczniki skali, główne (ang. *major*) i poboczne (ang. *minor*),
+    - etykiety osi (ang. *label*) – możemy je ustawić za pomocą ``plt.xlabel()`` lub metod wykresu:
+      ``ax.set_xlabel()``, ``ax.set_ylabel()``,
+
+- **Markers** – pojedyncze punkty, które można dodać za pomocą ``ax.scatter()``,
+- **Line** – linie generowane przez metodę ``plot()``,
+- **Grid** – siatka wykresu, którą można dodać za pomoca metody ``grid()``.
 
 Funkcja liniowa
 ***************
 
-*ZADANIE*: Wykonaj wykres funkcji ``f(x) = a*x + b``.
+**Zadania**: Wykonaj wykres funkcji ``f(x) = a*x + b``.
 
-*DANE WEJŚCIOWE*:
+**Dane**:
 
-- współczynniki ``a`` = 1, ``b`` = 2, liczby całkowite,
-- lista argumentów ``x`` zawierająca liczby całkowite z zakresu ``<-10;10>`` z krokiem 1.
+- współczynnik kierunkowy ``a`` i wyraz wolny ``b``, liczby całkowite,
+- lista argumentów ``x`` zawierająca liczby całkowite z zakresu ``<-10;10>``.
 
-W pliku :file:`pylab01.py` umieszczamy poniższy kod:
+W pliku :file:`matplot01.py` umieszczamy poniższy kod:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: pylab01.py
+.. literalinclude:: matplot01.py
     :linenos:
 
-Na początku importujemy interfejs ``pylab``. Następnie postępujemy wg omówionego schematu:
-definiujemy dziedzinę argumentów funkcji, a następnie zbiór wyliczonych wartości.
-W powyższym przypadku generujemy listę wartości ``x`` za pomocą funkcji ``range()``.
-Wartości ``y`` wyliczamy w pętli i zapisujemy w liście.
+Na początku nadajemy wartości parametrom ``a`` i ``b``. Następnie postępujemy wg omówionego schematu.
+Generujemy listę argumentów ``x`` za pomocą funkcji ``range()``.
+W pętli ``for`` dla każdego argumentu obliczamy wartość funkcji i dodajemy do listy ``y``.
 
-Dodatkowe metody:
-
-- ``title()`` – dodaje tytuł wykresu,
-- ``grid()`` – włącza wyświetlanie pomocniczej siatki.
-
-Uruchom skrypt.
+Następnie stosujemy jawny styl kodowania, tzn. używamy metody ``subplots()``, która obiekty
+reprezentujące figurę (``fig``, okno) i wykres (``ax``). Serie danych dodajemy za pomocą metody
+``plot()``, która wizualizuje je domyślnie przy użyciu linii ciągłych. Dodajemy tytuł (``set_title()``)
+i siatkę (``ax.grid()``). Na koniec wyświetlamy wykres (``plt.show()``).
 
 Ćwiczenie 1
 ============
