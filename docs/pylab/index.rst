@@ -160,35 +160,36 @@ zastępuje pętlę i zwraca listę wartości. Jego działanie należy rozumieć 
 dla każdej wartości ``i`` (nazwa zmiennej dowolna) odczytywanej w pętli z listy ``x`` (``for i in x``)
 wylicz wyrażenie ``a + i`` i umieść w liście ``y``.
 
-Użyj wyrażenia listowego w naszym programie:
+Użyjmy wyrażenia listowego w naszym programie:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: pylab02.py
+.. literalinclude:: matplot02.py
     :linenos:
-    :emphasize-lines: 1, 2, 6
-    :lineno-start: 6
-    :lines: 6-12
+    :emphasize-lines: 10
+    :lineno-start: 1
 
 Dwie funkcje
 *************
 
-ZADANIE: wykonaj wykres funkcji:
+**Zadanie**: wykonaj wykres podanych funkcji:
 
-* *f(x) = x/(-3) + a* dla *x* <= 0,
-* *f(x) = x\*x/3* dla *x* >= 0,
+    * *f(x) = x/(-3) + a* dla *x* <= 0,
+    * *f(x) = x\*x/3* dla *x* >= 0,
 
-– gdzie *x* = <-10;10> z krokiem 0.5. Współczynnik *a* podaje użytkownik.
+– gdzie *x* = <-10;10> z krokiem 0.5.
 
-Wykonanie zadania wymaga umieszczenia na wykresie dwóch funkcji.
-Wykorzystamy funkcję ``arange()``, która zwraca listę wartości
-zmiennoprzecinkowych (zob. :term:`typy danych`) z zakresu określonego przez
-dwa pierwsze argumenty i z krokiem wyznaczonym przez argument trzeci.
-Drugą przydatną konstrukcją będzie wyrażenie listowe uzupełnione o instrukcję
-warunkową, która ogranicza wartości, dla których obliczane jest podane wyrażenie.
+**Dane:**
+
+- współczynnik ``a`` pobrany z klawiatury, liczba całkowita.
+- lista argumentów ``x`` zawierająca liczby z zakresu ``<-10;10>`` z krokiem 0.5.
+
+Wykonanie zadania wymaga na początku wygenerowania listy argumentów.
+Do tego celu możemy wykorzystać funkcję ``arange()``. Listę wartości funkcji
+wyliczymy za pomocą wyrażenia listowego.
 
 Ćwiczenie 3
 ============
@@ -201,37 +202,46 @@ Zanim zrealizujemy zadanie przećwiczmy w konsoli Pythona następujący kod:
 
 .. code-block:: python
 
-    >>> import pylab
-    >>> x = pylab.arange(-10, 10.5, 0.5)
+    >>> import numpy as np
+    >>> x = np.arange(-10, 10.5, 0.5)
     >>> print(x)
     >>> len(x)
     >>> a = 3
     >>> y1 = [i / -3 + a for i in x if i <= 0]
     >>> len(y1)
 
-Uwaga: nie zamykaj tej sesji konsoli, zaraz się nam jeszcze przyda.
+Funkcja ``arange()`` znajduje się w module ``numpy`` i zwraca listę wartości zmiennoprzecinkowych
+(zob. :term:`typy danych`) z zakresu określonego przez dwa pierwsze argumenty i z krokiem
+wyznaczonym przez argument trzeci. Do obliczenia wartości pierwszej funkcji ``x / -3``
+wykorzystujemy wyrażenie listowe uzupełnione o instrukcję warunkową ``if i <= 0``, która
+ogranicza zbiór argumentów, dla których obliczana jest wartość funkcji.
 
-W pliku :file:`pylab02.py` umieszczamy poniższy kod:
+.. warning::
+
+    Nie zamykaj tej sesji konsoli, będziemy z niej korzystać w kolejnych ćwiczeniach.
+
+W pliku :file:`matplot03.py` umieszczamy poniższy kod:
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: pylab03.py
+.. literalinclude:: matplot03.py
     :linenos:
 
 Uruchom program. Nie działa, dostajemy komunikat:
-*ValueError: x and y must have same first dimension*,
-czyli listy wartości *x* i *y1* nie zawierają tyle samo elementów.
+``ValueError: x and y must have same first dimension, but have shapes (41,) and (21,)``,
+który oznacza, że listy ``x`` i ``y1`` powinny mieć tyle samo elementów, ale nie mają.
+Przyczyną tego jest fakt, że w powyższym kodzie wyliczyliśmy 21 wartości funkcji
+(dla argumentów mniejszych lub równych zero), a wszystkich argumentów jest 41.
 
-Co należy z tym zrobić? Jak wynika z warunków zadania, wartości *y1* obliczane
-są tylko dla argumentów mniejszych od zera. Zatem trzeba ograniczyć listę
-*x*, tak aby zawierała tylko wartości z odpowiedniego przedziału.
-Wróćmy do konsoli Pythona:
+Błąd można usunąć poprzez zawężenie listy argumentów do 21 elementów.
 
 Ćwiczenie 4
 ============
+
+Wróćmy do konsoli Pythona z wprowadzonym i wykonanym wcześniejszym kodem:
 
 .. raw:: html
 
@@ -241,17 +251,20 @@ Wróćmy do konsoli Pythona:
 
     >>> x
     >>> x[0]
-    >>> x[0:5]
-    >>> x[:5]
+    >>> x[0:22]
+    >>> x[:22]
     >>> x[:len(y1)]
     >>> len(x[:len(y1)])
 
-Uwaga: nie zamykaj tej sesji konsoli, zaraz się nam jeszcze przyda.
 
-Z pomocą przychodzi nam wydobywanie z listy wartości wskazywanych przez
-indeksy liczone od 0. Jednak prawdziwym ułatwieniem jest **notacja wycinania**
-(ang. *slice*), która pozwala podać pierwszy i ostatni indeks interesującego
-nas zakresu. Zmieniamy więc wywołanie funkcji ``plot()``:
+Podane wyżej przykłady ilustrują działanie **notacji wycinania** (ang. *slice*),
+której obecność rozpoznajemy po znaku dwukropka. Pozwala ona odczytywać z listy tylko
+wskazany przez indeksy zakres elementów. W naszym przypadku wszystkie podane przykłady,
+tzn. ``0:22``, ``:22``, ``:len(y1)`` – wskazują pierwsze 21 elementów listy.
+Jeżeli brak indeksu początkowego przed dwukropkiem, domyślną wartością jest 0 (zero),
+indeks po dwukropku oznacza z kolei element końcowy, przy czym nie wchodzi on do odczytywanego zakresu.
+
+Zmieniamy więc wywołanie funkcji ``plot()`` w naszym skrypcie:
 
 .. raw:: html
 
@@ -259,32 +272,16 @@ nas zakresu. Zmieniamy więc wywołanie funkcji ``plot()``:
 
 .. code-block:: python
 
-    pylab.plot(x[:len(y1)], y1)
+    ax.plot(x[:len(y1)], y1)
 
 Uruchom i przetestuj działanie programu.
 
-Udało się nam zrealizować pierwszą część zadania.
-Spróbujmy zakodować część drugą. Dopisujemy:
-
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. highlight:: python
-.. literalinclude:: pylab04.py
-    :linenos:
-    :lineno-start: 14
-    :lines: 14-16
-
-Wyrażenie listowe wylicza nam drugą dziedzinę wartości. Następnie do argumentów
-funkcji ``plot()`` dodajemy drugą parę list. Spróbuj uruchomić program.
-Nie działa, znowu dostajemy komunikat: *ValueError: x and y must have same first dimension*.
-Teraz jednak wiemy już dlaczego...
-
 Ćwiczenie 5
-============
+===========
 
-Przetestujmy kod w konsoli Pythona:
+Udało się nam zrealizować pierwszą część zadania, tzn. uzyskać wykres jednej funkcji.
+Zanim spróbujesz dokończyć zadanie, wróćmy jeszcze raz do konsoli Pythona
+z wprowadzonym i wykonanym wcześniejszym kodem:
 
 .. raw:: html
 
