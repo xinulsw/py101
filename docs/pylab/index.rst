@@ -212,8 +212,9 @@ Zanim zrealizujemy zadanie przećwiczmy w konsoli Pythona następujący kod:
 
 Funkcja ``arange()`` znajduje się w module ``numpy`` i zwraca listę wartości zmiennoprzecinkowych
 (zob. :term:`typy danych`) z zakresu określonego przez dwa pierwsze argumenty i z krokiem
-wyznaczonym przez argument trzeci. Do obliczenia wartości pierwszej funkcji ``x / -3``
-wykorzystujemy wyrażenie listowe uzupełnione o instrukcję warunkową ``if i <= 0``, która
+wyznaczonym przez argument trzeci.
+
+Do obliczenia wartości pierwszej funkcji ``x / -3`` wykorzystujemy wyrażenie listowe uzupełnione o instrukcję warunkową ``if i <= 0``, która
 ogranicza zbiór argumentów, dla których obliczana jest wartość funkcji.
 
 .. warning::
@@ -241,7 +242,7 @@ Błąd można usunąć poprzez zawężenie listy argumentów do 21 elementów.
 Ćwiczenie 4
 ============
 
-Wróćmy do konsoli Pythona z wprowadzonym i wykonanym wcześniejszym kodem:
+Wróćmy do konsoli Pythona z wprowadzonym i wykonanym wcześniejszym kodem. Wpisujemy podane niżej polecenia:
 
 .. raw:: html
 
@@ -256,8 +257,7 @@ Wróćmy do konsoli Pythona z wprowadzonym i wykonanym wcześniejszym kodem:
     >>> x[:len(y1)]
     >>> len(x[:len(y1)])
 
-
-Podane wyżej przykłady ilustrują działanie **notacji wycinania** (ang. *slice*),
+Podane wyżej przykłady ilustrują działanie **notacji indeksowej** (ang. *slice*),
 której obecność rozpoznajemy po znaku dwukropka. Pozwala ona odczytywać z listy tylko
 wskazany przez indeksy zakres elementów. W naszym przypadku wszystkie podane przykłady,
 tzn. ``0:22``, ``:22``, ``:len(y1)`` – wskazują pierwsze 21 elementów listy.
@@ -280,8 +280,19 @@ Uruchom i przetestuj działanie programu.
 ===========
 
 Udało się nam zrealizować pierwszą część zadania, tzn. uzyskać wykres jednej funkcji.
-Zanim spróbujesz dokończyć zadanie, wróćmy jeszcze raz do konsoli Pythona
-z wprowadzonym i wykonanym wcześniejszym kodem:
+Aby uzyskać wykres drugiej funkcji, musimy uzupełnić skrypt o instrukcję obliczającą wartości dla drugiej funkcji.
+Umieszczamy więc we właściwym miejscu poniższy kod:
+
+.. raw:: html
+
+    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. code-block:: python
+
+    y2 = [i**2 / 3 for i in x if i >= 0]
+
+Zanim dokończymy zadanie, wróćmy jeszcze raz do konsoli Pythona
+z wprowadzonym i wykonanym wcześniejszym kodem. Wpisujemy podane niżej polecenia:
 
 .. raw:: html
 
@@ -295,19 +306,15 @@ z wprowadzonym i wykonanym wcześniejszym kodem:
     >>> len(y2)
     >>> x[-len(y2):]
 
-Jak widać, w **notacji wycinania** możemy używać indeksów ujemnych wskazujących
+W **notacji indeksowej** możemy używać również indeksów ujemnych wskazujących
 elementy od końca listy. Jeżeli taki indeks umieścimy jako pierwszy przed
 dwukropkiem, czyli separatorem przedziału, dostaniemy resztę elementów listy.
 
-Na koniec musimy więc zmodyfikować funkcję ``plot()``:
+Metoda ``plot()`` może otrzymać kilka zestawów list argumentów x i wartości y.
+Wykorzystamy tę możliwość oraz notację indeksową do narysowania wykresu drugiej funkcji.
+W skrypcie modyfikujemy instrukcję ``plot()``:
 
-.. raw:: html
-
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
-
-.. code-block:: python
-
-    pylab.plot(x[:len(y1)], y1, x[-len(y2):], y2)
+    ax.plot(x[:len(y1)], y1, x[-len(y2):], y2)
 
 Ćwiczenie 6
 ============
